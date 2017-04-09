@@ -1,0 +1,27 @@
+{
+  "name": "K-BA",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node-dev ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cromade/K-BA.git"
+  },
+  "author": "Candice Guitton Dylan Fernandes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cromade/K-BA/issues"
+  },
+  "homepage": "https://github.com/Cromade/K-BA#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.2",
+    "morgan": "^1.8.1",
+    "mysql": "^2.13.0",
+    "sequelize": "^3.30.4"
+  }
+}
