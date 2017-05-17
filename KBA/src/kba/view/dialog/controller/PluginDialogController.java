@@ -1,0 +1,33 @@
+package kba.view.dialog.controller;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
+
+public class PluginDialogController {
+
+    private Stage dialogStage;
+	
+	public PluginDialogController() {
+	}
+	
+	public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
+	
+	@FXML
+	private void handleReturn() {
+		dialogStage.close();
+	}
+	
+	@FXML
+	private void handleMorePlugin() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+        alert.initOwner(dialogStage);
+        alert.setTitle("Plus de plugin");
+        alert.setHeaderText("Trouvez plus de plugin sur le site :");
+        alert.setContentText("adresse du site");
+        alert.showAndWait();
+	}
+}
