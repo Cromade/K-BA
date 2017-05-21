@@ -449,7 +449,7 @@ public class MainApp extends Application {
         }
     }
     
-    public void showProductDetailDialog(Product product, boolean isPreference) {
+    public boolean showProductDetailDialog(Product product, boolean isPreference) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -471,7 +471,7 @@ public class MainApp extends Application {
             controller.setChoiceBoxes();
             controller.setProduct(product);
             if (isPreference) {
-            	controller.setButtonSpecific();
+            	controller.setButtonDisable();
             }
 
             // Show the dialog and wait until the user closes it
@@ -480,6 +480,7 @@ public class MainApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+		return false;
     }
     
     public void showPluginManagement() {

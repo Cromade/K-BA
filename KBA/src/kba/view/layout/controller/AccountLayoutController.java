@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import kba.MainApp;
 import kba.model.User;
 
@@ -120,6 +121,9 @@ public class AccountLayoutController {
             alert.setTitle("Suppression de compte");
             alert.setHeaderText("Attention");
             alert.setContentText("Etes-vous sur de vouloir supprimer votre compte?");
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("../../style/MainTheme.css").toExternalForm());
+            dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {

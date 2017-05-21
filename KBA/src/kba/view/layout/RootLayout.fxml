@@ -26,9 +26,9 @@
             <AnchorPane layoutX="620.0" prefHeight="130.0" prefWidth="130.0">
                <children>
                   <ImageView fx:id="profileImgView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="15.0" />
-                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="76.0" layoutY="75.0" onMouseClicked="#handleDisconnect" pickOnBounds="true" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
+                  <ImageView fx:id="decoImgView" fitHeight="40.0" fitWidth="40.0" layoutX="76.0" layoutY="75.0" onMouseClicked="#handleDisconnect" pickOnBounds="true" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
                      <image>
-                        <Image url="@../../../../resources/off.png" />
+                        <Image url="@../../../../resources/deco.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />

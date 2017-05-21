@@ -17,6 +17,8 @@ public class RootLayoutController {
 	@FXML
 	private ImageView logoImgView;
 	@FXML
+	private ImageView decoImgView;
+	@FXML
 	private ImageView profileImgView;
 	
 	private MainApp mainApp;
@@ -29,10 +31,14 @@ public class RootLayoutController {
 		try {
 			img = ImageIO.read(new FileInputStream("resources/logo.png"));
 			image = SwingFXUtils.toFXImage(img, null);
+			logoImgView.setImage(image);
+
+			img = ImageIO.read(new FileInputStream("resources/deco.png"));
+			image = SwingFXUtils.toFXImage(img, null);
+			decoImgView.setImage(image);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		logoImgView.setImage(image);
 	}
 	
 	public void setMainApp(MainApp mainApp) {

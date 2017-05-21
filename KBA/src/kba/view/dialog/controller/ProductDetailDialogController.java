@@ -10,6 +10,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -117,28 +118,9 @@ public class ProductDetailDialogController {
 		}
     }
 	
-	public void setButtonSpecific() {
-		preferenceButton.setText("Retirer des preferences");
-		preferenceButton.setOnAction(lambda->{
-			handleRemoveFromPreference();
-		});
-	}
-	
-	@FXML
-	private void handleRemoveFromPreference() {
-		//recuperation of the preference in db
-		//TODO
-						
-		//to delete when db up
-		Preference pref = mainApp.getPreference();
-		
-		if(pref != null) {
-			pref.getPreferenceList().remove(selectedProduct);
-		}
-		
-		mainApp.setPreference(pref);
-		
-		dialogStage.close();
+	public void setButtonDisable() {
+		preferenceButton.setText("Deja dans vos preferences");
+		preferenceButton.setDisable(true);
 	}
 		
 	@FXML
@@ -148,6 +130,9 @@ public class ProductDetailDialogController {
             alert.initOwner(dialogStage);
             alert.setTitle("Attention");
             alert.setHeaderText("Vous n'avez pas de panier allez en créer un !");
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("../../style/MainTheme.css").toExternalForm());
+            dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait();
 		} else {
@@ -156,6 +141,9 @@ public class ProductDetailDialogController {
 	            alert.initOwner(dialogStage);
 	            alert.setTitle("Erreur");
 	            alert.setHeaderText("Selectionnez un panier !");
+	            DialogPane dialogPane = alert.getDialogPane();
+	            dialogPane.getStylesheets().add(getClass().getResource("../../style/MainTheme.css").toExternalForm());
+	            dialogPane.getStyleClass().add("myDialog");
 	
 	            alert.showAndWait();
 			} else {
@@ -189,6 +177,9 @@ public class ProductDetailDialogController {
 	            alert.initOwner(dialogStage);
 	            alert.setTitle("Information");
 	            alert.setHeaderText("Produit deja present dans la liste");
+	            DialogPane dialogPane = alert.getDialogPane();
+	            dialogPane.getStylesheets().add(getClass().getResource("../../style/MainTheme.css").toExternalForm());
+	            dialogPane.getStyleClass().add("myDialog");
 
 	            alert.showAndWait();
 			} else {
@@ -201,8 +192,13 @@ public class ProductDetailDialogController {
 	            alert.initOwner(dialogStage);
 	            alert.setTitle("Information");
 	            alert.setHeaderText("Le Produit a ete ajouté au preferences");
+	            DialogPane dialogPane = alert.getDialogPane();
+	            dialogPane.getStylesheets().add(getClass().getResource("../../style/MainTheme.css").toExternalForm());
+	            dialogPane.getStyleClass().add("myDialog");
 
 	            alert.showAndWait();
+	            
+	            setButtonDisable();
 			}
 		} else {
 			// Show the error message.
@@ -210,6 +206,9 @@ public class ProductDetailDialogController {
             alert.initOwner(dialogStage);
             alert.setTitle("Erreur");
             alert.setHeaderText("Erreur");
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("../../style/MainTheme.css").toExternalForm());
+            dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait();
 		}

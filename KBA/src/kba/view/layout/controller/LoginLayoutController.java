@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kba.MainApp;
@@ -18,27 +19,27 @@ import kba.util.InputFieldTests;
 
 public class LoginLayoutController {
 	@FXML
-	private ImageView logoImgView;
-	@FXML
     private TextField emailField;
     @FXML
     private TextField passwordField;
+    @FXML
+	private ImageView logoImgView;
 	
 	private MainApp mainApp;
 
-	@FXML
-	private void initialize() {
-		Image image = null;
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(new FileInputStream("resources/logo.png"));
-			image = SwingFXUtils.toFXImage(img, null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		logoImgView.setImage(image);
-	}
-
+    @FXML
+    private void initialize() {
+        Image image = null;
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new FileInputStream("resources/logo.png"));
+            image = SwingFXUtils.toFXImage(img, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        logoImgView.setImage(image);
+    }
+	
 	public LoginLayoutController() {
 	}
 	
@@ -57,7 +58,10 @@ public class LoginLayoutController {
             alert.setTitle("Erreur");
             alert.setHeaderText("Certains champs sont invalides :");
             alert.setContentText(errorMessage);
-
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("../../style/MainTheme.css").toExternalForm());
+            dialogPane.getStyleClass().add("myDialog");
+            
             alert.showAndWait();
 		} else {
 			//compare with db
@@ -101,6 +105,9 @@ public class LoginLayoutController {
             alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("Validation");
             alert.setHeaderText("Votre compte a bien été créé !");
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("../../style/MainTheme.css").toExternalForm());
+            dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait();
         }

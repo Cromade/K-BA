@@ -63,6 +63,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
+                  <Button fx:id="detailButton" mnemonicParsing="false" styleClass="focus" text="Détails" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="25.0" />
                </children>
             </AnchorPane>
          </children>

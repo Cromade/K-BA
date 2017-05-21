@@ -7,6 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -17,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import kba.MainApp;
 import kba.model.Category;
+import kba.model.Preference;
 import kba.model.Product;
 
 public class ProductListLayoutController {
@@ -34,6 +37,8 @@ public class ProductListLayoutController {
     private TableColumn<Product, String> descriptionColumn;
     @FXML
     private TableColumn<Product, Double> priceColumn;
+	@FXML
+	private Button detailButton;
 
 	private MainApp mainApp;
 	List<Category> categories = new ArrayList<Category>();
@@ -54,12 +59,17 @@ public class ProductListLayoutController {
 		priceColumn.setMaxWidth(50);
 		
 		productTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, selectedProduct) -> showProductDetails(selectedProduct));
+                (observable, oldValue, selectedProduct) -> detailButton.setOnAction(lambda-> showProductDetails(selectedProduct)));
 	}
 	
 	private void showProductDetails(Product selectedProduct) {
 		if (selectedProduct != null) {
-			mainApp.showProductDetailDialog(selectedProduct, false);
+			Preference pref = mainApp.getPreference();
+			if (pref.getPreferenceList().contains(selectedProduct)) {
+				mainApp.showProductDetailDialog(selectedProduct, true);
+			} else {
+				mainApp.showProductDetailDialog(selectedProduct, false);
+			}
 		}
 	}
 
@@ -134,6 +144,9 @@ public class ProductListLayoutController {
         alert.initOwner(mainApp.getPrimaryStage());
         alert.setTitle("Erreur");
         alert.setHeaderText("Le champ de recherche est vide");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("../../style/MainTheme.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
         
         alert.showAndWait();
 	}

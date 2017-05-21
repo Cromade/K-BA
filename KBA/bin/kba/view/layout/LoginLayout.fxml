@@ -29,7 +29,7 @@
             <Label layoutX="275.0" layoutY="409.0" text="Mot de passe :" textFill="WHITE" />
             <PasswordField fx:id="passwordField" layoutX="275.0" layoutY="425.0" prefWidth="200.0" />
             <Button layoutX="275.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleNewUser" styleClass="focus" text="Inscription" />
-            <Button layoutX="383.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleConnect" styleClass="focus" text="Connection" />
+            <Button layoutX="383.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleConnect" styleClass="focus" text="Connexion" />
          </children>
       </Pane>
    </children>

@@ -2,6 +2,8 @@ package kba.view.layout.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,6 +28,10 @@ public class PreferenceManagementLayoutController {
     private TableColumn<Product, String> descriptionColumn;
     @FXML
     private TableColumn<Product, Double> priceColumn;
+	@FXML
+	private Button detailButton;
+	@FXML
+	private Button removeButton;
 
 	private MainApp mainApp;
 	
@@ -43,21 +49,28 @@ public class PreferenceManagementLayoutController {
 		
 		// listener
 		productTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, selectedProduct) -> showProductDetails(selectedProduct));
+				(observable, oldValue, selectedProduct) -> setButton(selectedProduct));
 	}
 	
+	private void setButton(Product selectedProduct) {
+		detailButton.setOnAction(lambda->{
+			if (selectedProduct != null) {
+				mainApp.showProductDetailDialog(selectedProduct, true);
+			}
+		});
+		removeButton.setOnAction(lambda->{
+			if (selectedProduct != null) {
+				removeFromTable(selectedProduct);
+			}
+		});
+	}
+
 	public PreferenceManagementLayoutController() {
 	}
 	
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
-	
-	private void showProductDetails(Product selectedProduct) {
-		if (selectedProduct != null) {
-			mainApp.showProductDetailDialog(selectedProduct, true);
-		}
-	}
 	
 	public void setDataInTable() {
 		//get the preference of the user in db
@@ -69,6 +82,28 @@ public class PreferenceManagementLayoutController {
 		
 		// Add observable list data to the table
         productTable.setItems(preferences.getPreferenceList());
+	}
+	
+	public void removeFromTable(Product productToDelete) {
+		
+        int selectedIndex = productTable.getSelectionModel().getSelectedIndex();
+		productTable.getItems().remove(selectedIndex);
+		
+		//recuperation of the preference in db
+		//TODO
+			
+		//to delete when db up
+		Preference preference = mainApp.getPreference();
+
+		if(preference != null) {
+			preference.getPreferenceList().remove(productToDelete);
+		}
+		
+		//update in db
+		//TODO
+		
+		//To remove
+		mainApp.setPreference(preference);
 	}
 	
 	@FXML
@@ -88,6 +123,9 @@ public class PreferenceManagementLayoutController {
         alert.initOwner(mainApp.getPrimaryStage());
         alert.setTitle("Erreur");
         alert.setHeaderText("Le champ de recherche est vide");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("../../style/MainTheme.css").toExternalForm());
+        dialogPane.getStyleClass().add("myDialog");
         
         alert.showAndWait();
 	}

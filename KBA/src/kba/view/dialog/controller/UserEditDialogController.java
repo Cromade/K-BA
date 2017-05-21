@@ -2,6 +2,7 @@ package kba.view.dialog.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -71,6 +72,9 @@ public class UserEditDialogController {
             alert.setTitle("Erreur");
             alert.setHeaderText("Certains champs sont invalides :");
             alert.setContentText(errorMessage);
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("../../style/MainTheme.css").toExternalForm());
+            dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait();
         } else {

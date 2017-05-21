@@ -96,3 +96,11 @@
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: #01b2a8;
 }
+
+.myDialog{
+    -fx-background-color: #01b2a8;
+    -fx-text-fill: #ff5801;
+}
+.myDialog:header *.header-panel{
+    -fx-background-color: #ff5801;
+}
