@@ -58,7 +58,6 @@ public class RootLayoutController {
 		if (connectedUser != null) {
             profileImgView.setImage(connectedUser.getProfileImg());
         } else {
-        	System.out.println("nop");
             Image image = null;
 			BufferedImage img = null;
 			try {

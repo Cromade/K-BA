@@ -3,10 +3,7 @@ package kba.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -19,6 +16,10 @@ public class Product {
 	private List<Category> categories;
 	private DoubleProperty price;
 	private ImageView productImg;
+
+	//for the basket management
+	private LongProperty quantity;
+	private DoubleProperty total;
 	
 	public Product(Long id, String name, String manufacturer, String description, Double price) {
 		this.id = id;
@@ -94,7 +95,7 @@ public class Product {
 	}
 	
 	public DoubleProperty priceProperty() {
-		if (price == null) price = new SimpleDoubleProperty(this, "price");
+		if (price == null) price = new SimpleDoubleProperty(this, "0");
         return price; 
 	}
 
@@ -107,5 +108,37 @@ public class Product {
 		this.productImg.setFitHeight(60);
 		this.productImg.setFitWidth(60);
 	}
-	
+
+	// for basket detail
+
+	public void addQuantity(Long quantityToAdd) {
+		this.quantity.set(quantity.getValue() + quantityToAdd);
+        total.setValue(quantity.longValue() * price.getValue());
+	}
+
+    public void removeQuantity(Long quantityToRemove) {
+	    if (quantityToRemove.longValue() > quantity.longValue()) {
+	        return;
+        }
+        this.quantity.set(quantity.getValue() - quantityToRemove);
+	    total.setValue(quantity.longValue() * price.getValue());
+    }
+
+	public Long getQuantity() {
+		return quantity.get();
+	}
+
+	public LongProperty quantityProperty() {
+	    if (quantity == null) quantity = new SimpleLongProperty(this, "0");
+	    return quantity;
+    }
+
+    public Double getTotal() {
+        return total.get();
+    }
+
+    public DoubleProperty totalProperty() {
+        if (total == null) total = new SimpleDoubleProperty(this, "0");
+        return total;
+    }
 }

@@ -42,6 +42,7 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
     
     private User connectedUser;
+    private Group defaultGroup;
 
     //some data do delete when db is up
     private ObservableList<Basket> basketData = FXCollections.observableArrayList();
@@ -109,6 +110,23 @@ public class MainApp extends Application {
 	    	productData.add(product4);
 	    	productData.add(product5);
 	    	productData.add(product6);
+
+            User user1 = new User("john", "john", "johnjohn", "jhn@jhn.fr", "thisisapass", "05/05/2015", "3rue truc", "ville truc", "75000");
+            User user2 = new User("johana", "johana", "johanajohana", "jhna@jhna.fr", "thisisapass", "05/05/2015", "3rue truc", "ville truc", "75000");
+            userData.add(user1);
+            userData.add(user2);
+
+            img = ImageIO.read(new FileInputStream("resources/user.png"));
+            image = SwingFXUtils.toFXImage(img, null);
+            defaultGroup = new Group("Default", connectedUser, image);
+
+            Group group2 = new Group("group2", userData, image);
+            group2.addUserToGroup(user1);
+            group2.addUserToGroup(user2);
+            group2.addUserToGroup(connectedUser);
+
+            groupData.add(defaultGroup);
+            groupData.add(group2);
 	    	
 	    	Basket basket1 = new Basket("basket1");
 	    	basket1.addProduct(product1,1);
@@ -118,14 +136,15 @@ public class MainApp extends Application {
 	    	Basket basket2 = new Basket("basket2");
 	    	basket2.addProduct(product4,5);
 	    	Basket basket3 = new Basket("basket3");
+            basket1.setGroup(defaultGroup);
+            basket2.setGroup(defaultGroup);
+            basket3.setGroup(group2);
 	    	basketData.add(basket1);
 	    	basketData.add(basket2);
 	    	basketData.add(basket3);
 	    	
-	    	User user1 = new User("john", "john", "johnjohn", "jhn@jhn.fr", "thisisapass", "05/05/2015", "3rue truc", "ville truc", "75000");
-	    	User user2 = new User("johana", "johana", "johanajohana", "jhna@jhna.fr", "thisisapass", "05/05/2015", "3rue truc", "ville truc", "75000");
-	    	userData.add(user1);
-	    	userData.add(user2);
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -315,6 +334,7 @@ public class MainApp extends Application {
 	        // Give the controller access to the main app.
 	        BasketManagementLayoutController coreController = loader.getController();
 	        coreController.setMainApp(this);
+	        coreController.setDataInTable();
 	        
 	        //set the menu
 	        LeftMenuLayoutController menuController = menuLoader.getController();
@@ -508,6 +528,10 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+
+
+    public void showBasketDetailDialog(Basket selectedBasket) {
+    }
     
     /**
      * Returns the main stage.
@@ -524,4 +548,5 @@ public class MainApp extends Application {
 	public static void main(String[] args) {
         launch(args);
     }
+
 }
