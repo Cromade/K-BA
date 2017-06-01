@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../style/MainTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.dialog.PluginDialogController">
+   <children>
+      <Pane layoutX="100.0" layoutY="148.0" prefHeight="400.0" prefWidth="600.0" styleClass="root-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane layoutX="15.0" layoutY="15.0" prefHeight="50.0" prefWidth="570.0" styleClass="focus-background">
+               <children>
+                  <Button layoutX="-4.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleReturn" rotate="-90.0" text="Retour" />
+                  <Label layoutX="201.0" layoutY="16.0" text="Gestion des plugins" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="446.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleMorePlugin" prefWidth="110.0" text="Plus de plugin" />
+               </children>
+            </Pane>
+            <Pane layoutX="15.0" layoutY="80.0" prefHeight="305.0" prefWidth="570.0" styleClass="basic-background">
+               <children>
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="305.0" prefWidth="570.0" styleClass="basic-background">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="570.0" styleClass="basic-background" stylesheets="@../../style/MainTheme.css" />
+                    </content>
+                  </ScrollPane>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,115 @@
+.root-background {
+	-fx-background-color: #414042;
+}
+
+.topmenu-background {
+	-fx-background-color: #11857e;
+}
+
+.leftmenu-background {
+	-fx-background-color: #01b2a8;
+}
+
+.focus-background {
+	-fx-background-color: #ff5801;
+}
+
+.basic-background {
+	-fx-background-color: #b7eeea;
+}
+
+.menu-item .label {
+    -fx-text-fill: white;
+}
+
+.menu-item:focused {
+     -fx-background-color: #159e95;
+}
+
+.context-menu {
+    -fx-background-color: #11857e;
+}
+
+.cb {
+    -fx-background-radius: 0;
+	-fx-background-color: #11857e;
+	-fx-effect: dropshadow(one-pass-box , black , 8 , 0.0 , 2 , 0 ); 
+	-fx-cursor: hand;
+}
+
+.choice-box .label {
+     -fx-text-fill: white; 
+}
+
+.button {
+    -fx-background-radius: 0;
+    -fx-background-color: #11857e;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(one-pass-box , black , 8 , 0.0 , 2 , 0 ); 
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #159e95;
+}
+
+.button.focus {
+	-fx-background-color: #ff5801;
+}
+
+.button.focus-top {
+    -fx-background-color: #ff5801;
+    -fx-effect : null;
+}
+
+.button.focus:hover {
+	-fx-background-color: #ff7a33;
+}
+
+.button.focus-top:hover {
+    -fx-background-color: #ff7a33;
+}
+
+.image-view.disconnect:hover {
+	-fx-background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))
+}
+
+.table-view {
+    -fx-base: #b7eeea;
+    -fx-control-inner-background: #b7eeea;
+    -fx-background-color: #b7eeea;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 20;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color: 
+        transparent
+        transparent
+        derive(-fx-base, 80%) 
+        transparent;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 10px;
+    -fx-text-fill: black;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: #01b2a8;
+}
+
+.myDialog{
+    -fx-background-color: #01b2a8;
+    -fx-text-fill: #ff5801;
+}
+.myDialog:header *.header-panel{
+    -fx-background-color: #ff5801;
+}
