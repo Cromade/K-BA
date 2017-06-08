@@ -1,12 +1,19 @@
 package kba;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.imageio.ImageIO;
 
+import javafx.application.Platform;
 import kba.model.*;
+import kba.util.PluginParser;
+import kba.util.ScanDirectory;
+import kba.util.ScanDirectoryCase;
 import kba.view.dialog.*;
 import kba.view.layout.AccountLayoutController;
 import kba.view.layout.BasketManagementLayoutController;
@@ -36,6 +43,8 @@ public class MainApp extends Application {
     
     private User connectedUser;
     private Group defaultGroup;
+    private Map<String, PluginHolder> pluginList = new ConcurrentHashMap<>();
+    private DataRepository dataRepository;
 
     //some data do delete when db is up
     private ObservableList<Basket> basketData = FXCollections.observableArrayList();
@@ -191,6 +200,7 @@ public class MainApp extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
+        initDataRepository();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("K-BA");
 
@@ -244,7 +254,57 @@ public class MainApp extends Application {
 	        //set the current user into the layout and call the refreshRootImg
             controller.setConnectedUser(connectedUser);
             controller.setUserProfileImg();
+
+            /**
+             * Plugin detection first launch + thread
+             */
+            pluginList = PluginParser.pluginParser();
+            controller.addButton(pluginList);
             
+            ScanDirectory.scanDirectory(new File("plugin"), (d,n) -> n.toLowerCase().endsWith(".jar"),
+                    new ScanDirectoryCase() {
+                        @Override
+                        public void pluginFileAdded(File newFile) {
+                            Platform.runLater(() -> {
+                                try {
+                                    PluginParser.analyzeJar(newFile, pluginList);
+                                    controller.addButton(pluginList);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void pluginFileRemoved(File removedFile) {
+                            Platform.runLater(() -> {
+                                Iterator it = pluginList.keySet().iterator();
+                                while (it.hasNext()){
+                                    String key = it.next().toString();
+                                    PluginHolder value = pluginList.get(key);
+
+                                    if (value.equals(removedFile)) {
+                                        pluginList.remove(key);
+                                        break;
+                                    }
+                                }
+                                controller.addButton(pluginList);
+                            });
+                        }
+
+                        @Override
+                        public void pluginFileUpdated(File updatedFile) {
+                            Platform.runLater(() -> {
+                                try {
+                                    PluginParser.analyzeJar(updatedFile, pluginList);
+                                    controller.addButton(pluginList);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        }
+            });
+
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -260,7 +320,7 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/views/layouts/MainLayout.fxml"));
             AnchorPane mainLayout = loader.load();
-            
+
             //Load mainMenu
             FXMLLoader menuLoader = new FXMLLoader();
             menuLoader.setLocation(MainApp.class.getResource("/views/menus/MainLeftMenuLayout.fxml"));
@@ -584,6 +644,8 @@ public class MainApp extends Application {
             
             PluginDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
+            controller.setMainApp(this);
+            controller.setDataInTable();
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -670,12 +732,39 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+
+    /**
+     *  Set the data Repository to give to the plugins
+     */
+    private void initDataRepository() {
+        this.dataRepository = new DataRepository() {
+
+            private List<String> data = new ArrayList<>(Arrays.asList("a", "b", "c"));
+
+            @Override
+            public List<String> getProperties() {
+                return Collections.unmodifiableList(data);
+            }
+
+            @Override
+            public void addProperty(String newProp) {
+                data.add(newProp);
+            }
+        };
+    }
     
     /**
      * Returns the main stage.
      */
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    /**
+     * Returns the data repository.
+     */
+    public DataRepository getDataRepository() {
+        return dataRepository;
     }
 
     /**
@@ -691,5 +780,9 @@ public class MainApp extends Application {
 
     public BorderPane getRootLayout() {
         return rootLayout;
+    }
+
+    public Map<String, PluginHolder> getPluginList() {
+        return pluginList;
     }
 }

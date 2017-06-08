@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import javax.imageio.ImageIO;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -14,6 +15,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import kba.MainApp;
 import kba.model.User;
@@ -40,6 +43,16 @@ public class LoginLayoutController {
             e.printStackTrace();
         }
         logoImgView.setImage(image);
+
+        passwordField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                handleConnect();
+            }
+        });
+
+        //TO DELETE
+        emailField.setText("email@email.com");
+        passwordField.setText("qzsedrftgyhuji");
     }
 	
 	public LoginLayoutController() {
@@ -48,6 +61,7 @@ public class LoginLayoutController {
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
+
 	
 	@FXML
 	private void handleConnect() {

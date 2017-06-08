@@ -1,3 +1,5 @@
+package kba;
+
 import java.util.List;
 
 public interface DataRepository {

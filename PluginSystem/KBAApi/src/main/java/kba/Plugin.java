@@ -1,3 +1,5 @@
+package kba;
+
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -10,6 +12,9 @@ public @interface Plugin {
 
 	// id of the plugin
 	public String name();
+
+	// creator of the plugin
+	public String creatorName();
 	
 	// plugin version
 	public int version();

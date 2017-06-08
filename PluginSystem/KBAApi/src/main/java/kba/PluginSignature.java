@@ -1,3 +1,5 @@
+package kba;
+
 public interface PluginSignature {
 
 	public void init(DataRepository repository);

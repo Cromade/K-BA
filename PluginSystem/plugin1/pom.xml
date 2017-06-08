@@ -40,7 +40,7 @@
                             <mainClass>Main</mainClass>
                         </manifest>
                         <manifestEntries>
-                            <Plugin-Main-Class>Plugin1</Plugin-Main-Class>
+                            <Plugin-Main-Class>kba.Plugin1</Plugin-Main-Class>
                         </manifestEntries>
                     </archive>
                 </configuration>

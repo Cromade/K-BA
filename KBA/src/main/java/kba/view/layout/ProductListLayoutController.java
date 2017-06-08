@@ -43,9 +43,6 @@ public class ProductListLayoutController {
 	private MainApp mainApp;
 	List<Category> categories = new ArrayList<Category>();
 	
-	public ProductListLayoutController() {
-	}
-	
 	@FXML
 	private void initialize() {
 
