@@ -1,20 +1,24 @@
 package kba.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class User {
 
 	private Long id;
 	private String lastname;
 	private String firstname;
-	private String username;
-	private String email;
+	private StringProperty username;
+	private StringProperty email;
 	private String password;
 	private String birthday;
 	private String address;
 	private String city;
 	private String postalCode;
 	private Image profileImg;
+	private ImageView imageUser;
 	private Boolean isPremium;
 	
 	//Default constructor
@@ -22,8 +26,8 @@ public class User {
 		this.id = null;
 		this.lastname = null;
 		this.firstname = null;
-		this.username = null;
-		this.email = null;
+		this.username = new SimpleStringProperty();
+		this.email = new SimpleStringProperty();
 		this.password = null;
 		this.birthday = null;
 		this.address = null;
@@ -32,12 +36,25 @@ public class User {
 		this.isPremium = null;
 	}
 
+	public User(User user) {
+		this.lastname = user.getLastname();
+		this.firstname = user.getFirstname();
+		this.username = new SimpleStringProperty(user.getUsername());
+		this.email = new SimpleStringProperty(user.getEmail());
+		this.password = user.getPassword();
+		this.birthday = user.getBirthday();
+		this.address = user.getAddress();
+		this.city = user.getCity();
+		this.postalCode = user.getPostalCode();
+		this.isPremium = user.getIsPremium();
+	}
+
 	public User(String lastname, String firstname, String username, String email,
 			String password, String birthday, String address, String city, String postalCode) {
 		this.lastname = lastname;
 		this.firstname = firstname;
-		this.username = username;
-		this.email = email;
+		this.username = new SimpleStringProperty(username);
+		this.email = new SimpleStringProperty(email);
 		this.password = password;
 		this.birthday = birthday;
 		this.address = address;
@@ -70,20 +87,30 @@ public class User {
 		this.firstname = firstname;
 	}
 
+    public StringProperty usernameProperty() {
+        if (username == null) username = new SimpleStringProperty(this, "username");
+        return username;
+    }
+
 	public String getUsername() {
-		return username;
+		return username.get();
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.username.set(username);
 	}
 
-	public String getEmail() {
+	public StringProperty emailProperty() {
+		if (email == null) email = new SimpleStringProperty(this, "email");
 		return email;
 	}
 
+	public String getEmail() {
+		return email.get();
+	}
+
 	public void setEmail(String email) {
-		this.email = email;
+		this.email.set(email);
 	}
 
 	public String getPassword() {
@@ -130,8 +157,15 @@ public class User {
 		return profileImg;
 	}
 
+    public ImageView getImageUser() {
+        return imageUser;
+    }
+
 	public void setProfileImg(Image img) {
 		this.profileImg = img;
+        this.imageUser = new ImageView(img);
+        this.imageUser.setFitHeight(60);
+        this.imageUser.setFitWidth(60);
 	}
 
 	public Boolean getIsPremium() {
@@ -141,5 +175,5 @@ public class User {
 	public void setIsPremium(Boolean isPremium) {
 		this.isPremium = isPremium;
 	}
-	
+
 }

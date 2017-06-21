@@ -1,38 +1,56 @@
 package kba.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Group {
 	
 	private StringProperty name;
-	private List<User> users;
-	private Image imageGroup;
+	private ObservableList<User> users = FXCollections.observableArrayList();
+	private ImageView imageGroup;
+	private User creator;
 
-	public Group(String name, Image imageGroup) {
-		this.name = new SimpleStringProperty(name);
-		this.users = new ArrayList<User>();
-		this.imageGroup = imageGroup;
-	}
-
-    public Group(String name, User user, Image imageGroup) {
-        this.name = new SimpleStringProperty(name);
-        this.users = new ArrayList<User>();
-        users.add(user);
-        this.imageGroup = imageGroup;
+    public Group() {
+        this.name = new SimpleStringProperty();
+        this.imageGroup = new ImageView();
+        this.imageGroup.setFitHeight(60);
+        this.imageGroup.setFitWidth(60);
+        this.creator = new User();
     }
 
-	public Group(String name, List<User> users, Image imageGroup) {
+	public Group(String name, Image imageGroup, User creator) {
 		this.name = new SimpleStringProperty(name);
-		this.users = users;
-		this.imageGroup = imageGroup;
+		this.imageGroup = new ImageView(imageGroup);
+		this.imageGroup.setFitHeight(60);
+		this.imageGroup.setFitWidth(60);
+		this.creator = new User(creator);
 	}
 
-	public String getName() {
+    public Group(String name, User user, Image imageGroup, User creator) {
+        this.name = new SimpleStringProperty(name);
+        users.add(user);
+		this.imageGroup = new ImageView(imageGroup);
+		this.imageGroup.setFitHeight(60);
+		this.imageGroup.setFitWidth(60);
+		this.creator = new User(creator);
+    }
+
+	public Group(String name, List<User> users, Image imageGroup, User creator) {
+		this.name = new SimpleStringProperty(name);
+		this.users = (ObservableList<User>) users;
+		this.imageGroup = new ImageView(imageGroup);
+		this.imageGroup.setFitHeight(60);
+		this.imageGroup.setFitWidth(60);
+		this.creator = new User(creator);
+	}
+
+    public String getName() {
 		return name.get();
 	}
 
@@ -45,21 +63,31 @@ public class Group {
 		return name;
 	}
 
-	public List<User> getUsers() {
+	public ObservableList<User> getUsers() {
 		return users;
 	}
 
-	public Image getImageGroup() {
+	public ImageView getImageGroup() {
 		return imageGroup;
 	}
 
 	public void setImageGroup(Image imageGroup) {
-		this.imageGroup = imageGroup;
+		this.imageGroup = new ImageView(imageGroup);
+		this.imageGroup.setFitHeight(60);
+		this.imageGroup.setFitWidth(60);
 	}
 	
 	public void addUserToGroup(User user) {
 		users.add(user);
 	}
+
+	public User getCreator() {
+		return creator;
+	}
+
+	public void setCreator(User user) {
+        this.creator = user;
+    }
 
 	public String toString() {
 		return name.getValue();

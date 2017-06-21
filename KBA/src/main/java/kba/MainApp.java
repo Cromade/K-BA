@@ -65,9 +65,9 @@ public class MainApp extends Application {
     	categoriesData.add(cat1);
     	categoriesData.add(cat2);
     	categoriesData.add(cat3);
-    	
-    	Image image = null;
-		BufferedImage img = null;
+
+    	Image image;
+		BufferedImage img;
 		try {
 		    img = ImageIO.read(new FileInputStream("resources/stylo.jpg"));
 		    image = SwingFXUtils.toFXImage(img, null);
@@ -113,18 +113,37 @@ public class MainApp extends Application {
 	    	productData.add(product5);
 	    	productData.add(product6);
 
+	    	connectedUser = new User();
+	    	connectedUser.setId(123456L);
+            connectedUser.setLastname("Jean");
+            connectedUser.setFirstname("Person");
+            connectedUser.setUsername("Mr nobody");
+            connectedUser.setEmail("email@email.fr");
+            connectedUser.setPassword("password");
+            connectedUser.setBirthday("06/09/1994");
+            connectedUser.setAddress("5 rue de truc");
+            connectedUser.setCity("cityville");
+            connectedUser.setPostalCode("75000");
+            img = ImageIO.read(new FileInputStream("resources/usertmp.jpg"));
+            image = SwingFXUtils.toFXImage(img, null);
+            connectedUser.setProfileImg(image);
+
+            img = ImageIO.read(new FileInputStream("resources/user.png"));
+            image = SwingFXUtils.toFXImage(img, null);
             User user1 = new User("john", "john", "johnjohn", "jhn@jhn.fr", "thisisapass", "05/05/2015", "3rue truc", "ville truc", "75000");
+            user1.setProfileImg(image);
+            user1.setId(789456L);
             User user2 = new User("johana", "johana", "johanajohana", "jhna@jhna.fr", "thisisapass", "05/05/2015", "3rue truc", "ville truc", "75000");
+            user2.setProfileImg(image);
+            user2.setId(321879L);
             userData.add(user1);
             userData.add(user2);
 
             img = ImageIO.read(new FileInputStream("resources/user.png"));
             image = SwingFXUtils.toFXImage(img, null);
-            defaultGroup = new Group("Aucun", connectedUser, image);
+            defaultGroup = new Group("Aucun", connectedUser, image, user1);
 
-            Group group2 = new Group("Famille", userData, image);
-            group2.addUserToGroup(user1);
-            group2.addUserToGroup(user2);
+            Group group2 = new Group("Famille", userData, image, user2);
             group2.addUserToGroup(connectedUser);
 
             groupData.add(defaultGroup);
@@ -335,6 +354,7 @@ public class MainApp extends Application {
             MainLayoutController coreController = loader.getController();
             coreController.setMainApp(this);
             coreController.setFavouriteBasketTotal();
+            coreController.setRecentGroup();
 
 	        //set the menu
             LeftMenuLayoutController menuController = menuLoader.getController();
@@ -509,6 +529,8 @@ public class MainApp extends Application {
 	        // Give the controller access to the main app.
 	        GroupManagementLayoutController coreController = loader.getController();
 	        coreController.setMainApp(this);
+	        coreController.setDataInTable();
+	        coreController.setConnectedUser(connectedUser);
 
 	        //set the menu
 	        LeftMenuLayoutController menuController = menuLoader.getController();
@@ -553,9 +575,49 @@ public class MainApp extends Application {
     }
 
     /**
+     * Show the Group Edit Dialog
+     */
+    public boolean showGroupEditDialog(Group group, boolean isNew) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/views/dialogs/GroupEditDialog.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            if (isNew) {
+                dialogStage.setTitle("Creation d'un groupe");
+            } else {
+                dialogStage.setTitle("Modification d'un groupe");
+            }
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the user into the controller.
+            GroupEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setGroupDetails(group);
+            controller.setConnectedUser(connectedUser);
+            controller.setIsNew(isNew);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * Show the Product Detail Dialog
      */
-    public boolean showProductDetailDialog(Product product, boolean isPreference) {
+    public void showProductDetailDialog(Product product, boolean isPreference) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -586,13 +648,12 @@ public class MainApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-		return false;
     }
 
     /**
      * Show the Product Detail Dialog
      */
-    public boolean showBasketProductDetailDialog(BasketProduct product, Basket basket) {
+    public void showBasketProductDetailDialog(BasketProduct product, Basket basket) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -621,7 +682,6 @@ public class MainApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
     /**
@@ -724,6 +784,101 @@ public class MainApp extends Application {
                 newBasket.setGroup(defaultGroup);
                 controller.setBasketData(newBasket);
             }
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Show the Member Management Dialog
+     */
+    public void showMemberManagementDialog(Group selectedGroup) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/views/dialogs/MemberManagementDialog.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Gestion des membres du groupe "+selectedGroup.getName());
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            MemberManagementDialogController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setDialogStage(dialogStage);
+            controller.setDataInTableByGroup(selectedGroup);
+            controller.setConnectedUser(connectedUser);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Show the User Search Dialog
+     */
+    public void showUserSearchDialog(Group selectedGroup) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/views/dialogs/UserSearchDialog.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Ajout utilisateur dans : "+selectedGroup.getName());
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            UserSearchDialogController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setDialogStage(dialogStage);
+            controller.setReferencedGroup(selectedGroup);
+            controller.setConnectedUser(connectedUser);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Show the User Detail Dialog
+     */
+    public void showUserDetailDialog(User selectedUser) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/views/dialogs/UserDetailDialog.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Detail Utilisateur");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the user into the controller.
+            UserDetailDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setUser(selectedUser);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();

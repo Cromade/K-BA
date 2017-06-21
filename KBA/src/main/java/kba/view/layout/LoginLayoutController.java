@@ -86,11 +86,12 @@ public class LoginLayoutController {
 			//TODO
 			
 			//some default data to delete when db connection will be made
+            connectedUser.setId(123456L);
 			connectedUser.setLastname("Jean");
 			connectedUser.setFirstname("Person");
 			connectedUser.setUsername("Mr nobody");
-			connectedUser.setEmail(emailField.getText());
-			connectedUser.setPassword(passwordField.getText());
+            connectedUser.setEmail("email@email.fr");
+            connectedUser.setPassword("password");
 			connectedUser.setBirthday("06/09/1994");
 			connectedUser.setAddress("5 rue de truc");
 			connectedUser.setCity("cityville");

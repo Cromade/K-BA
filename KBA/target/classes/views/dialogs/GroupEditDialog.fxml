@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="270.0" prefWidth="400.0" styleClass="leftmenu-background" stylesheets="@../../style/MainTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.dialog.GroupEditDialogController">
+   <children>
+      <GridPane layoutX="10.0" layoutY="171.0" prefHeight="40.0" prefWidth="380.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="175.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="nameField" GridPane.columnIndex="1" />
+            <Label text="Nom du groupe" textFill="WHITE" />
+         </children>
+      </GridPane>
+      <Pane prefHeight="150.0" prefWidth="150.0" styleClass="topmenu-background" AnchorPane.leftAnchor="115.0" AnchorPane.topAnchor="15.0">
+         <children>
+            <ImageView fx:id="groupImgView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../resources/user.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <ButtonBar layoutX="175.0" layoutY="215.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="220.0">
+        <buttons>
+          <Button mnemonicParsing="false" onAction="#handleOk" styleClass="focus" text="OK" />
+            <Button mnemonicParsing="false" onAction="#handleCancel" text="Annuler" />
+        </buttons>
+      </ButtonBar>
+      <Button layoutX="203.0" layoutY="77.0" mnemonicParsing="false" onAction="#handleChangeImage" prefWidth="150.0" rotate="-90.0" styleClass="focus-top" text="Changer d'image" AnchorPane.rightAnchor="47.0" />
+   </children>
+</AnchorPane>
