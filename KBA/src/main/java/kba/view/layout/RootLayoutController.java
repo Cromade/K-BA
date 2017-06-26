@@ -2,6 +2,7 @@ package kba.view.layout;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -87,20 +88,9 @@ public class RootLayoutController {
             temp.setMaxSize(100, 26);
             temp.setId(key);
             temp.setOnAction(lambda -> {
-                PluginSignature plugin = null;
-                try {
-                    plugin = value.pluginClass.newInstance();
-                    plugin.init(mainApp.getDataRepository());
-                    System.out.println(value.pluginClass.getMethod("testPlugin").invoke(plugin));
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                PluginSignature plugin;
+                plugin = value.getPlugin();
+				plugin.run();
             });
             buttonList.add(temp);
 		    gridPane.add(temp, 0, index--);
@@ -108,7 +98,6 @@ public class RootLayoutController {
             if (index == 0) {
                 break;
             }
-            index--;
         }
 	}
 	

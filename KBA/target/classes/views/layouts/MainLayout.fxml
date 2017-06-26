@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../style/MainTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.layout.MainLayoutController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.layout.MainLayoutController">
    <children>
       <Pane prefHeight="400.0" prefWidth="600.0" styleClass="root-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -21,7 +21,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                <children>
-                  <GridPane layoutX="10.0" layoutY="10.0" prefHeight="55.0" prefWidth="255.0">
+                  <GridPane layoutX="7.0" layoutY="10.0" prefHeight="55.0" prefWidth="257.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="134.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="91.0" />
@@ -63,14 +63,6 @@
                   </GridPane>
                </children>
             </Pane>
-            <Pane layoutX="310.0" layoutY="15.0" prefHeight="370.0" prefWidth="275.0" styleClass="basic-background">
-               <children>
-                  <Label layoutX="14.0" layoutY="14.0" text="Rappels Produits :">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                  </Label>
-               </children></Pane>
             <AnchorPane layoutX="15.0" layoutY="105.0" prefHeight="280.0" prefWidth="275.0" styleClass="basic-background">
                <children>
                   <Label layoutX="14.0" layoutY="14.0" text="Groupes récents :" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -88,6 +80,15 @@
                      </columnResizePolicy>
                   </TableView>
                   <Button mnemonicParsing="false" onAction="#handleChangeToGroupManagement" styleClass="focus" text="Plus de groupes..." AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="305.0" layoutY="15.0" prefHeight="370.0" prefWidth="280.0" styleClass="basic-background">
+               <children>
+                  <Label text="Rappels Produits :" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>

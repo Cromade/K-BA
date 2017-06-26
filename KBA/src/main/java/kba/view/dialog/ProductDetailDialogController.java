@@ -60,6 +60,7 @@ public class ProductDetailDialogController {
 		numberChoiceBox.getItems().add(10);
 		numberChoiceBox.setValue(1);
 	}
+
 	public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
@@ -125,7 +126,7 @@ public class ProductDetailDialogController {
             alert.setTitle("Attention");
             alert.setHeaderText("Vous n'avez pas de panier allez en créer un !");
             DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+            dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
             dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait();
@@ -136,7 +137,7 @@ public class ProductDetailDialogController {
 	            alert.setTitle("Erreur");
 	            alert.setHeaderText("Selectionnez un panier !");
 	            DialogPane dialogPane = alert.getDialogPane();
-	            dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+	            dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
 	            dialogPane.getStyleClass().add("myDialog");
 	
 	            alert.showAndWait();
@@ -172,7 +173,7 @@ public class ProductDetailDialogController {
 	            alert.setTitle("Information");
 	            alert.setHeaderText("Produit deja present dans la liste");
 	            DialogPane dialogPane = alert.getDialogPane();
-	            dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+	            dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
 	            dialogPane.getStyleClass().add("myDialog");
 
 	            alert.showAndWait();
@@ -187,7 +188,7 @@ public class ProductDetailDialogController {
 	            alert.setTitle("Information");
 	            alert.setHeaderText("Le Produit a ete ajouté au preferences");
 	            DialogPane dialogPane = alert.getDialogPane();
-	            dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+	            dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
 	            dialogPane.getStyleClass().add("myDialog");
 
 	            alert.showAndWait();
@@ -201,7 +202,7 @@ public class ProductDetailDialogController {
             alert.setTitle("Erreur");
             alert.setHeaderText("Erreur");
             DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+            dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
             dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait();

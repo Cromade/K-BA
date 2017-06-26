@@ -1,0 +1,4 @@
+themePlugin/views/ThemeSelectorDialogController.class
+themePlugin/utils/InitThemes.class
+themePlugin/model/CssThemeFile.class
+themePlugin/ThemePlugin.class

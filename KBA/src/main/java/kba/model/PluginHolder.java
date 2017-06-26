@@ -12,6 +12,7 @@ public class PluginHolder {
     public StringProperty name;
     public String jarFile;
     public Class<? extends PluginSignature> pluginClass;
+    private PluginSignature plugin;
 
     private StringProperty autor;
     private IntegerProperty pluginVersion;
@@ -47,5 +48,13 @@ public class PluginHolder {
     public IntegerProperty requireVersionProperty() {
         if (requireVersion == null) requireVersion = new SimpleIntegerProperty(this, "1");
         return requireVersion;
+    }
+
+    public void setPlugin(PluginSignature plugin) {
+        this.plugin = plugin;
+    }
+
+    public PluginSignature getPlugin() {
+        return plugin;
     }
 }

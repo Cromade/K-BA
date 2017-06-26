@@ -4,6 +4,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -45,6 +48,9 @@ public class MainApp extends Application {
     private Group defaultGroup;
     private Map<String, PluginHolder> pluginList = new ConcurrentHashMap<>();
     private DataRepository dataRepository;
+    private File defaultCss;
+    private File currentCss;
+    private boolean isStart;
 
     //some data do delete when db is up
     private ObservableList<Basket> basketData = FXCollections.observableArrayList();
@@ -219,9 +225,23 @@ public class MainApp extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
+        InputStream inputStream = getClass().getResourceAsStream("/style/MainTheme.css");
+        try {
+            File tempDefaultCss = File.createTempFile("javafx_stylesheet", "");
+            tempDefaultCss.deleteOnExit();
+            Files.copy(inputStream, tempDefaultCss.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            defaultCss = tempDefaultCss;
+            currentCss = tempDefaultCss;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         initDataRepository();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("K-BA");
+        this.isStart = true;
+
+        //Plugin detection first launch
+        pluginList = PluginParser.pluginParser(dataRepository);
 
         initLoginLayout();
     }
@@ -238,6 +258,7 @@ public class MainApp extends Application {
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(loginLayout);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             
@@ -263,6 +284,7 @@ public class MainApp extends Application {
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             
@@ -273,20 +295,16 @@ public class MainApp extends Application {
 	        //set the current user into the layout and call the refreshRootImg
             controller.setConnectedUser(connectedUser);
             controller.setUserProfileImg();
-
-            /**
-             * Plugin detection first launch + thread
-             */
-            pluginList = PluginParser.pluginParser();
             controller.addButton(pluginList);
-            
-            ScanDirectory.scanDirectory(new File("plugin"), (d,n) -> n.toLowerCase().endsWith(".jar"),
+
+            //Plugin detection thread
+            ScanDirectory.scanDirectory(new File(new File(System.getProperty("user.home")), "KBA/Plugin"), (d,n) -> n.toLowerCase().endsWith(".jar"),
                     new ScanDirectoryCase() {
                         @Override
                         public void pluginFileAdded(File newFile) {
                             Platform.runLater(() -> {
                                 try {
-                                    PluginParser.analyzeJar(newFile, pluginList);
+                                    PluginParser.analyzeJar(newFile, pluginList, dataRepository);
                                     controller.addButton(pluginList);
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -297,17 +315,7 @@ public class MainApp extends Application {
                         @Override
                         public void pluginFileRemoved(File removedFile) {
                             Platform.runLater(() -> {
-                                Iterator it = pluginList.keySet().iterator();
-                                while (it.hasNext()){
-                                    String key = it.next().toString();
-                                    PluginHolder value = pluginList.get(key);
-
-                                    if (value.equals(removedFile)) {
-                                        pluginList.remove(key);
-                                        break;
-                                    }
-                                }
-                                controller.addButton(pluginList);
+                                //TODO
                             });
                         }
 
@@ -315,7 +323,7 @@ public class MainApp extends Application {
                         public void pluginFileUpdated(File updatedFile) {
                             Platform.runLater(() -> {
                                 try {
-                                    PluginParser.analyzeJar(updatedFile, pluginList);
+                                    PluginParser.analyzeJar(updatedFile, pluginList, dataRepository);
                                     controller.addButton(pluginList);
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -335,6 +343,8 @@ public class MainApp extends Application {
      */
     public void showMainLayout() {
         try {
+            this.isStart = false;
+
             // Load mainLayout.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/views/layouts/MainLayout.fxml"));
@@ -349,6 +359,7 @@ public class MainApp extends Application {
             rootLayout.setCenter(mainLayout);
             rootLayout.setLeft(menuLayout);
             rootLayout.setCenterShape(false);
+            rootLayout.getStylesheets().add(currentCss.toURI().toString());
             
             // Give the controller access to controller
             MainLayoutController coreController = loader.getController();
@@ -557,11 +568,13 @@ public class MainApp extends Application {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             dialogStage.setScene(scene);
 
             // Set the user into the controller.
             UserEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
+            controller.setMainApp(this);
             controller.setUser(user);
 
             // Show the dialog and wait until the user closes it
@@ -594,6 +607,7 @@ public class MainApp extends Application {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             dialogStage.setScene(scene);
 
             // Set the user into the controller.
@@ -602,6 +616,7 @@ public class MainApp extends Application {
             controller.setGroupDetails(group);
             controller.setConnectedUser(connectedUser);
             controller.setIsNew(isNew);
+            controller.setMainApp(this);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -630,6 +645,7 @@ public class MainApp extends Application {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             dialogStage.setScene(scene);
 
             // Set the user into the controller.
@@ -666,6 +682,7 @@ public class MainApp extends Application {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             dialogStage.setScene(scene);
 
             // Set the user into the controller.
@@ -700,6 +717,7 @@ public class MainApp extends Application {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             dialogStage.setScene(scene);
             
             PluginDialogController controller = loader.getController();
@@ -731,6 +749,7 @@ public class MainApp extends Application {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             dialogStage.setScene(scene);
 
             BasketDetailDialogController controller = loader.getController();
@@ -769,6 +788,7 @@ public class MainApp extends Application {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             dialogStage.setScene(scene);
 
             BasketEditDialogController controller = loader.getController();
@@ -809,6 +829,7 @@ public class MainApp extends Application {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             dialogStage.setScene(scene);
 
             MemberManagementDialogController controller = loader.getController();
@@ -841,6 +862,7 @@ public class MainApp extends Application {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             dialogStage.setScene(scene);
 
             UserSearchDialogController controller = loader.getController();
@@ -873,6 +895,7 @@ public class MainApp extends Application {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(currentCss.toURI().toString());
             dialogStage.setScene(scene);
 
             // Set the user into the controller.
@@ -894,16 +917,36 @@ public class MainApp extends Application {
     private void initDataRepository() {
         this.dataRepository = new DataRepository() {
 
-            private List<String> data = new ArrayList<>(Arrays.asList("a", "b", "c"));
-
             @Override
-            public List<String> getProperties() {
-                return Collections.unmodifiableList(data);
+            public Stage getPrimaryStage() {
+                return primaryStage;
             }
 
             @Override
-            public void addProperty(String newProp) {
-                data.add(newProp);
+            public File getDefaultCssFile() {
+                return defaultCss;
+            }
+
+            @Override
+            public void setNewCss(File newCss) {
+                currentCss = newCss;
+                if (!isStart) {
+                    showMainLayout();
+                }
+            }
+
+            @Override
+            public void resetDefaultCss() {
+                InputStream inputStream = getClass().getResourceAsStream("/style/MainTheme.css");
+                try {
+                    File tempDefaultCss = File.createTempFile("javafx_stylesheet", "");
+                    tempDefaultCss.deleteOnExit();
+                    Files.copy(inputStream, tempDefaultCss.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    currentCss = tempDefaultCss;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                showMainLayout();
             }
         };
     }
@@ -913,6 +956,13 @@ public class MainApp extends Application {
      */
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    /**
+     * Returns the Css.
+     */
+    public File getCurrentCss() {
+        return currentCss;
     }
 
     /**

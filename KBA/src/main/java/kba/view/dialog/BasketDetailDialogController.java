@@ -107,7 +107,7 @@ public class BasketDetailDialogController {
         alert.setTitle("Erreur");
         alert.setHeaderText("Le champ de recherche est vide");
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+        dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
         dialogPane.getStyleClass().add("myDialog");
 
         alert.showAndWait();

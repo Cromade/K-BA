@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="180.0" prefWidth="400.0" styleClass="leftmenu-background" stylesheets="@../../style/MainTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.dialog.BasketEditDialogController">
+<AnchorPane prefHeight="180.0" prefWidth="400.0" styleClass="leftmenu-background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.dialog.BasketEditDialogController">
    <children>
       <GridPane layoutX="63.0" layoutY="39.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <columnConstraints>

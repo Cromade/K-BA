@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import kba.MainApp;
 import kba.model.Group;
 import kba.model.User;
 
@@ -27,9 +28,13 @@ public class GroupEditDialogController {
     private Stage dialogStage;
     private Group selectedGroup;
     private User connectedUser;
+    private MainApp mainApp;
     private boolean isNew = false;
     private boolean okClicked = false;
 
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
@@ -60,7 +65,7 @@ public class GroupEditDialogController {
             alert.setHeaderText("Certains champs sont invalides :");
             alert.setContentText("Le nom est invalide");
             DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+            dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
             dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait();

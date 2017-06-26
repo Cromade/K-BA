@@ -75,7 +75,7 @@ public class LoginLayoutController {
             alert.setHeaderText("Certains champs sont invalides :");
             alert.setContentText(errorMessage);
             DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+            dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
             dialogPane.getStyleClass().add("myDialog");
             
             alert.showAndWait();
@@ -123,7 +123,7 @@ public class LoginLayoutController {
             alert.setTitle("Validation");
             alert.setHeaderText("Votre compte a bien été créé !");
             DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+            dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
             dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait();

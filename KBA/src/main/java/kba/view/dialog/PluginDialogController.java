@@ -5,14 +5,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import kba.MainApp;
-import kba.Plugin;
-import kba.model.Basket;
 import kba.model.PluginHolder;
-import kba.model.Product;
 
 public class PluginDialogController {
 
@@ -47,7 +42,7 @@ public class PluginDialogController {
         pluginRequireVersionColumn.setCellValueFactory(cellData -> cellData.getValue().requireVersionProperty().asObject());
 
         pluginTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, selectedPlugin) -> deleteButton.setOnAction(lambda-> deleteProduct(selectedPlugin)));
+                (observable, oldValue, selectedPlugin) -> deleteButton.setOnAction(lambda-> deletePlugin(selectedPlugin)));
 
     }
 
@@ -56,7 +51,7 @@ public class PluginDialogController {
         pluginTable.setItems(pluginData);
     }
 
-    private void deleteProduct(PluginHolder selectedPlugin) {
+    private void deletePlugin(PluginHolder selectedPlugin) {
         //TODO
     }
 
@@ -73,7 +68,7 @@ public class PluginDialogController {
         alert.setHeaderText("Trouvez plus de plugin sur le site :");
         alert.setContentText("adresse du site");
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+        dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
         dialogPane.getStyleClass().add("myDialog");
         alert.showAndWait();
 	}

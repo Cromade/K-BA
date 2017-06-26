@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="530.0" prefWidth="750.0" styleClass="root-background" stylesheets="@../../style/MainTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.layout.RootLayoutController">
+<BorderPane prefHeight="530.0" prefWidth="750.0" styleClass="root-background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.layout.RootLayoutController">
    <top>
       <AnchorPane maxHeight="130.0" prefHeight="130.0" styleClass="topmenu-background" BorderPane.alignment="CENTER">
          <children>

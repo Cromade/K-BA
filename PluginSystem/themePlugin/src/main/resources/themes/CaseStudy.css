@@ -1,0 +1,133 @@
+.root-background {
+	-fx-background-color: #9ba2a2;
+}
+
+.topmenu-background {
+	-fx-background-color: #a34343;
+}
+
+.leftmenu-background {
+	-fx-background-color: #d16565;
+}
+
+.focus-background {
+	-fx-background-color: #ffe1e1;
+	-fx-text-fill: #4b5254;
+}
+
+.focus-background .label {
+	-fx-text-fill: #4b5254;
+}
+
+.basic-background {
+	-fx-background-color: #fffaf0;
+}
+
+.menu-item .label {
+    -fx-text-fill: white;
+}
+
+.menu-item:focused {
+     -fx-background-color: #b56868;
+}
+
+.context-menu {
+    -fx-background-color: #a34343;
+}
+
+.cb {
+    -fx-background-radius: 0;
+	-fx-background-color: #a34343;
+	-fx-effect: dropshadow(one-pass-box , black , 8 , 0.0 , 2 , 0 ); 
+	-fx-cursor: hand;
+	-fx-text-fill: white;
+}
+
+.choice-box .label {
+     -fx-text-fill: white; 
+}
+
+.button {
+    -fx-background-radius: 0;
+    -fx-background-color: #a34343;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(one-pass-box , black , 8 , 0.0 , 2 , 0 ); 
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #ac5555;
+}
+
+.button.focus {
+	-fx-background-color: #ffe1e1;
+	-fx-text-fill: #4b5254;
+}
+
+.button.focus-top {
+    -fx-background-color: #ffe1e1;
+	-fx-text-fill: #4b5254;
+    -fx-effect : null;
+}
+
+.button.focus:hover {
+	-fx-background-color: #ffe7e7;
+	-fx-text-fill: #4b5254;
+}
+
+.button.focus-top:hover {
+    -fx-background-color: #ffe7e7;
+	-fx-text-fill: #9ba2a2;
+}
+
+.button.plugin {
+    -fx-background-color: #ac5555;
+    -fx-effect : null;
+}
+
+.button.plugin:hover {
+    -fx-background-color: #b56868;
+}
+
+.image-view.disconnect:hover {
+	-fx-background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))
+}
+
+.table-view {
+    -fx-base: #fffaf0;
+    -fx-control-inner-background: #fffaf0;
+    -fx-background-color: #fffaf0;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 20;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color: 
+        transparent
+        transparent
+        derive(-fx-base, 80%) 
+        transparent;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 10px;
+    -fx-text-fill: black;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: #d16565;
+}
+
+.myDialog{
+    -fx-background-color: #d16565;
+}
+.myDialog:header *.header-panel{
+    -fx-background-color: #ffe1e1;
+}

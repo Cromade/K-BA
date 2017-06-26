@@ -6,6 +6,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import kba.MainApp;
 import kba.model.User;
 import kba.util.InputFieldTests;
 
@@ -31,8 +32,12 @@ public class UserEditDialogController {
 
     private Stage dialogStage;
     private User connectedUser;
+    private MainApp mainApp;
     private boolean okClicked = false;
 
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
@@ -69,7 +74,7 @@ public class UserEditDialogController {
             alert.setHeaderText("Certains champs sont invalides :");
             alert.setContentText(errorMessage);
             DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+            dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
             dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait();

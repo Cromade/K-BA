@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="270.0" prefWidth="400.0" styleClass="leftmenu-background" stylesheets="@../../style/MainTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.dialog.GroupEditDialogController">
+<AnchorPane prefHeight="270.0" prefWidth="400.0" styleClass="leftmenu-background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.dialog.GroupEditDialogController">
    <children>
       <GridPane layoutX="10.0" layoutY="171.0" prefHeight="40.0" prefWidth="380.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="175.0">
         <columnConstraints>

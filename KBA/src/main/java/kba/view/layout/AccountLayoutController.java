@@ -33,8 +33,6 @@ public class AccountLayoutController {
 	@FXML
 	private Label emailLabel;
 	@FXML
-	private Label passwordLabel;
-	@FXML
 	private Label birthdayLabel;
 	@FXML
 	private Label addressLabel;
@@ -142,7 +140,7 @@ public class AccountLayoutController {
             alert.setHeaderText("Attention");
             alert.setContentText("Etes-vous sur de vouloir supprimer votre compte?");
             DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+            dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
             dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait().ifPresent(response -> {

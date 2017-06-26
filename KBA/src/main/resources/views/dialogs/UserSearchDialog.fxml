@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="root-background" stylesheets="@../../style/MainTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.dialog.UserSearchDialogController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="root-background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kba.view.dialog.UserSearchDialogController">
     <children>
         <AnchorPane layoutX="15.0" layoutY="75.0" prefHeight="310.0" prefWidth="570.0" styleClass="basic-background">
             <children>

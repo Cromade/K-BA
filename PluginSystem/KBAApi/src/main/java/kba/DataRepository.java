@@ -1,11 +1,17 @@
 package kba;
 
-import java.util.List;
+import java.io.File;
+
+import javafx.stage.Stage;
 
 public interface DataRepository {
 
-	public List<String> getProperties();
-	
-	public void addProperty(String newProp);
-	
+	public Stage getPrimaryStage();
+
+	public File getDefaultCssFile();
+
+	public void setNewCss(File newCss);
+
+	public void resetDefaultCss();
+
 }

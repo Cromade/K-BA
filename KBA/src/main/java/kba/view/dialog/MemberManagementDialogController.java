@@ -78,7 +78,7 @@ public class MemberManagementDialogController {
                     alert.setTitle("Erreur");
                     alert.setHeaderText("Vous ne pouvez pas vous retirer du groupe ici");
                     DialogPane dialogPane = alert.getDialogPane();
-                    dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+                    dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
                     dialogPane.getStyleClass().add("myDialog");
 
                     alert.showAndWait();

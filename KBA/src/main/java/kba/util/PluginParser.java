@@ -1,5 +1,6 @@
 package kba.util;
 
+import kba.DataRepository;
 import kba.Plugin;
 import kba.PluginSignature;
 import kba.model.PluginHolder;
@@ -13,15 +14,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PluginParser {
 
-    public static Map<String, PluginHolder> pluginParser() {
-        String pluginDirectoryStr = "plugin";
+    public static Map<String, PluginHolder> pluginParser(DataRepository dataRepository) {
 
         //load the plugin directory
-        File pluginDirectory = new File(pluginDirectoryStr);
+        File pluginDirectory = new File(new File(System.getProperty("user.home")), "KBA/Plugin");
 
         //if the directory do not exist
         if (!pluginDirectory.exists()) {
-            return new HashMap<>();
+            pluginDirectory.getParentFile().mkdirs();
+            pluginDirectory.mkdirs();
         }
 
         //if the directory is not a folder
@@ -33,7 +34,7 @@ public class PluginParser {
         File[] jarFiles = pluginDirectory.listFiles((dir, filename) -> filename.endsWith(".jar"));
         for(File jarFile : jarFiles) {
             try {
-                analyzeJar(jarFile, pluginRepository);
+                analyzeJar(jarFile, pluginRepository, dataRepository);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -42,7 +43,7 @@ public class PluginParser {
         return pluginRepository;
     }
 
-    public static void analyzeJar(File jarFile, Map<String, PluginHolder> pluginRepository) throws IOException {
+    public static void analyzeJar(File jarFile, Map<String, PluginHolder> pluginRepository, DataRepository dataRepository) throws IOException {
 
         if (pluginRepository.values().stream().filter(ph -> ph.jarFile.equals(jarFile.getName())).count() > 0) {
             //plugin already analyzed
@@ -55,7 +56,8 @@ public class PluginParser {
         //get the manifest and test it
         URL manifestUrl = pluginClassLoader.findResource("META-INF/MANIFEST.MF");
         if (manifestUrl == null || !manifestUrl.toString().contains(jarFile.getAbsolutePath())) {
-			return;
+            System.out.println("no manifest");
+            return;
         }
 
         try (InputStream is = manifestUrl.openStream();
@@ -63,6 +65,7 @@ public class PluginParser {
 
             //test the manifest reader/reading
             if (reader == null) {
+                System.out.println("manifest unreadable");
                 return;
             }
 
@@ -79,6 +82,7 @@ public class PluginParser {
 
         //test if the plugin have a main class
         if (mainClassName == null) {
+            System.out.println("no main class");
             return;
         }
 
@@ -86,15 +90,28 @@ public class PluginParser {
         try {
             pluginClass = Class.forName(mainClassName, true, pluginClassLoader).asSubclass(PluginSignature.class);
         } catch (ClassNotFoundException e) {
+            System.out.println("error on main grab");
             return;
         }
 
         //check if the plugin use the annotation
         Plugin pluginAnnotation = pluginClass.getAnnotation(Plugin.class);
         if (pluginAnnotation == null) {
+            System.out.println("no annotation");
             return;
         }
 
-        pluginRepository.put(pluginAnnotation.name(), new PluginHolder(pluginAnnotation.name(), jarFile.getName(), pluginClass));
+        PluginHolder pluginHolder = new PluginHolder(pluginAnnotation.name(), jarFile.getName(), pluginClass);
+        PluginSignature pluginSignature;
+        try {
+            pluginSignature = pluginHolder.pluginClass.newInstance();
+            pluginSignature.init(dataRepository);
+            pluginHolder.setPlugin(pluginSignature);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        pluginRepository.put(pluginAnnotation.name(), pluginHolder);
     }
 }

@@ -70,7 +70,7 @@ public class BasketEditDialogController {
             alert.setHeaderText("Certains champs sont invalides :");
             alert.setContentText("Il faut donner un nom au groupe !");
             DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(getClass().getResource("/style/MainTheme.css").toExternalForm());
+            dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
             dialogPane.getStyleClass().add("myDialog");
 
             alert.showAndWait();
