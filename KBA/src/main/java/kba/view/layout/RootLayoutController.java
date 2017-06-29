@@ -44,7 +44,7 @@ public class RootLayoutController {
 		Image image = null;
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(new FileInputStream("resources/logo.png"));
+			img = ImageIO.read(getClass().getResourceAsStream("/images/logo.png"));
 			image = SwingFXUtils.toFXImage(img, null);
 			logoImgView.setImage(image);
 

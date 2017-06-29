@@ -59,16 +59,20 @@ public class MainApp extends Application {
     private ObservableList<Group> groupData = FXCollections.observableArrayList();
     private ObservableList<Category> categoriesData = FXCollections.observableArrayList();
     private Preference preference;
-    
-    //Constructor
+    private Basket cleverBasket;
+
+
+    /**
+     * constructor of the application
+      */
     public MainApp() {
+
         // Add some sample data to remove when db is up -----
     	this.preference = new Preference(1L, connectedUser);
-    	
-    	Category cat1 = new Category("Tendance");
+
+    	Category cat1 = new Category("Tous");
     	Category cat2 = new Category("fourniture");
     	Category cat3 = new Category("papeterie");
-    	categoriesData.add(cat1);
     	categoriesData.add(cat2);
     	categoriesData.add(cat3);
 
@@ -78,37 +82,38 @@ public class MainApp extends Application {
 		    img = ImageIO.read(new FileInputStream("resources/stylo.jpg"));
 		    image = SwingFXUtils.toFXImage(img, null);
 	    	
-	    	Product product1 = new Product(01L,"Stylo 4 couleurs","bic","stylo 4 couleurs classique", 1.0);    
+	    	Product product1 = new Product(1L,"Stylo 4 couleurs","bic","stylo 4 couleurs classique", 1.0);
 	    	product1.addCategory(cat1);
 	    	product1.setProductImg(image);
 	    	
 	    	img = ImageIO.read(new FileInputStream("resources/papier.jpg"));
 		    image = SwingFXUtils.toFXImage(img, null);
-	    	Product product2 = new Product(02L,"papier","canson","150 feuillesvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv oui", 3.0);
+	    	Product product2 = new Product(2L,"papier","canson","150 feuillesvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv oui", 3.0);
+	    	product2.addCategory(cat1);
 	    	product2.addCategory(cat2);
 	    	product2.setProductImg(image);
 	    	
 	    	img = ImageIO.read(new FileInputStream("resources/gomme.jpg"));
 		    image = SwingFXUtils.toFXImage(img, null);
-	    	Product product3 = new Product(03L,"Gomme","bic","Accedebant enim eius asperitati, ubi inminuta vel laesa amplitudo imperii dicebatur, et iracundae suspicionum quantitati proximorum cruentae blanditiae exaggerantium incidentia et dolere inpendio simulantium, si principis periclitetur vita, a cuius salute velut filo pendere statum orbis terrarum fictis vocibus exclamabant.", 0.5);
+	    	Product product3 = new Product(3L,"Gomme","bic","Accedebant enim eius asperitati, ubi inminuta vel laesa amplitudo imperii dicebatur, et iracundae suspicionum quantitati proximorum cruentae blanditiae exaggerantium incidentia et dolere inpendio simulantium, si principis periclitetur vita, a cuius salute velut filo pendere statum orbis terrarum fictis vocibus exclamabant.", 0.5);
 	    	product3.addCategory(cat1);
 	    	product3.setProductImg(image);
 	    	
 	    	img = ImageIO.read(new FileInputStream("resources/crayon.jpg"));
 		    image = SwingFXUtils.toFXImage(img, null);
-	    	Product product4 = new Product(04L,"Crayon de papier","bic","mine 0.5", 1.0);
+	    	Product product4 = new Product(4L,"Crayon de papier","bic","mine 0.5", 1.0);
 	    	product4.addCategory(cat1);
 	    	product4.setProductImg(image);
 	    	
 	    	img = ImageIO.read(new FileInputStream("resources/cahier.jpg"));
 		    image = SwingFXUtils.toFXImage(img, null);
-	    	Product product5 = new Product(05L,"Cahier","Canson","50 pages", 5.0);
+	    	Product product5 = new Product(5L,"Cahier","Canson","50 pages", 5.0);
 	    	product5.addCategory(cat1);
 	    	product5.setProductImg(image);
 	    	
 	    	img = ImageIO.read(new FileInputStream("resources/scotch.jpg"));
 		    image = SwingFXUtils.toFXImage(img, null);
-	    	Product product6 = new Product(06L,"Ruban adhesif","Scotch","attention ca colle", 2.0);
+	    	Product product6 = new Product(6L,"Ruban adhesif","Scotch","attention ca colle", 2.0);
 	    	product6.addCategory(cat1);
 	    	product6.setProductImg(image);
 	    	
@@ -147,7 +152,7 @@ public class MainApp extends Application {
 
             img = ImageIO.read(new FileInputStream("resources/user.png"));
             image = SwingFXUtils.toFXImage(img, null);
-            defaultGroup = new Group("Aucun", connectedUser, image, user1);
+            defaultGroup = new Group(connectedUser.getUsername(), connectedUser, image, user1);
 
             Group group2 = new Group("Famille", userData, image, user2);
             group2.addUserToGroup(connectedUser);
@@ -172,8 +177,10 @@ public class MainApp extends Application {
 	    	basketData.add(basket1);
 	    	basketData.add(basket2);
 	    	basketData.add(basket3);
-	    	
 
+            cleverBasket = new Basket("cleverBasket");
+            cleverBasket.setGroup(defaultGroup);
+            cleverBasket.addProduct(product1, 9);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -200,28 +207,26 @@ public class MainApp extends Application {
     public Preference getPreference() {
     	return preference;
     }
+    public Basket getCleverBasket() {
+        return cleverBasket;
+    }
     public void setBasketData(ObservableList<Basket> basketData) {
         this.basketData = basketData;
     }
-    public void setProductData(ObservableList<Product> productData) {
-        this.productData = productData;
-    }
-    public void setUserData(ObservableList<User> userData) {
-        this.userData = userData;
-    }
     public void setGroupData(ObservableList<Group> groupData) {
         this.groupData = groupData;
-    } 
-    public void setCategoriesData(ObservableList<Category> categoriesData) {
-        this.categoriesData = categoriesData;
     }
     public void setPreference(Preference preference) {
     	this.preference = preference;
     }
+    public void setCleverBasket(Basket cleverBasket) {
+        this.cleverBasket = cleverBasket;
+    }
     //---------------------------
 
     /**
-     * Start the FX
+     * start method of the FX
+     * @param primaryStage the primary stage (FX)
      */
     @Override
     public void start(Stage primaryStage) {
@@ -247,8 +252,8 @@ public class MainApp extends Application {
     }
 
     /**
-     * Initializes the login layout.
-     */
+     * launch the login layout
+      */
     public void initLoginLayout() {
     	try {
             // Load root layout from fxml file.
@@ -273,8 +278,8 @@ public class MainApp extends Application {
     }
 
     /**
-     * Initializes the root layout.
-     */
+     * launch the root layout start the plugin thread
+      */
     public void initRootLayout() {
         try {
             // Load root layout from fxml file.
@@ -315,7 +320,15 @@ public class MainApp extends Application {
                         @Override
                         public void pluginFileRemoved(File removedFile) {
                             Platform.runLater(() -> {
-                                //TODO
+                                for(Map.Entry<String , PluginHolder> entry : pluginList.entrySet()) {
+                                    String key = entry.getKey();
+                                    PluginHolder value = entry.getValue();
+
+                                    if (value.getJarFile().equals(removedFile.getName())) {
+                                        pluginList.remove(key);
+                                    }
+                                }
+                                controller.addButton(pluginList);
                             });
                         }
 
@@ -339,8 +352,8 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show the Main layout
-     */
+     * launch the main layout (home page of the app)
+      */
     public void showMainLayout() {
         try {
             this.isStart = false;
@@ -366,6 +379,7 @@ public class MainApp extends Application {
             coreController.setMainApp(this);
             coreController.setFavouriteBasketTotal();
             coreController.setRecentGroup();
+            coreController.setReminderTable();
 
 	        //set the menu
             LeftMenuLayoutController menuController = menuLoader.getController();
@@ -377,7 +391,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show the Account layout
+     * launch the account layout
      */
     public void changeLayoutToAccount(){
     	try {
@@ -414,8 +428,8 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show the basket Management layout
-     */
+     * launch the basket management layout
+      */
     public void changeLayoutToBasketManagement(){
     	try {
 	    	// Load Layout.
@@ -448,8 +462,8 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show the Preference layout
-     */
+     * launch the preference management
+      */
     public void changeLayoutToPreferenceManagement(){
     	try {
 	    	// Load Layout.
@@ -482,8 +496,8 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show the ProductList layout
-     */
+     * launch the product list layout
+      */
     public void changeLayoutToProductList(){
     	try {
 	    	// Load Layout.
@@ -518,8 +532,8 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show the Group Management layout
-     */
+     * launch the group management layout
+      */
     public void changeLayoutToGroupManagement(){
     	try {
 	    	// Load Layout.
@@ -553,7 +567,10 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show the User Edit Dialog
+     * show the user edit dialog
+      * @param user the user edited
+     * @param type new or modified
+     * @return if the user has been modified
      */
     public boolean showUserEditDialog(User user, String type) {
         try {
@@ -589,6 +606,9 @@ public class MainApp extends Application {
 
     /**
      * Show the Group Edit Dialog
+     * @param group the group edited
+     * @param isNew new or modified
+     * @return if the group has been modified
      */
     public boolean showGroupEditDialog(Group group, boolean isNew) {
         try {
@@ -631,6 +651,8 @@ public class MainApp extends Application {
 
     /**
      * Show the Product Detail Dialog
+     * @param product the product selected by the user
+     * @param isPreference if the product is in preference
      */
     public void showProductDetailDialog(Product product, boolean isPreference) {
         try {
@@ -668,6 +690,8 @@ public class MainApp extends Application {
 
     /**
      * Show the Product Detail Dialog
+     * @param product the product selected by the user
+     * @param basket the basket witch the product come
      */
     public void showBasketProductDetailDialog(BasketProduct product, Basket basket) {
         try {
@@ -735,6 +759,7 @@ public class MainApp extends Application {
 
     /**
      * Show the Basket Detail Dialog
+     * @param selectedBasket the basket selected by the user
      */
     public void showBasketDetailDialog(Basket selectedBasket) {
         try {
@@ -770,6 +795,8 @@ public class MainApp extends Application {
 
     /**
      * Show the Basket Edit Dialog
+     * @param selectedBasket the basket selected by the user
+     * @param isNew new or modified
      */
     public void showBasketEditDialog(Basket selectedBasket, boolean isNew) {
         try {
@@ -815,6 +842,7 @@ public class MainApp extends Application {
 
     /**
      * Show the Member Management Dialog
+     * @param selectedGroup the group selected by the user
      */
     public void showMemberManagementDialog(Group selectedGroup) {
         try {
@@ -848,6 +876,7 @@ public class MainApp extends Application {
 
     /**
      * Show the User Search Dialog
+     * @param selectedGroup the group selected by the user
      */
     public void showUserSearchDialog(Group selectedGroup) {
         try {
@@ -881,6 +910,7 @@ public class MainApp extends Application {
 
     /**
      * Show the User Detail Dialog
+     * @param selectedUser the user selected by the the user
      */
     public void showUserDetailDialog(User selectedUser) {
         try {
@@ -912,7 +942,40 @@ public class MainApp extends Application {
     }
 
     /**
-     *  Set the data Repository to give to the plugins
+     * show the basket proof dialog
+     * @param selectedBasket the basket selected by the user
+     */
+    public void showBasketProofDialog(Basket selectedBasket) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/views/dialogs/BasketProofDialog.fxml"));
+            AnchorPane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Preuve d'achat du panier "+selectedBasket.getName());
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            scene.getStylesheets().add(currentCss.toURI().toString());
+            dialogStage.setScene(scene);
+
+            // Set the basket into the controller.
+            BasketProofDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.showProof(selectedBasket);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *  Set the data Repository given to the plugins
      */
     private void initDataRepository() {
         this.dataRepository = new DataRepository() {
@@ -959,17 +1022,10 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns the Css.
+     * Returns the current Css.
      */
     public File getCurrentCss() {
         return currentCss;
-    }
-
-    /**
-     * Returns the data repository.
-     */
-    public DataRepository getDataRepository() {
-        return dataRepository;
     }
 
     /**
@@ -979,15 +1035,28 @@ public class MainApp extends Application {
 		this.connectedUser = connectedUser;
 	}
 
+    /**
+     * The main
+     * @param args given args
+     */
 	public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Explicit
+     * @return the root layout
+     */
     public BorderPane getRootLayout() {
         return rootLayout;
     }
 
+    /**
+     * Explicit
+     * @return the plugin list
+     */
     public Map<String, PluginHolder> getPluginList() {
         return pluginList;
     }
+
 }

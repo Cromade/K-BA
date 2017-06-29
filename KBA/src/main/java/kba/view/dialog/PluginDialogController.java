@@ -7,7 +7,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import kba.MainApp;
+import kba.PluginSignature;
 import kba.model.PluginHolder;
+
+import java.io.File;
+import java.util.Iterator;
+import java.util.Map;
 
 public class PluginDialogController {
 
@@ -52,7 +57,30 @@ public class PluginDialogController {
     }
 
     private void deletePlugin(PluginHolder selectedPlugin) {
-        //TODO
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.initOwner(mainApp.getPrimaryStage());
+        alert.setTitle("Suppression de plugin");
+        alert.setHeaderText("Attention");
+        alert.setContentText("Etes-vous sur de vouloir supprimer ce plugin?");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
+        dialogPane.getStyleClass().add("myDialog");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                for(Map.Entry<String , PluginHolder> entry : mainApp.getPluginList().entrySet()) {
+                    String key = entry.getKey();
+                    PluginHolder value = entry.getValue();
+
+                    if (value.equals(selectedPlugin)) {
+                        mainApp.getPluginList().remove(key);
+                    }
+                }
+                File pluginToDelete = new File(System.getProperty("user.home")+"/KBA/Plugin/"+selectedPlugin.getJarFile());
+                pluginToDelete.delete();
+                setDataInTable();
+            }
+        });
     }
 
     @FXML

@@ -21,7 +21,7 @@
             </Label>
             <ImageView fitHeight="120.0" fitWidth="120.0" layoutX="15.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../resources/logo.png" />
+                  <Image url="@../../../../src/main/resources/images/logo.png" />
                </image></ImageView>
             <AnchorPane layoutX="620.0" prefHeight="130.0" prefWidth="130.0">
                <children>

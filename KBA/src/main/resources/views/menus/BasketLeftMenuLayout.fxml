@@ -38,7 +38,7 @@
                         <Font size="12.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" styleClass="focus" text="Gestion du panier" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" styleClass="focus" text="Gestion de panier" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2">
                      <font>
                         <Font size="12.0" />
                      </font>

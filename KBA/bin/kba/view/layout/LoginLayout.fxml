@@ -21,7 +21,7 @@
             </Label>
             <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="225.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../resources/logo.png" />
+                  <Image url="@../../../../src/main/resources/images/logo.png" />
                </image>
             </ImageView>
             <TextField fx:id="emailField" layoutX="275.0" layoutY="361.0" prefWidth="200.0" />

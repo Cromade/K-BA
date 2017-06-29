@@ -6,6 +6,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 
 public class Basket {
 
@@ -16,8 +19,10 @@ public class Basket {
 	private ObservableList<BasketProduct> productList;
 	private StringProperty status;
 	private boolean isFavourite;
+	private ImageView proofImageView;
+	private Image proofImage;
 
-	public  Basket() {
+	public Basket() {
         this.name = new SimpleStringProperty("");
         this.groupName = new SimpleStringProperty("Aucun");
         this.group = null;
@@ -25,6 +30,8 @@ public class Basket {
         this.productList = FXCollections.observableArrayList();
         this.status = new SimpleStringProperty("En cours...");
         this.isFavourite = false;
+        this.proofImage = null;
+        this.proofImageView = null;
     }
 	
 	public Basket(String name) {
@@ -35,6 +42,8 @@ public class Basket {
 		this.productList = FXCollections.observableArrayList();
 		this.status = new SimpleStringProperty("En cours...");
 		this.isFavourite = false;
+        this.proofImage = null;
+        this.proofImageView = null;
 	}
 
 	public String getName() {
@@ -135,6 +144,21 @@ public class Basket {
 
 	public boolean getIsFavourite() {
 	    return isFavourite;
+    }
+
+    public Image getProofImage() {
+        return proofImage;
+    }
+
+    public ImageView getProofImageView() {
+        return proofImageView;
+    }
+
+    public void setProofImg(Image img) {
+        this.proofImage = img;
+        this.proofImageView = new ImageView(img);
+        this.proofImageView.setFitHeight(395);
+        this.proofImageView.setFitWidth(275);
     }
 
 }

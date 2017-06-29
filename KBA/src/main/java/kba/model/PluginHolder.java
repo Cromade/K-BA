@@ -57,4 +57,8 @@ public class PluginHolder {
     public PluginSignature getPlugin() {
         return plugin;
     }
+
+    public String getJarFile() {
+        return jarFile;
+    }
 }

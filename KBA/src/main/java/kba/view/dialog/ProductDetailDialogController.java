@@ -78,11 +78,13 @@ public class ProductDetailDialogController {
 		boolean first = true;				
 		if (!baskets.isEmpty()) {
 			for (Basket basket : baskets) {
-				if (first) {
-					addToChoiceBox.setValue(basket.getName());
-					first = false;
+				if (!basket.getStatus().equals("Validé !")) {
+					if (first) {
+						addToChoiceBox.setValue(basket.getName());
+						first = false;
+					}
+					addToChoiceBox.getItems().add(basket.getName());
 				}
-				addToChoiceBox.getItems().add(basket.getName());
 			}
 		}
 	}

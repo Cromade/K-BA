@@ -1,11 +1,13 @@
 package kba.view.layout;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import kba.MainApp;
 import kba.model.Basket;
+import kba.util.ReminderProduct;
 
 import java.util.List;
 
@@ -70,20 +72,43 @@ public class BasketManagementLayoutController {
                 removeFromTable(selectedBasket);
             }
         });
-        validateButton.setOnAction(lambda -> {
-            if (selectedBasket != null) {
-                if (selectedBasket.getStatus().equals("Validé !")) {
-                    selectedBasket.setInvalidated();
-                } else {
-                    selectedBasket.setValidated();
-                }
+        if (selectedBasket != null) {
+            if (selectedBasket.getStatus().equals("Validé !")) {
+                changeValidateButton(selectedBasket);
+            } else {
+                Platform.runLater(() -> {
+                    validateButton.setText("Changer le status");
+                    validateButton.setOnAction(lambda -> {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.initOwner(mainApp.getPrimaryStage());
+                        alert.setTitle("Valider le panier");
+                        alert.setHeaderText("Attention");
+                        alert.setContentText("Etes-vous sur de vouloir valider ce panier ?\nCette action est irreversible !");
+                        DialogPane dialogPane = alert.getDialogPane();
+                        dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
+                        dialogPane.getStyleClass().add("myDialog");
+
+                        alert.showAndWait().ifPresent(response -> {
+                            if (response == ButtonType.OK) {
+                                selectedBasket.setValidated();
+                                ReminderProduct.autoUpdatePreferences(selectedBasket, mainApp);
+                                changeValidateButton(selectedBasket);
+                            }
+                        });
+                    });
+                });
             }
-        });
+        }
         modifyButton.setOnAction(lambda->{
             if (selectedBasket != null) {
                 mainApp.showBasketEditDialog(selectedBasket, false);
             }
         });
+    }
+
+    public void changeValidateButton(Basket selectedBasket) {
+        validateButton.setText("Preuve d'achat");
+        validateButton.setOnAction(lambda -> mainApp.showBasketProofDialog(selectedBasket));
     }
 
     public void removeFromTable(Basket selectedBasket) {

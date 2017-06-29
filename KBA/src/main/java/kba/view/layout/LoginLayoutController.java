@@ -37,7 +37,7 @@ public class LoginLayoutController {
         Image image = null;
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new FileInputStream("resources/logo.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/images/logo.png"));
             image = SwingFXUtils.toFXImage(img, null);
         } catch (Exception e) {
             e.printStackTrace();

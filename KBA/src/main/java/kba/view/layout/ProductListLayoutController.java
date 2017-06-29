@@ -6,14 +6,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
@@ -26,7 +19,7 @@ public class ProductListLayoutController {
 	@FXML
     private TextField researchField;
 	@FXML
-	private MenuButton categoriesMenu;
+	private ComboBox<String> categoriesComboBox;
     @FXML
     private TableView<Product> productTable;
     @FXML
@@ -76,57 +69,53 @@ public class ProductListLayoutController {
 				
 		//to delete when db up
 		categories = mainApp.getCategoriesData();
-		Category tendance = null;
-				
+
+		//default category
+		categoriesComboBox.getItems().add("Tous");
+		categoriesComboBox.setValue("Tous");
+		categoriesComboBox.setVisibleRowCount(5);
+
 		if (!categories.isEmpty()) {
 			for (Category category : categories) {
-				MenuItem item = new MenuItem(category.getName());
-				item.setOnAction(lambda->{ 
-					setDataInTableByCategory(category);
-					categoriesMenu.setText(category.getName());
-				});
-				categoriesMenu.getItems().add(item);
-				if (category.getName().equals("Tendance")) {
-					tendance = category;
-				}
+				categoriesComboBox.getItems().add(category.getName());
 			}
 		}
-		
-		if (tendance != null) {
-			categoriesMenu.setText("Tendance");
-			setDataInTableByCategory(tendance);
-		}
+
+		setDataInTable();
 	}
 	
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 	
-	public void setDataInTableByCategory(Category categorySelected) {
-		//get the product list by category in db
+	public void setDataInTable() {
+		//get the product list in DB (last 30 products)
 		ObservableList<Product> products = FXCollections.observableArrayList();
 		//TODO
 		
 		//to delete when db up
 		products = mainApp.getProductData();
-		ObservableList<Product> productSorted = FXCollections.observableArrayList();
+		int cmp = 0;
+        ObservableList<Product> productSorted = FXCollections.observableArrayList();
 		for (Product product : products) {
-			if (product.getCategories() != null) {
-				for (Category productCategory : product.getCategories()) {
-					if (productCategory.equals(categorySelected)) {
-						productSorted.add(product);
-					}
-				}
-			}
+			productSorted.add(product);
+			cmp++;
+			if (cmp == 30) {
+			    break;
+            }
 		}
+        //---------------------
+
 		
 		// Add observable list data to the table
+        // modify productSorted by product
         productTable.setItems(productSorted);
 	}
 	
 	@FXML
 	private void handleSearch() {
 		String toSearch = researchField.getText();
+		String category = categoriesComboBox.getValue();
 		
 		if(toSearch != null) {
 			if(toSearch.length() > 0) {
@@ -134,8 +123,8 @@ public class ProductListLayoutController {
 				//TODO
 				return;
 			}
-		} 
-		
+		}
+
 		// Show the error message.
         Alert alert = new Alert(AlertType.ERROR);
         alert.initOwner(mainApp.getPrimaryStage());
@@ -144,7 +133,7 @@ public class ProductListLayoutController {
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
         dialogPane.getStyleClass().add("myDialog");
-        
+
         alert.showAndWait();
 	}
 	
