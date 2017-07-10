@@ -70,7 +70,7 @@ public class MainLayoutController {
 
         // listener
         reminderTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, selectedProduct) -> handleAddTo(selectedProduct));
+                (observable, oldValue, selectedProduct) -> addToButton.setOnAction(lambda -> handleAddTo(selectedProduct)));
     }
 	
 	public void setMainApp(MainApp mainApp) {
@@ -85,7 +85,7 @@ public class MainLayoutController {
         baskets = mainApp.getBasketData();
 
 		for (Basket basket :baskets) {
-			if (basket.getIsFavourite() == true) {
+			if (basket.getIsFavourite()) {
 				favourite = basket;
 			}
 		}
@@ -97,8 +97,10 @@ public class MainLayoutController {
 			favouriteBasketTotalLabel.setText(favourite.getTotal() + "€");
 		}
         Basket finalFavourite = favourite;
-        favouriteBasketButton.setOnAction(lambda->{
+        favouriteBasketButton.setOnAction(lambda-> {
             mainApp.showBasketDetailDialog(finalFavourite);
+            setReminderTable();
+            setFavouriteBasketTotal();
         });
 	}
 
@@ -123,17 +125,20 @@ public class MainLayoutController {
     }
 
     private void handleAddTo(Product selectedProduct) {
-        int nbProduct = numberChoiceBox.getValue().intValue();
+        int nbProduct = numberChoiceBox.getValue();
         favourite.addProduct(selectedProduct, nbProduct);
 
         //save in DB
         //TODO
 
         //to delete
+
+        reminderTable.getItems().remove(selectedProduct);
+        setFavouriteBasketTotal();
     }
 
-	@FXML
-	private void handleChangeToGroupManagement() {
-		mainApp.changeLayoutToGroupManagement();
-	}
+    @FXML
+    private void handleChangeToGroupManagement() {
+        mainApp.changeLayoutToGroupManagement();
+    }
 }
