@@ -1,0 +1,82 @@
+package projet.k_ba.models;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+/**
+ * Created by candice on 16/07/2017.
+ */
+public class Address implements Parcelable{
+
+    protected Address(Parcel in) {
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Address> CREATOR = new Creator<Address>() {
+        @Override
+        public Address createFromParcel(Parcel in) {
+            return new Address(in);
+        }
+
+        @Override
+        public Address[] newArray(int size) {
+            return new Address[size];
+        }
+    };
+
+    private String uid;
+    private String address;
+    private String zipcode;
+    private String city;
+
+    public Address() {
+
+    };
+
+    public Address(String uid, String address, String zipcode, String city) {
+        this.uid = uid;
+        this.address = address;
+        this.zipcode = zipcode;
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+}

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">K-BA</string>
+    <string name="wronglog">Wrong Login</string>
+    <string name="wrongpwd">Wrong Password</string>
+    <string name="required">Ce champs est requis</string>
+    <string name="connect">Vous êtes connecté</string>
+</resources>

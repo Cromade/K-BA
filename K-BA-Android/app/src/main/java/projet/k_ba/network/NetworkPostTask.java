@@ -1,0 +1,36 @@
+package projet.k_ba.network;
+
+import android.os.AsyncTask;
+import android.util.Log;
+
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * Created by candice on 16/07/2017.
+ */
+public class NetworkPostTask extends AsyncTask<Object, Void, String> {
+
+    private INetworkListener listener;
+
+    public NetworkPostTask(INetworkListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    protected String doInBackground(Object... args) {
+        try {
+            String url = (String)args[0];
+            Map<String, String> params = (Map<String, String>)args[1];
+            return WebService.post(url, params);
+        } catch (Exception e) {
+            Log.e("Network", "POST", e);
+            return null;
+        }
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        this.listener.onComplete(s);
+    }
+}
