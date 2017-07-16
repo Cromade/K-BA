@@ -4,13 +4,13 @@ const UtilsIndex = require('../utils');
 const responsifier = UtilsIndex.ResponsifyUtils.sequelize;
 
 /**
- * Define the Address model
+ * Define the Preference model
  * @param {Sequelize} sequelize
  * @param {Object} DataTypes
  * @returns {Model}
  */
 module.exports = function (sequelize, DataTypes) {
-    const Address = sequelize.define("Address", {
+    const Preference = sequelize.define("Preference", {
         id: {
             type: DataTypes.BIGINT,
             primaryKey: true,
@@ -21,22 +21,19 @@ module.exports = function (sequelize, DataTypes) {
             unique: true,
             defaultValue: DataTypes.UUIDV4,
             allowNull: false
-        },
-        address: {
-            type: DataTypes.STRING(255),
-            allowNull: false,
-        },
-        zipcode : DataTypes.BIGINT,
-        town : DataTypes.STRING(50),
+        }
     }, {
         paranoid: true,
         underscored: true,
         freezeTableName: true,
         classMethods: {
             associate: function (ModelIndex) {
-                Address.belongsToMany(ModelIndex.getModel('User'), {
-                    as: 'users',
-                    through: 'AddressUser'
+                Preference.belongsTo(ModelIndex.getModel('User'), {
+                    as: 'user',
+                });
+                Preference.hasMany(ModelIndex.getModel('Item'), {
+                    as: 'items',
+                    through: 'PreferenceItem'
                 });
             }
         },
@@ -44,12 +41,13 @@ module.exports = function (sequelize, DataTypes) {
             responsify: function () {
                 const obj = {};
                 obj.uid = this.uid;
-                obj.address = this.address;
-                obj.zipcode = this.zipcode;
-                obj.town = this.town;
+                obj.name = this.name;
+                if(this.items) {
+                    obj.items = responsifier.list(this.items)
+                }
                 return obj;
             }
         }
     });
-    return Address;
+    return List;
 };

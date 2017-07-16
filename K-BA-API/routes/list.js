@@ -15,8 +15,9 @@ const router = express.Router();
 
 router.use(AuthMiddleware.getToken());
 router.use(SessionMiddleware.getUser());
+
 router.post('/', (req, res, next) => {
-    ListController.create(req.body.name, req.body.state).then((list) => {
+    ListController.create(req.body.name, req.body.state, req.user).then((list) => {
         res.json(responsifier.instance(list));
     }).catch(next);
 });

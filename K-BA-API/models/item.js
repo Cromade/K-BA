@@ -27,6 +27,10 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             unique: true,
         },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         price: {
             type: DataTypes.FLOAT,
             allowNull: false
@@ -48,6 +52,7 @@ module.exports = function (sequelize, DataTypes) {
                 const obj = {};
                 obj.uid = this.uid;
                 obj.name = this.name;
+                obj.description = this.description;
                 obj.price = this.price;
                 return obj;
             }

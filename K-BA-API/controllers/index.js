@@ -9,6 +9,7 @@ const NotificationController = require('./notification');
 const PluginController = require('./plugin');
 const AddressController = require('./address');
 const CategoryController = require('./category');
+const PreferenceController = require('./preference');
 
 
 const ControllerIndex = {};
@@ -21,5 +22,6 @@ ControllerIndex.NotificationController = NotificationController;
 ControllerIndex.PluginController = PluginController;
 ControllerIndex.AddressController = AddressController;
 ControllerIndex.CategoryController = CategoryController;
+ControllerIndex.PreferenceController = PreferenceController;
 
 module.exports = ControllerIndex;

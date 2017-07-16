@@ -10,12 +10,14 @@ const ItemController = {};
 /**
  *
  * @param {String} name
+ * @param {String} description
  * @param {Float} price
  * @returns {Promise<Item|undefined>}
  */
-ItemController.create = function(name, price) {
+ItemController.create = function(name, description,price) {
     return Item.create({
         name: name,
+        description: description,
         price: price
     });
 };

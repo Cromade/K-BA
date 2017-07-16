@@ -3,6 +3,8 @@
 const ModelIndex = require ('../models');
 const UtilsIndex = require ('../utils');
 const User = ModelIndex.getModel('User');
+const Address = ModelIndex.getModel('Address');
+
 const CryptUtils = UtilsIndex.CryptUtils;
 
 const UserController = {};
@@ -13,13 +15,19 @@ const UserController = {};
  * @param {String} password
  * @returns {Promise<User|undefined>}
  */
-UserController.create = function(email, password, gender) {
+UserController.create = function(firstname, lastname, email, password, address, zipcode, city) {
     return CryptUtils.createSalt().then((salt) => {
-        return User.create({
-            email : email,
-            password: CryptUtils.hashPassword(salt, password),
-            salt : salt,
-            gender: gender
+        return Address.create({
+            address : address,
+            zipcode : zipcode,
+            city : city
+        }).then((address) => {
+            return User.create({
+                email : email,
+                password: CryptUtils.hashPassword(salt, password),
+                salt : salt,
+                address_uid: address.uid
+            });
         });
     });
 };
@@ -49,4 +57,6 @@ UserController.getByUid = function(uid) {
         }
     });
 };
+
+
 module.exports = UserController;

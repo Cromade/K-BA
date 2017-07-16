@@ -36,13 +36,12 @@ module.exports = function (sequelize, DataTypes) {
         freezeTableName: true,
         classMethods: {
             associate: function (ModelIndex) {
-                List.belongsToMany(ModelIndex.getModel('Group'), {
-                    as: 'groups',
-                    through: 'GroupList'
+                List.belongsTo(ModelIndex.getModel('Group'), {
+                    as: 'group'
                 });
-                List.belongsToMany(ModelIndex.getModel('User'), {
-                    as: 'users',
-                    through: 'UserList'
+
+                List.belongsTo(ModelIndex.getModel('User'), {
+                    as: 'user'
                 });
             }
         },

@@ -23,15 +23,25 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false
         },
+        firstname: {
+            type: DataTypes.STRING(150),
+            allowNull: false,
+            unique: true,
+        },
+        lastname: {
+            type: DataTypes.STRING(150),
+            allowNull: false,
+            unique: true,
+        },
         email: {
             type: DataTypes.STRING(150),
-            allowNull: false
+            allowNull: false,
+            unique: true,
         },
         password: {
             type: DataTypes.STRING(50),
             allowNull: false
         },
-        gender : DataTypes.ENUM('F','M'),
         premium : DataTypes.BOOLEAN,
         salt: DataTypes.STRING(255)
     }, {
@@ -62,8 +72,7 @@ module.exports = function (sequelize, DataTypes) {
             responsify: function () {
                 const obj = {};
                 obj.uid = this.uid;
-                obj.email = this.email;
-                obj.gender= this.gender;
+                obj.pseudo = this.pseudo;
                 obj.premium = this.premium;
                 return obj;
             },

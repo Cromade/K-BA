@@ -5,34 +5,31 @@ const UtilsIndex = require ('../utils');
 const List = ModelIndex.getModel('List');
 const CryptUtils = UtilsIndex.CryptUtils;
 
-const ListController = {};
+const PreferenceController = {};
 
 /**
  *
  * @param {String} name
  * @param {Enum} state
- * @returns {Promise<List|undefined>}
+ * @returns {Promise<Preference|undefined>}
  */
-ListController.create = function(name, state, user) {
-    return List.create({
-        name: name,
-        state: state,
-        user_id : user.id
+PreferenceController.create = function(user) {
+    return Preference.create({
+        user_id: user.id, 
     });
 };
 
 /**
  *
  * @param {String} uid
- * @returns {Promise<List|undefined>}
+ * @returns {Promise<Preference|undefined>}
  */
-ListController.getByUid = function(uid) {
-    return List.find({
+PreferenceController.getByUid = function(uid) {
+    return Preference.find({
         where: {
             uid: uid
         }
     });
 };
 
-
-module.exports = ListController;
+module.exports = PreferenceController;

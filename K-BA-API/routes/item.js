@@ -16,7 +16,7 @@ router.use(AuthMiddleware.getToken());
 router.use(SessionMiddleware.getUser());
 
 router.post('/', (req, res, next) => {
-    ItemController.create(req.body.name, req.body.price).then((item) => {
+    ItemController.create(req.body.name, req.body.description, req.body.price).then((item) => {
         res.json(responsifier.instance(item));
     }).catch(next);
 });
