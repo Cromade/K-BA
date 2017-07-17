@@ -6,7 +6,7 @@ import android.util.Log;
 /**
  * Created by candice on 16/07/2017.
  */
-public class NetworkGetTask extends AsyncTask<String, Void, String> {
+public class NetworkGetTask extends AsyncTask<String, Void, NetworkResponse> {
 
     private INetworkListener listener;
 
@@ -15,7 +15,7 @@ public class NetworkGetTask extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected String doInBackground(String... url) {
+    protected NetworkResponse doInBackground(String... url) {
         try {
             return WebService.get(url[0]);
         } catch (Exception e) {
@@ -25,8 +25,8 @@ public class NetworkGetTask extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        this.listener.onComplete(s);
+    protected void onPostExecute(NetworkResponse nr) {
+        this.listener.onComplete(nr);
     }
 
 }

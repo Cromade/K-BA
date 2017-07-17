@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -15,11 +17,13 @@ import java.util.Map;
 
 import projet.k_ba.network.AsyncWebServices;
 import projet.k_ba.network.INetworkListener;
+import projet.k_ba.network.NetworkResponse;
 
 public class SubscribeActivity extends AppCompatActivity {
 
     private EditText firstname_text_edit;
     private EditText lastname_text_edit;
+    private EditText email_text_edit;
     private EditText pseudo_text_edit;
     private EditText pwd_text_edit;
     private EditText birthdate_text_edit;
@@ -44,6 +48,7 @@ public class SubscribeActivity extends AppCompatActivity {
                 if (!pseudo_text_edit.getText().toString().equals("")) {
                     if (!pwd_text_edit.getText().equals("")) {
                         subscribeButton();
+
                     } else {
                         pwd_text_edit.setError(getApplicationContext().getString(R.string.required));
                     }
@@ -71,6 +76,7 @@ public class SubscribeActivity extends AppCompatActivity {
     public void findViewsById() {
         firstname_text_edit = (EditText)findViewById(R.id.firstname_text_edit);
         lastname_text_edit = (EditText) findViewById(R.id.lastname_text_edit);
+        email_text_edit = (EditText) findViewById(R.id.email_text_edit);
         pseudo_text_edit = (EditText) findViewById(R.id.pseudo_text_edit);
         pwd_text_edit = (EditText) findViewById(R.id.pwd_text_edit);
         birthdate_text_edit = (EditText) findViewById(R.id.birthdate_text_edit);
@@ -87,7 +93,7 @@ public class SubscribeActivity extends AppCompatActivity {
         params.put("firstname", firstname_text_edit.getText().toString());
         params.put("lastname", lastname_text_edit.getText().toString());
         params.put("pseudo", pseudo_text_edit.getText().toString());
-        params.put("email", "test@test.com");
+        params.put("email", email_text_edit.getText().toString());
         params.put("password", pwd_text_edit.getText().toString());
         params.put("birthdate", birthdate_text_edit.getText().toString());
         params.put("address", address_text_edit.getText().toString());
@@ -96,8 +102,26 @@ public class SubscribeActivity extends AppCompatActivity {
 
         AsyncWebServices.post("/auth/subscribe", params, new INetworkListener() {
             @Override
-            public void onComplete(String response) {
-                Log.d("NETWORK", response);
+            public void onComplete(NetworkResponse response) {
+                Log.d("NETWORK", response.getBody());
+                if(response.toString() != null) {
+                    try {
+                        JSONObject object = new JSONObject(response.getBody());
+                        if((object.getString("uid")) != null) {
+                            Toast popup = Toast.makeText(getApplicationContext(), R.string.subscribe, Toast.LENGTH_LONG);
+                            popup.show();
+                            finish();
+                            return;
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                Toast popup = Toast.makeText(getApplicationContext(), R.string.fail, Toast.LENGTH_LONG);
+                popup.show();
+
             }
         });
     }

@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
                 Preference.belongsTo(ModelIndex.getModel('User'), {
                     as: 'user',
                 });
-                Preference.hasMany(ModelIndex.getModel('Item'), {
+                Preference.belongsToMany(ModelIndex.getModel('Item'), {
                     as: 'items',
                     through: 'PreferenceItem'
                 });
@@ -49,5 +49,5 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     });
-    return List;
+    return Preference;
 };

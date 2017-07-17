@@ -27,17 +27,14 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
         },
         zipcode : DataTypes.BIGINT,
-        town : DataTypes.STRING(50),
+        city : DataTypes.STRING(50),
     }, {
         paranoid: true,
         underscored: true,
         freezeTableName: true,
         classMethods: {
             associate: function (ModelIndex) {
-                Address.belongsToMany(ModelIndex.getModel('User'), {
-                    as: 'users',
-                    through: 'AddressUser'
-                });
+            
             }
         },
         instanceMethods: {

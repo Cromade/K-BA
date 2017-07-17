@@ -3,6 +3,7 @@ package projet.k_ba;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 import projet.k_ba.network.AsyncWebServices;
 import projet.k_ba.network.INetworkListener;
+import projet.k_ba.network.NetworkResponse;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,26 +67,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void connectButton() {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("login", login_text_edit.getText().toString());
+        params.put("email", login_text_edit.getText().toString());
         params.put("password", password_text_edit.getText().toString());
         AsyncWebServices.post("/auth/login", params, new INetworkListener() {
             @Override
-            public void onComplete(String response) {
-
-                if (!response.equals("false")) {
-                    try {
-                        JSONObject object = new JSONObject(response);
-                        Intent Subscribe = new Intent(MainActivity.this, HomeActivity.class);
-                        Toast popup = Toast.makeText(getApplicationContext(), R.string.connect, Toast.LENGTH_LONG);
-                        popup.show(); // toast
-                        startActivity(Subscribe); // nouvelle page
+            public void onComplete(NetworkResponse response) {
+                if(response != null) {
+                   String token =  response.getFirstHeader("Token");
+                    if(token != null){
+                        Intent Home = new Intent(MainActivity.this, HomeActivity.class);
+                        Home.putExtra("token",token);
+                        startActivity(Home);
                         finish();
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
                 } else {
-                    login_text_edit.setError(getApplicationContext().getString(R.string.wronglog));
-                    password_text_edit.setError(getApplicationContext().getString(R.string.wrongpwd));
+                    Toast popup = Toast.makeText(getApplicationContext(), R.string.fail, Toast.LENGTH_LONG);
+                    popup.show();
                 }
             }
         });
@@ -93,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         try {
             Intent Subscribe = new Intent(MainActivity.this, SubscribeActivity.class);
             startActivity(Subscribe); // nouvelle page
-            finish();
         } catch (Exception e) {
             e.printStackTrace();
         }

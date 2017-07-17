@@ -2,7 +2,7 @@
 
 const ModelIndex = require ('../models');
 const UtilsIndex = require ('../utils');
-const List = ModelIndex.getModel('List');
+const Preference = ModelIndex.getModel('Preference');
 const CryptUtils = UtilsIndex.CryptUtils;
 
 const PreferenceController = {};

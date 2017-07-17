@@ -30,7 +30,7 @@
         android:id="@+id/login_text_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:hint="Login"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/title_text_view"
         style="@style/EditTextStyle"/>
@@ -40,7 +40,7 @@
         android:id="@+id/password_text_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Password"
+        android:hint="Password"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/login_text_edit"
         style="@style/EditTextStyle"/>

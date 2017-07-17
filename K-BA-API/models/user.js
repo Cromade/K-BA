@@ -26,14 +26,17 @@ module.exports = function (sequelize, DataTypes) {
         firstname: {
             type: DataTypes.STRING(150),
             allowNull: false,
-            unique: true,
         },
         lastname: {
             type: DataTypes.STRING(150),
             allowNull: false,
-            unique: true,
         },
         email: {
+            type: DataTypes.STRING(150),
+            allowNull: false,
+            unique: true,
+        },
+        pseudo: {
             type: DataTypes.STRING(150),
             allowNull: false,
             unique: true,
@@ -42,7 +45,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(50),
             allowNull: false
         },
-        premium : DataTypes.BOOLEAN,
+        birthdate: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
         salt: DataTypes.STRING(255)
     }, {
         paranoid: true,
@@ -54,9 +60,8 @@ module.exports = function (sequelize, DataTypes) {
                     as: 'plugins',
                     through: 'PluginUser'
                 });
-                User.belongsToMany(ModelIndex.getModel('Address'), {
-                    as: 'addresses',
-                    through: 'AddressUser'
+                User.belongsTo(ModelIndex.getModel('Address'), {
+                    as: 'address',
                 });
                 User.belongsToMany(ModelIndex.getModel('Group'), {
                     as: 'groups',

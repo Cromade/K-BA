@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/subscribe', (req, res, next) => {
     console.log(req.body);
     if(req.body.firstname && req.body.lastname && req.body.email && req.body.password && req.body.pseudo && req.body.address && req.body.zipcode && req.body.city && req.body.birthdate ) {
-        UserController.create(req.body.firstname && req.body.lastname && req.body.email && req.body.password && req.body.pseudo && req.body.address && req.body.zipcode && req.body.city && req.body.birthdate ).then((user) => {
+        UserController.create(req.body.firstname, req.body.lastname, req.body.email, req.body.pseudo, req.body.password,  req.body.birthdate,req.body.address, req.body.zipcode, req.body.city).then((user) => {
             res.json(responsifier.instance(user));
             }).catch(next);
     } else {

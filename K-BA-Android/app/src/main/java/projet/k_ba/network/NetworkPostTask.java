@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * Created by candice on 16/07/2017.
  */
-public class NetworkPostTask extends AsyncTask<Object, Void, String> {
+public class NetworkPostTask extends AsyncTask<Object, Void, NetworkResponse> {
 
     private INetworkListener listener;
 
@@ -18,7 +18,7 @@ public class NetworkPostTask extends AsyncTask<Object, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Object... args) {
+    protected NetworkResponse doInBackground(Object... args) {
         try {
             String url = (String)args[0];
             Map<String, String> params = (Map<String, String>)args[1];
@@ -30,7 +30,7 @@ public class NetworkPostTask extends AsyncTask<Object, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        this.listener.onComplete(s);
+    protected void onPostExecute(NetworkResponse nr) {
+        this.listener.onComplete(nr);
     }
 }

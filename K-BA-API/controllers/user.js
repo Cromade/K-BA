@@ -15,7 +15,7 @@ const UserController = {};
  * @param {String} password
  * @returns {Promise<User|undefined>}
  */
-UserController.create = function(firstname, lastname, email, password, address, zipcode, city) {
+UserController.create = function(firstname, lastname, pseudo, email, password, birthdate, address, zipcode, city) {
     return CryptUtils.createSalt().then((salt) => {
         return Address.create({
             address : address,
@@ -23,10 +23,14 @@ UserController.create = function(firstname, lastname, email, password, address, 
             city : city
         }).then((address) => {
             return User.create({
+                firstname: firstname,
+                lastname:lastname,
                 email : email,
                 password: CryptUtils.hashPassword(salt, password),
+                birthdate: birthdate,
+                pseudo: pseudo,
                 salt : salt,
-                address_uid: address.uid
+                address_id: address.id
             });
         });
     });

@@ -4,4 +4,6 @@
     <string name="wrongpwd">Wrong Password</string>
     <string name="required">Ce champs est requis</string>
     <string name="connect">Vous êtes connecté</string>
+    <string name="subscribe">Vous êtes bien inscrit</string>
+    <string name="fail">Problème de connexion</string>
 </resources>

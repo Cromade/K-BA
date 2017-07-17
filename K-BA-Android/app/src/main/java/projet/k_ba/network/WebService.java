@@ -15,11 +15,11 @@ import java.util.Set;
  * Created by candice on 16/07/2017.
  */
 public class WebService {
-    public static String get(String url) throws Exception {
+    public static NetworkResponse get(String url) throws Exception {
         return get(url, null);
     }
 
-    public static String get(String url, Map<String, String> headers) throws Exception {
+    public static NetworkResponse get(String url, Map<String, String> headers) throws Exception {
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -40,19 +40,23 @@ public class WebService {
         String inputLine = null;
         StringBuffer response = new StringBuffer();
 
+        NetworkResponse networkResponse = new NetworkResponse();
+        networkResponse.setHeaders(con.getHeaderFields());
+
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
         in.close();
 
-        return response.toString();
+        networkResponse.setBody(response.toString());
+        return networkResponse;
     }
 
-    public static String post(String url, Map<String, String> parameters) throws Exception {
+    public static NetworkResponse post(String url, Map<String, String> parameters) throws Exception {
         return post(url, parameters, null);
     }
 
-    public static String post(String url, Map<String, String> parameters, Map<String, String> headers)
+    public static NetworkResponse post(String url, Map<String, String> parameters, Map<String, String> headers)
             throws Exception {
         // Create connection
         URL obj = new URL(url);
@@ -83,6 +87,8 @@ public class WebService {
 
         // Get Response
         InputStream is = con.getInputStream();
+        NetworkResponse networkResponse = new NetworkResponse();
+        networkResponse.setHeaders(con.getHeaderFields());
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
         StringBuilder response = new StringBuilder();
         String line;
@@ -90,6 +96,8 @@ public class WebService {
             response.append(line);
         }
         rd.close();
-        return response.toString();
+
+        networkResponse.setBody(response.toString());
+        return networkResponse;
     }
 }
