@@ -49,6 +49,9 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.DATE,
             allowNull: false,
         },
+        path :{
+            type: DataTypes.STRING,
+        },
         salt: DataTypes.STRING(255)
     }, {
         paranoid: true,
@@ -78,7 +81,6 @@ module.exports = function (sequelize, DataTypes) {
                 const obj = {};
                 obj.uid = this.uid;
                 obj.pseudo = this.pseudo;
-                obj.premium = this.premium;
                 return obj;
             },
             authenticate: function(clearPassword) {

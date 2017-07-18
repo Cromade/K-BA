@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!login_text_edit.getText().toString().equals("")) {
                     if (!password_text_edit.getText().equals("")) {
-                        connectButton();
+                        connexion();
                     } else {
                         password_text_edit.setError(getApplicationContext().getString(R.string.required));
                     }
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         password_text_edit = (EditText) findViewById(R.id.password_text_edit);
     }
 
-    private void connectButton() {
+    private void connexion() {
         Map<String, String> params = new HashMap<String, String>();
         params.put("email", login_text_edit.getText().toString());
         params.put("password", password_text_edit.getText().toString());

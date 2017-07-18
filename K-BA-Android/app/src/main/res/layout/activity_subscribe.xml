@@ -87,7 +87,7 @@
                 android:id="@+id/birthdate_text_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="JJ/MM/AAAA"
+                android:hint="JJ-MM-AAAA"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/pwd_text_edit"
                 style="@style/EditTextStyle"/>
