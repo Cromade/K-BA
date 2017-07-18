@@ -49,9 +49,6 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.DATE,
             allowNull: false,
         },
-        path :{
-            type: DataTypes.STRING,
-        },
         salt: DataTypes.STRING(255)
     }, {
         paranoid: true,
