@@ -61,6 +61,11 @@ UserController.getByUid = function(uid) {
         }
     });
 };
-
-
+/**
+ *
+ * @returns {Promise<User|undefined>}
+ */
+UserController.listUsers = function() {
+    return User.findAndCountAll();
+};
 module.exports = UserController;

@@ -46,7 +46,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         birthdate: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         salt: DataTypes.STRING(255)
@@ -56,10 +56,6 @@ module.exports = function (sequelize, DataTypes) {
         freezeTableName: true,
         classMethods: {
             associate: function (ModelIndex) {
-                User.belongsToMany(ModelIndex.getModel('Plugin'), {
-                    as: 'plugins',
-                    through: 'PluginUser'
-                });
                 User.belongsTo(ModelIndex.getModel('Address'), {
                     as: 'address',
                 });
@@ -77,7 +73,10 @@ module.exports = function (sequelize, DataTypes) {
             responsify: function () {
                 const obj = {};
                 obj.uid = this.uid;
+                obj.lastname = this.lastname;
+                obj.firstname = this.firstname;
                 obj.pseudo = this.pseudo;
+                obj.groups = this.groups;
                 return obj;
             },
             authenticate: function(clearPassword) {

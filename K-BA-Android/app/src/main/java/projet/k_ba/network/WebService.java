@@ -86,6 +86,7 @@ public class WebService {
         wr.close();
 
         // Get Response
+
         InputStream is = con.getInputStream();
         NetworkResponse networkResponse = new NetworkResponse();
         networkResponse.setHeaders(con.getHeaderFields());

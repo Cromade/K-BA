@@ -5,6 +5,7 @@ const categoryRouter = require('./category');
 const itemRouter = require('./item');
 const listRouter = require('./list');
 const groupRouter = require('./group');
+const userRouter = require('./user');
 
 const RouteIndex = {};
 
@@ -18,6 +19,7 @@ RouteIndex.attach = function(app) {
     app.use('/item', itemRouter);
     app.use('/list', listRouter);
     app.use('/group', groupRouter);
+    app.use('/user', userRouter);
 
 
 };

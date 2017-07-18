@@ -34,6 +34,10 @@ module.exports = function (sequelize, DataTypes) {
         price: {
             type: DataTypes.FLOAT,
             allowNull: false
+        },
+        manufacturer: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     }, {
         paranoid: true,
