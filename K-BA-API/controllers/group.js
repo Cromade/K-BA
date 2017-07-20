@@ -37,22 +37,34 @@ GroupController.getByUid = function(uid) {
  * @returns {Promise<Group|undefined>}
  */
 GroupController.listGroups = function(user_id) {
-    var where = {};
-    var whereInclude = {}
     if(user_id) {
-        where["$or"] = {
-            "owner_id": user_id,
-        }
-        whereInclude.id = user_id
+        return Group.findAll({
+            include:[{
+                model: ModelIndex.getModel("User"), 
+                as: "users"
+            }],
+            where: {
+                owner_id: user_id
+            }
+        }).then((groups) => {
+            return Group.findAll({
+                include:[{
+                    model: ModelIndex.getModel("User"), 
+                    as: "users",
+                    where: {
+                        id: user_id
+                    }
+                }]
+            }).then((others) => {
+                return groups.concat(others);
+            });
+        })
     }
     return Group.findAll({
         include:[{
             model: ModelIndex.getModel("User"), 
-            as: "users",
-            where: whereInclude,
-            required: false
+            as: "users"
         }],
-        where: where
     });
 };
 
