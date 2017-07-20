@@ -29,10 +29,15 @@ fs.readdirSync(__dirname)
         ModelIndex[model.name] = model;
     });
 
+
+
 Object.keys(ModelIndex).forEach((modelName) => {
-    if (ModelIndex[modelName].associate) {
-        ModelIndex[modelName].associate(ModelIndex);
-    }
+  if (ModelIndex[modelName].associate) {
+    ModelIndex[modelName].associate(ModelIndex);
+  }
+  if (ModelIndex[modelName].associateScopes) {
+    ModelIndex[modelName].associateScopes(ModelIndex);
+  }
 });
 
 ModelIndex.sequelize = sequelize;
