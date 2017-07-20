@@ -22,5 +22,17 @@ AddressController.create = function(number, street, zipcode, town, country) {
     });
 };
 
+/**
+ *
+ * @param {String} uid
+ * @returns {Promise<Address|undefined>}
+ */
+AddressController.getByUid = function(uid) {
+    return User.scope(scope || 'defaultScope').find({
+        where: {
+            uid: uid
+        }
+    });
+};
 
 module.exports = AddressController;

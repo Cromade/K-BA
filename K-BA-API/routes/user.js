@@ -23,7 +23,7 @@ router.get('/', (req, res, next)=> {
 });
 
 router.get('/:uid', (req, res, next)=> {
-   UserController.getByUid(req.params.uid).then((user) => {
+   UserController.getByUid(req.params.uid, 'minimum').then((user) => {
        res.json(user);
    }).catch(next);
 });

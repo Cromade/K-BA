@@ -55,12 +55,13 @@ UserController.getByEmail = function(email) {
  * @returns {Promise<User|undefined>}
  */
 UserController.getByUid = function(uid) {
-    return User.find({
+    return User.scope(scope || 'defaultScope').find({
         where: {
             uid: uid
         }
     });
 };
+
 /**
  *
  * @returns {Promise<User|undefined>}
