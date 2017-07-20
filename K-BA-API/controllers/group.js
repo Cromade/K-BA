@@ -41,7 +41,11 @@ GroupController.listGroups = function(user_id) {
         where.user_id = user_id;
     }
     return Group.findAll({
-        where: where
+        includes:[{
+            model: ModelIndex.getModel("User"), 
+            as: "users",
+            where: where
+        }] 
     });
 };
 
