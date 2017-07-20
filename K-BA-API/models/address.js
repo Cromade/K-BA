@@ -36,7 +36,7 @@ module.exports = function (sequelize, DataTypes) {
             associate: function (ModelIndex) {
             
             },
-            associateScopes: function(models) {
+            associateScopes: function(ModelIndex) {
             Address.addScope("minimum", {
                 attributes: ["uid", "address", "zipcode", "city"],
             })

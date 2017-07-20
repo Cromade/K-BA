@@ -68,7 +68,7 @@ module.exports = function (sequelize, DataTypes) {
                     through: 'UserList'
                 });
             },
-            associateScopes: function(models) {
+            associateScopes: function(ModelIndex) {
                 User.addScope("minimum", {
                 attributes: ["uid", "firstname", "lastname", "pseudo", "email", "birthdate"],
                     include: [{
