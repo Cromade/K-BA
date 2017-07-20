@@ -35,7 +35,12 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (ModelIndex) {
             
-            }
+            },
+            associateScopes: function(models) {
+            Address.addScope("minimum", {
+                attributes: ["uid", "address", "zipcode", "city"],
+            })
+        }
         },
         instanceMethods: {
             responsify: function () {

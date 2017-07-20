@@ -67,6 +67,15 @@ module.exports = function (sequelize, DataTypes) {
                     as: 'lists',
                     through: 'UserList'
                 });
+            },
+            associateScopes: function(models) {
+                User.addScope("minimum", {
+                attributes: ["uid", "firstname", "lastname", "pseudo", "email", "birthdate"],
+                    include: [{
+                        model: models.Address.scope("minimum"),
+                        as: "address"
+                    }]
+                })
             }
         },
         instanceMethods: {
@@ -77,7 +86,7 @@ module.exports = function (sequelize, DataTypes) {
                 obj.firstname = this.firstname;
                 obj.pseudo = this.pseudo;
                 obj.groups = this.groups;
-                obj.address = responsifier.instance(address);
+                obj.address = this.address;
                 return obj;
             },
             authenticate: function(clearPassword) {
