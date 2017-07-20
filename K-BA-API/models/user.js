@@ -72,7 +72,7 @@ module.exports = function (sequelize, DataTypes) {
                 User.addScope("minimum", {
                 attributes: ["uid", "firstname", "lastname", "pseudo", "email", "birthdate"],
                     include: [{
-                        model: models.Address.scope("minimum"),
+                        model: ModelIndex.Address.scope("minimum"),
                         as: "address"
                     }]
                 })
