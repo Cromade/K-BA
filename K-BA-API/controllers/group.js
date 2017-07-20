@@ -38,19 +38,18 @@ GroupController.getByUid = function(uid) {
  */
 GroupController.listGroups = function(user_id) {
     var where = {};
-    var whereInclude = {};
     if(user_id) {
-        where.owner_id = user_id;
-        whereInclude.id = user_id
+        where["$or"] = {
+            "`owner_id`": user_id,
+            "id": user_id
+        }
     }
     return Group.findAll({
         include:[{
             model: ModelIndex.getModel("User"), 
             as: "users",
-            where: whereInclude,
-            required: false
+            where: where
         }],
-        where: where
     });
 };
 
