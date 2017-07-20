@@ -49,6 +49,7 @@ GroupController.listGroups = function(user_id) {
             model: ModelIndex.getModel("User"), 
             as: "users"
         }],
+        where: where
     });
 };
 
