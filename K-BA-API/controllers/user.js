@@ -54,7 +54,7 @@ UserController.getByEmail = function(email) {
  * @param {String} uid
  * @returns {Promise<User|undefined>}
  */
-UserController.getByUid = function(uid) {
+UserController.getByUid = function(uid, scope) {
     return User.scope(scope || 'defaultScope').find({
         where: {
             uid: uid

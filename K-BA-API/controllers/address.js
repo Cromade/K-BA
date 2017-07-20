@@ -27,7 +27,7 @@ AddressController.create = function(number, street, zipcode, town, country) {
  * @param {String} uid
  * @returns {Promise<Address|undefined>}
  */
-AddressController.getByUid = function(uid) {
+AddressController.getByUid = function(uid, scope) {
     return Address.scope(scope || 'defaultScope').find({
         where: {
             uid: uid
