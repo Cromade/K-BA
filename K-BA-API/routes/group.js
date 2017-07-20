@@ -23,7 +23,7 @@ router.post('/', (req, res, next) => {
 
 router.get('/', (req, res, next)=> {
     if(req.query.user_uid) {
-        UserController.getByUid(user_uid).then((user) => {
+        UserController.getByUid(req.query.user_uid).then((user) => {
         return GroupController.listGroups(user.id).then((groups) => {
                 res.json(groups);
             }).catch(next);
