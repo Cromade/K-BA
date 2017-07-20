@@ -2,11 +2,18 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const RouteIndex = require('./routes');
+const cors = require('cors');
 
 const app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
+app.use(cors({
+	exposedHeaders: [
+		"Access-Control-Request-Headers",
+		"Token"
+	]
+}));
 
 app.use((req, res, next) => {
   res.set('Access-Control-Allow-Origin', 'http://localhost:4200');
