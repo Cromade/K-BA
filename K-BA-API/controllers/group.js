@@ -37,18 +37,17 @@ GroupController.getByUid = function(uid) {
  * @returns {Promise<Group|undefined>}
  */
 GroupController.listGroups = function(user_id) {
-    var where= {};
+    var where = {};
+    var whereInclude = {};
     if(user_id) {
-        var col = ModelIndex.sequelize.col("users.id")
-        where["$or"] = {
-            owner_id:user_id,
-            col: user_id
-        }
+        where.owner_id = user_id;
+        whereInclude.id = user_id
     }
     return Group.findAll({
         include:[{
             model: ModelIndex.getModel("User"), 
-            as: "users"
+            as: "users",
+            where: whereInclude
         }],
         where: where
     });
