@@ -47,7 +47,8 @@ GroupController.listGroups = function(user_id) {
         include:[{
             model: ModelIndex.getModel("User"), 
             as: "users",
-            where: whereInclude
+            where: whereInclude,
+            require: false
         }],
         where: where
     });
