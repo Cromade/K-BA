@@ -39,9 +39,10 @@ GroupController.getByUid = function(uid) {
 GroupController.listGroups = function(user_id) {
     var where= {};
     if(user_id) {
+        var col = ModelIndex.sequelize.col("users.id")
         where["$or"] = {
             owner_id:user_id,
-            "users.id": user_id
+            col: user_id
         }
     }
     return Group.findAll({
