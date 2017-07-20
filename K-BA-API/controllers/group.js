@@ -15,7 +15,7 @@ const GroupController = {};
 GroupController.create = function(name, user_id) {
     return Group.create({
         name: name,
-        owner: user_id
+        owner_id: user_id
     });
 };
 
