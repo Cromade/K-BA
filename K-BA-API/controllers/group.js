@@ -40,16 +40,16 @@ GroupController.listGroups = function(user_id) {
     var where = {};
     if(user_id) {
         where["$or"] = {
-            "`owner_id`": user_id,
-            "id": user_id
+            "owner_id": user_id,
+            "`users.id`": user_id
         }
     }
     return Group.findAll({
         include:[{
             model: ModelIndex.getModel("User"), 
-            as: "users",
-            where: where
+            as: "users"
         }],
+        where: where
     });
 };
 
