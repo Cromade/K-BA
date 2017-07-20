@@ -41,7 +41,8 @@ GroupController.listGroups = function(user_id) {
         return Group.findAll({
             include:[{
                 model: ModelIndex.getModel("User").scope("minimum"), 
-                as: "users"
+                as: "users",
+                required: false
             },{
                 model: ModelIndex.getModel("User").scope("minimum"), 
                 as: "owner"
@@ -59,7 +60,8 @@ GroupController.listGroups = function(user_id) {
                     }
                 }, {
                     model: ModelIndex.getModel("User").scope("minimum"), 
-                    as: "owner"
+                    as: "owner",
+                    required:false
                 }]
             }).then((others) => {
                 return groups.concat(others);
