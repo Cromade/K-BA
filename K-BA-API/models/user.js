@@ -77,6 +77,7 @@ module.exports = function (sequelize, DataTypes) {
                 obj.firstname = this.firstname;
                 obj.pseudo = this.pseudo;
                 obj.groups = this.groups;
+                obj.address = this.address
                 return obj;
             },
             authenticate: function(clearPassword) {
