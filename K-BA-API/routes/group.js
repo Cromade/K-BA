@@ -16,7 +16,7 @@ router.use(AuthMiddleware.getToken());
 router.use(SessionMiddleware.getUser());
 
 router.post('/', (req, res, next) => {
-    GroupController.create(req.body.name).then((group) => {
+    GroupController.create(req.body.name, req.user.id).then((group) => {
         res.json(responsifier.instance(group));
     }).catch(next);
 });

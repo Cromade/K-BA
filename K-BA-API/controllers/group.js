@@ -12,9 +12,10 @@ const GroupController = {};
  * @param {String} name
  * @returns {Promise<Group|undefined>}
  */
-GroupController.create = function(name) {
+GroupController.create = function(name, user_id) {
     return Group.create({
-        name: name
+        name: name,
+        owner: user_id
     });
 };
 
