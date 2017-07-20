@@ -18,6 +18,7 @@ import java.util.Map;
 import projet.k_ba.network.AsyncWebServices;
 import projet.k_ba.network.INetworkListener;
 import projet.k_ba.network.NetworkResponse;
+import projet.k_ba.utils.InputFieldTest;
 
 public class SubscribeActivity extends AppCompatActivity {
 
@@ -45,7 +46,7 @@ public class SubscribeActivity extends AppCompatActivity {
         validate_inscription_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!pseudo_text_edit.getText().toString().equals("")) {
+                if (!email_text_edit.getText().toString().equals("")) {
                     if (!pwd_text_edit.getText().equals("")) {
                         subscribeButton();
 
@@ -53,7 +54,7 @@ public class SubscribeActivity extends AppCompatActivity {
                         pwd_text_edit.setError(getApplicationContext().getString(R.string.required));
                     }
                 } else {
-                    pseudo_text_edit.setError(getApplicationContext().getString(R.string.required));
+                    email_text_edit.setError(getApplicationContext().getString(R.string.required));
                 }
             }
         });
@@ -89,6 +90,22 @@ public class SubscribeActivity extends AppCompatActivity {
 
 
     private void subscribeButton() {
+        String firstname = firstname_text_edit.getText().toString();
+        String lastname = lastname_text_edit.getText().toString();
+        String email = email_text_edit.getText().toString();
+        String pseudo = pseudo_text_edit.getText().toString();
+        String pwd = pwd_text_edit.getText().toString();
+        String birthdate = birthdate_text_edit.getText().toString();
+        String address = address_text_edit.getText().toString();
+        String zipcode = zipcode_text_edit.getText().toString();
+        String city = city_text_edit.getText().toString();
+
+        String message = InputFieldTest.isInputValid(lastname, firstname, pseudo, email, pwd, birthdate, address, zipcode, city);
+        if(message.length() > 0) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            return;
+        }
+
         Map<String, String> params = new HashMap<String, String>();
         params.put("firstname", firstname_text_edit.getText().toString());
         params.put("lastname", lastname_text_edit.getText().toString());

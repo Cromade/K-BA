@@ -66,7 +66,7 @@ UserController.getByUid = function(uid, scope) {
  *
  * @returns {Promise<User|undefined>}
  */
-UserController.listUsers = function() {
-    return User.findAndCountAll();
+UserController.listUsers = function(scope) {
+    return User.scope(scope || 'defaultScope').findAndCountAll();
 };
 module.exports = UserController;

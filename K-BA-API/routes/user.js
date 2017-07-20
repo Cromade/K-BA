@@ -14,10 +14,8 @@ const router = express.Router();
 router.use(AuthMiddleware.getToken());
 router.use(SessionMiddleware.getUser());
 
-
-
 router.get('/', (req, res, next)=> {
-   UserController.listUsers().then((users) => {
+   UserController.listUsers('minimum').then((users) => {
        res.json(users);
    }).catch(next);
 });
