@@ -14,6 +14,7 @@ const router = express.Router();
 
 router.use(AuthMiddleware.getToken());
 router.use(SessionMiddleware.getUser());
+
 router.post('/', (req, res, next) => {
     GroupController.create(req.body.name).then((group) => {
         res.json(responsifier.instance(group));
@@ -21,9 +22,17 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/', (req, res, next)=> {
-    GroupController.listGroups().then((groups) => {
-        res.json(groups);
-    }).catch(next);
+    if(req.query.user_uid) {
+        UserController.getByUid(user_uid).then((user) => {
+        return GroupController.listGroups(user.id).then((groups) => {
+                res.json(groups);
+            }).catch(next);
+        })
+    } else {
+        GroupController.listGroups().then((groups) => {
+            res.json(groups);
+        }).catch(next);
+    }
 });
 
 

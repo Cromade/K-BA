@@ -32,11 +32,17 @@ GroupController.getByUid = function(uid) {
 };
 
 /**
- *
+ * @param {String} user_id
  * @returns {Promise<Group|undefined>}
  */
-GroupController.listGroups = function() {
-    return Group.findAndCountAll();
+GroupController.listGroups = function(user_id) {
+    var where= {};
+    if(user_id) {
+        where.user_id = user_id;
+    }
+    return Group.findAll({
+        where: where
+    });
 };
 
 module.exports = GroupController;

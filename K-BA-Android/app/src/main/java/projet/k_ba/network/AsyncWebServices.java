@@ -12,9 +12,16 @@ public class AsyncWebServices {
     public static void get(String url, INetworkListener listener) {
         new NetworkGetTask(listener).execute(BASE_URL + url);
     }
+    public static void get(String url, INetworkListener listener, Map<String,String> headers) {
+        new NetworkGetTask(listener).execute(BASE_URL + url,headers);
+    }
 
     public static void post(String url, Map<String, String> parameters, INetworkListener listener) {
         new NetworkPostTask(listener).execute(BASE_URL + url, parameters);
+    }
+
+    public static void post(String url, Map<String, String> parameters, INetworkListener listener, Map<String,String> headers) {
+        new NetworkPostTask(listener).execute(BASE_URL + url, parameters, headers);
     }
 
 }

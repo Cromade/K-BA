@@ -6,6 +6,7 @@
     <color name="orangeButton">#ff5801</color>
     <color name="white">#FFF7F6F6</color>
     <color name="black">#FF000000</color>
-    <color name="blueGreen">#11857e</color>
+    <color name="blueGreen">#159e95</color>
+    <color name="darkBlueGreen">#11857e</color>
 
 </resources>

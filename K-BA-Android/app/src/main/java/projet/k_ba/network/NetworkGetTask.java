@@ -3,10 +3,12 @@ package projet.k_ba.network;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.Map;
+
 /**
  * Created by candice on 16/07/2017.
  */
-public class NetworkGetTask extends AsyncTask<String, Void, NetworkResponse> {
+public class NetworkGetTask extends AsyncTask<Object, Void, NetworkResponse> {
 
     private INetworkListener listener;
 
@@ -15,9 +17,10 @@ public class NetworkGetTask extends AsyncTask<String, Void, NetworkResponse> {
     }
 
     @Override
-    protected NetworkResponse doInBackground(String... url) {
+    protected NetworkResponse doInBackground(Object... url) {
         try {
-            return WebService.get(url[0]);
+
+            return WebService.get((String)url[0], url.length > 1 ? (Map<String, String>)url[1] : null);
         } catch (Exception e) {
             Log.e("Network", "GET", e);
             return null;
