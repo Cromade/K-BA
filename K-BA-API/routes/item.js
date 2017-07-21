@@ -57,8 +57,10 @@ router.get('/:item_uid', (req, res, next)=> {
 
 router.delete('/:item_uid', (req, res, next)=> {
    ItemController.getByUid(req.query.item_uid).then((item) => {
-       ItemController.destroy(item);
-       res.json(item);
+       return item.destroy().then((result) => {
+            res.json(result)
+       })
+       
    }).catch(next);
 });
 module.exports = router;
