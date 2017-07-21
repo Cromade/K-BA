@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import projet.k_ba.R;
 import projet.k_ba.network.AsyncWebServices;
+import projet.k_ba.network.INetworkListener;
+import projet.k_ba.network.NetworkResponse;
 
 public class GroupActivity extends AppCompatActivity {
 
@@ -14,7 +16,12 @@ public class GroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
-        AsyncWebServices.get("/user/:user_uid/group/");
+        AsyncWebServices.post("/group/", params, new INetworkListener() {
+            @Override
+            public void onComplete(NetworkResponse response) {
+
+            }
+        }
     }
 
 

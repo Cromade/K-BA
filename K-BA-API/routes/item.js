@@ -16,9 +16,15 @@ router.use(AuthMiddleware.getToken());
 router.use(SessionMiddleware.getUser());
 
 router.post('/', (req, res, next) => {
-    ItemController.create(req.body.name, req.body.description, req.body.price).then((item) => {
+    ItemController.create(req.body.name, req.body.description, req.body.price, req.body.manufacturer).then((item) => {
         res.json(responsifier.instance(item));
     }).catch(next);
+});
+
+router.put('/:item_uid', (req, res, next) => {
+        ItemController.modify(req.params.item_uid, req.body).then((response) => {
+            res.json(response);
+        }).catch(next);
 });
 
 router.put('/:item_uid/category/:category_uid', (req, res, next) => {
@@ -43,4 +49,11 @@ router.get('/', (req, res, next)=> {
    }).catch(next);
 });
 
+
+router.get('/:item_uid', (req, res, next)=> {
+   ItemController.getByUid(req.query.item_uid).then((item) => {
+       ItemController.destroy(item);
+       res.json(item);
+   }).catch(next);
+});
 module.exports = router;

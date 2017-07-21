@@ -14,11 +14,12 @@ const ItemController = {};
  * @param {Float} price
  * @returns {Promise<Item|undefined>}
  */
-ItemController.create = function(name, description,price) {
+ItemController.create = function(name, description,price, manufacturer) {
     return Item.create({
         name: name,
         description: description,
-        price: price
+        price: price,
+        manufacturer: manufacturer
     });
 };
 
@@ -35,6 +36,21 @@ ItemController.getByUid = function(uid) {
     });
 };
 
+/**
+ *
+ * @param {String} uid
+ * @returns {Promise<Item|undefined>}
+ */
+ItemController.modify = function(uid, params) {
+    return ItemController.getByUid(uid).then((item) => {
+        if(item){
+            if(params.name) {
+                item.name = params.name
+           }
+           return item.save();
+        }
+    })
+};
 
 /**
  *
