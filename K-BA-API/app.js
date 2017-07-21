@@ -15,10 +15,6 @@ app.use(cors({
 	]
 }));
 
-app.use((req, res, next) => {
-  res.set('Access-Control-Allow-Origin', 'http://localhost:4200');
-  next();
-});
 
 RouteIndex.attach(app);
 

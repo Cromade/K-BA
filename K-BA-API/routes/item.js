@@ -58,7 +58,7 @@ router.get('/:item_uid', (req, res, next)=> {
 router.delete('/:item_uid', (req, res, next)=> {
    ItemController.getByUid(req.params.item_uid).then((item) => {
        return item.destroy().then((result) => {
-            res.json(result)
+            res.status(200).end();
        })
        
    }).catch(next);
