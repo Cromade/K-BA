@@ -49,8 +49,13 @@ router.get('/', (req, res, next)=> {
    }).catch(next);
 });
 
-
 router.get('/:item_uid', (req, res, next)=> {
+   ItemController.getByUid(req.query.item_uid).then((item) => {
+       res.json(item);
+   }).catch(next);
+});
+
+router.delete('/:item_uid', (req, res, next)=> {
    ItemController.getByUid(req.query.item_uid).then((item) => {
        ItemController.destroy(item);
        res.json(item);
