@@ -34,6 +34,15 @@ module.exports = function (sequelize, DataTypes) {
                         allowNull: false
                     }
                 });
+            },
+            associateScopes: function(ModelIndex) {
+                Session.addScope("minimum", {
+                    attributes: ["uid", "token"],
+                    include: [{
+                         model: ModelIndex.User.scope("minimum"),
+                        as: "user"
+                   }]
+                })
             }
         },
         instanceMethods: {

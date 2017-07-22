@@ -18,6 +18,14 @@ ModelIndex.getModel = function (modelName) {
     return this[modelName];
 };
 
+ModelIndex.associateScopes = function(modelName) {
+    let model = this.getModel(modelName)
+    if (model.associateScopes && model._scopeInit === undefined) {
+        model.associateScopes(this);
+        model._scopeInit = true
+    }
+}
+
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 fs.readdirSync(__dirname)
@@ -35,9 +43,7 @@ Object.keys(ModelIndex).forEach((modelName) => {
   if (ModelIndex[modelName].associate) {
     ModelIndex[modelName].associate(ModelIndex);
   }
-  if (ModelIndex[modelName].associateScopes) {
-    ModelIndex[modelName].associateScopes(ModelIndex);
-  }
+  ModelIndex.associateScopes(modelName);
 });
 
 ModelIndex.sequelize = sequelize;

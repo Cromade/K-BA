@@ -36,6 +36,11 @@ module.exports = function (sequelize, DataTypes) {
                     as: 'lists',
                     through: ItemList
                 });
+            },
+            associateScopes: function(ModelIndex) {
+                ItemList.addScope("minimum", {
+                    attributes: ["uid", "quantity"],
+                })
             }
         },
         instanceMethods: {

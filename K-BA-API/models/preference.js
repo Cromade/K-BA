@@ -35,6 +35,20 @@ module.exports = function (sequelize, DataTypes) {
                     as: 'items',
                     through: 'PreferenceItem'
                 });
+            },
+            associateScopes: function(ModelIndex) {
+                ModelIndex.associateScopes("User"); // force scope user
+                Preference.addScope("minimum", {
+                    attributes: ["uid"],
+                    include: [{
+                         model: ModelIndex.getModel('Item').scope("minimum"),
+                        as: "items"
+                   },
+                    {
+                        model: ModelIndex.getModel('User').scope("minimum"),
+                        as: "user"  
+                    }]
+                })
             }
         },
         instanceMethods: {

@@ -36,6 +36,12 @@ module.exports = function (sequelize, DataTypes) {
                     as: 'items',
                     through: 'CategoryItem'
                 });
+            },
+            associateScopes: function(ModelIndex) {
+                ModelIndex.associateScopes("User"); // force scope user
+                Category.addScope("minimum", {
+                    attributes: ["uid", "name"]
+                })
             }
         },
         instanceMethods: {

@@ -47,6 +47,19 @@ module.exports = function (sequelize, DataTypes) {
                 List.belongsTo(ModelIndex.getModel('User'), {
                     as: 'user'
                 });
+            },
+            associateScopes: function(ModelIndex) {
+                ModelIndex.associateScopes("User"); // force scope user
+                List.addScope("minimum", {
+                    attributes: ["uid", "name", "state", "fav"],
+                    include: [{
+                         model: ModelIndex.Group.scope("minimum"),
+                        as: "group"
+                   },{
+                       model: ModelIndex.User.scope("minimum"),
+                       as: "user"
+                   }]
+                })
             }
         },
         instanceMethods: {

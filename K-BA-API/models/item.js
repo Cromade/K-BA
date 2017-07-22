@@ -49,6 +49,15 @@ module.exports = function (sequelize, DataTypes) {
                     as: 'categories',
                     through: 'CategoryItem'
                 });
+            },
+            associateScopes: function(ModelIndex) {
+                Item.addScope("minimum", {
+                    attributes: ["uid", "name", "description", "price", "manufacturer"],
+                    include: [{
+                         model: ModelIndex.getModel('Category').scope("minimum"),
+                        as: "categories"
+                   }]
+                })
             }
         },
         instanceMethods: {
