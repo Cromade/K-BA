@@ -22,6 +22,7 @@ public class DetailsGroupActivity extends AppCompatActivity {
     private String token;
     private Group group;
     private Button addMemberButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,7 @@ public class DetailsGroupActivity extends AppCompatActivity {
         token = this.getIntent().getStringExtra("token");
         group = this.getIntent().getParcelableExtra("group");
 
-        this.userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*this.userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User selectedUser = (User) userListView.getAdapter().getItem(position);
@@ -39,16 +40,17 @@ public class DetailsGroupActivity extends AppCompatActivity {
                 detailsGroupActivity.putExtra("token", DetailsGroupActivity.this.token);
                 startActivity(detailsGroupActivity);
             }
-        });
+        });*/
 
         UserAdapter userAdapter = new UserAdapter(this, this.group.getMembers());
         userListView.setAdapter(userAdapter);
         addMemberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addGroupActivity = new Intent(DetailsGroupActivity.this, AddUserActivity.class);
-                addGroupActivity.putExtra("token", DetailsGroupActivity.this.token);
-                startActivity(addGroupActivity);
+                Intent addMemberToGroupActivity = new Intent(DetailsGroupActivity.this, AddMemberToGroupActivity.class);
+                addMemberToGroupActivity.putExtra("token", DetailsGroupActivity.this.token);
+                addMemberToGroupActivity.putExtra("group", DetailsGroupActivity.this.group);
+                startActivity(addMemberToGroupActivity);
 
             }
         });

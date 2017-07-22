@@ -15,9 +15,9 @@ router.use(AuthMiddleware.getToken());
 router.use(SessionMiddleware.getUser());
 
 router.get('/', (req, res, next)=> {
-   UserController.listUsers('minimum').then((users) => {
-       res.json(users);
-   }).catch(next);
+    UserController.listUsers(req.query.search, 'minimum').then((users) => {
+        res.json(users);
+    }).catch(next);
 });
 
 router.get('/:uid', (req, res, next)=> {

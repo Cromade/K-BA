@@ -62,11 +62,22 @@ UserController.getByUid = function(uid, scope) {
     });
 };
 
+
 /**
  *
  * @returns {Promise<User|undefined>}
  */
-UserController.listUsers = function(scope) {
-    return User.scope(scope || 'defaultScope').findAll();
+UserController.listUsers = function(search, scope) {
+    if(search) {
+        return User.scope(scope || 'defaultScope').findAll({
+            where: {
+                pseudo: {
+                    $like:  search + '%'
+                }
+            }
+        })
+    }
+    return Item.findAll();
 };
+
 module.exports = UserController;
