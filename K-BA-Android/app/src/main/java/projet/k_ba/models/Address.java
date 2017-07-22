@@ -3,6 +3,9 @@ package projet.k_ba.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by candice on 16/07/2017.
  */
@@ -31,6 +34,15 @@ public class Address implements Parcelable{
             return new Address[size];
         }
     };
+
+    public Address(JSONObject obj) throws JSONException {
+        if(obj != null) {
+            this.uid = obj.getString("uid");
+            this.address = obj.getString("address");
+            this.zipcode = obj.getString("zipcode");
+            this.city = obj.getString("city");
+        }
+    }
 
     private String uid;
     private String address;

@@ -46,6 +46,7 @@
             android:layout_marginRight="20dp">
 
             <Button
+                android:id="@+id/gestion_list"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
@@ -54,6 +55,7 @@
                 android:background="@drawable/button_selector"/>
 
             <Button
+                android:id="@+id/gestion_group"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
@@ -62,6 +64,7 @@
                 android:background="@drawable/button_selector"/>
 
             <Button
+                android:id="@+id/list_produits"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
@@ -70,6 +73,7 @@
                 android:background="@drawable/button_selector"/>
 
             <Button
+                android:id="@+id/gestion_preference"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
@@ -78,6 +82,7 @@
                 android:background="@drawable/button_selector"/>
 
             <Button
+                android:id="@+id/gestion_compte"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"

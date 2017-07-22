@@ -73,7 +73,6 @@ public class SubscribeActivity extends AppCompatActivity {
         });
     }
 
-
     public void findViewsById() {
         firstname_text_edit = (EditText)findViewById(R.id.firstname_text_edit);
         lastname_text_edit = (EditText) findViewById(R.id.lastname_text_edit);

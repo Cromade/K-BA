@@ -10,11 +10,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import projet.k_ba.models.User;
 import projet.k_ba.network.AsyncWebServices;
 import projet.k_ba.network.INetworkListener;
 import projet.k_ba.network.NetworkResponse;
@@ -75,10 +77,19 @@ public class MainActivity extends AppCompatActivity {
                 if(response != null) {
                    String token =  response.getFirstHeader("Token");
                     if(token != null){
-                        Intent Home = new Intent(MainActivity.this, HomeActivity.class);
-                        Home.putExtra("token",token);
-                        startActivity(Home);
-                        finish();
+                        try {
+                            JSONObject result = new JSONObject(response.getBody());
+                            Intent Home = new Intent(MainActivity.this, HomeActivity.class);
+                            Home.putExtra("token",token);
+                            Home.putExtra("user", new User(result));
+                            startActivity(Home);
+                            finish();
+                        } catch (JSONException e) {
+                            Toast popup = Toast.makeText(getApplicationContext(), R.string.fail, Toast.LENGTH_LONG);
+                            popup.show();
+                            return;
+                        }
+
                     }
                 } else {
                     Toast popup = Toast.makeText(getApplicationContext(), R.string.fail, Toast.LENGTH_LONG);

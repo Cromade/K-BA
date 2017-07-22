@@ -32,21 +32,18 @@
             android:layout_gravity="center"
             />
     </LinearLayout>
-    <View
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/title_logo_linear_layout"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_logo_linear_layout">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            />
+            <ListView
+                android:id="@+id/group_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        
-        <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        </ListView>
-    </ScrollView>
-
+    </RelativeLayout>
 </RelativeLayout>
