@@ -24,4 +24,11 @@ public class AsyncWebServices {
         new NetworkPostTask(listener).execute(BASE_URL + url, parameters, headers);
     }
 
+    public static void put(String url, Map<String, Object> parameters, INetworkListener listener) {
+        new NetworkPutTask(listener).execute(BASE_URL + url, parameters);
+    }
+
+    public static void put(String url, Map<String, Object> parameters, INetworkListener listener, Map<String,String> headers) {
+        new NetworkPutTask(listener).execute(BASE_URL + url, parameters, headers);
+    }
 }

@@ -56,16 +56,25 @@ public class WebService {
         return post(url, parameters, null);
     }
 
-    public static NetworkResponse post(String url, Map<String, Object> parameters, Map<String, String> headers)
-            throws Exception {
+    public static NetworkResponse post(String url, Map<String, Object> parameters, Map<String, String> headers) throws Exception {
+        return body("POST", url, parameters, headers);
+    }
+
+    public static NetworkResponse put(String url, Map<String, Object> parameters) throws Exception {
+        return post(url, parameters, null);
+    }
+
+    public static NetworkResponse put(String url, Map<String, Object> parameters, Map<String, String> headers) throws Exception {
+        return body("PUT", url, parameters, headers);
+    }
+
+    private static NetworkResponse body(String method, String url, Map<String, Object> parameters, Map<String, String> headers) throws Exception {
         // Create connection
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("POST");
+        con.setRequestMethod(method);
 
-        JSONObject json = new JSONObject(parameters);
-
-        String parametersStr = json.toString();
+        String parametersStr = parameters !=null ? new JSONObject(parameters).toString() : "";
 
         if (headers != null) {
             Set<String> keys = headers.keySet();

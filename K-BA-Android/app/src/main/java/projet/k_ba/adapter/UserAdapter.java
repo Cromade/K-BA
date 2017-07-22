@@ -32,7 +32,7 @@ public class UserAdapter extends BaseAdapter{
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return users.get(position);
     }
 
     @Override
