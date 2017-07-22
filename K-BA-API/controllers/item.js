@@ -67,7 +67,7 @@ ItemController.listItems = function(search, category_uid) {
     }
     if(category_uid) {
         include.push({
-            model: ModelIndex.getModel("category"),
+            model: ModelIndex.getModel("Category"),
             as : "categories",
             where: {
                 uid: category_uid
