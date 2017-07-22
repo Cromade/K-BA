@@ -36,7 +36,7 @@ CategoryController.getByUid = function(uid) {
  * @returns {Promise<Category|undefined>}
  */
 CategoryController.listCategories = function() {
-    return Category.findAndCountAll();
+    return Category.findAll();
 };
 
 module.exports = CategoryController;
