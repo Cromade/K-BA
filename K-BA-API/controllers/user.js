@@ -77,7 +77,7 @@ UserController.listUsers = function(search, scope) {
             }
         })
     }
-    return Item.findAll();
+    return User.findAll();
 };
 
 module.exports = UserController;

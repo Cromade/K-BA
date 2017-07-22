@@ -7,6 +7,65 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".item.ItemActivity">
+    tools:context=".item.ItemActivity"
+        android:background="@color/blueGreen">
+        <LinearLayout
+            android:id="@+id/title_logo_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/logo_image_view"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/logo"
+                />
+
+            <TextView
+                android:id="@+id/title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="K-BA"
+                android:textSize="25dp"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/relative_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linear_button_group"
+            android:layout_below="@id/title_logo_linear_layout"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                />
+            <ListView
+                android:id="@+id/group_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@id/linear_button_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            >
+
+            <Button
+                android:id="@+id/add_group_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nouveau"
+                android:layout_margin="10dp"
+                style="@style/ButtonStyle" />
+
+
+        </LinearLayout>
 
 </RelativeLayout>
