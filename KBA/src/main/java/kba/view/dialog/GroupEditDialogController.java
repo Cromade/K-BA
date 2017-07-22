@@ -50,7 +50,9 @@ public class GroupEditDialogController {
 
     public void setGroupDetails(Group group) {
         nameField.setText(group.getName());
-        groupImgView.setImage(group.getImageGroup().getImage());
+        if (group.getImageGroup().getImage() != null) {
+            groupImgView.setImage(group.getImageGroup().getImage());
+        }
         selectedGroup = group;
         isNew = true;
     }

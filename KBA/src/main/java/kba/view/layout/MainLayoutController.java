@@ -1,5 +1,6 @@
 package kba.view.layout;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,11 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import kba.MainApp;
-import kba.model.Basket;
-import kba.model.BasketProduct;
-import kba.model.Group;
-import kba.model.Product;
+import kba.model.*;
+import kba.network.NetworkResponse;
+import kba.network.WebService;
 import kba.util.ReminderProduct;
+import org.json.JSONArray;
 
 import java.util.List;
 
@@ -41,40 +42,47 @@ public class MainLayoutController {
     private Button addToButton;
 	
 	private MainApp mainApp;
+	private User connectedUser;
 	private ObservableList<Basket> baskets;
 	private Basket favourite;
 
     @FXML
     private void initialize() {
-        numberChoiceBox.getItems().add(1);
-        numberChoiceBox.getItems().add(2);
-        numberChoiceBox.getItems().add(3);
-        numberChoiceBox.getItems().add(4);
-        numberChoiceBox.getItems().add(5);
-        numberChoiceBox.getItems().add(6);
-        numberChoiceBox.getItems().add(7);
-        numberChoiceBox.getItems().add(8);
-        numberChoiceBox.getItems().add(9);
-        numberChoiceBox.getItems().add(10);
-        numberChoiceBox.setValue(1);
+        Platform.runLater(() -> {
+            numberChoiceBox.getItems().add(1);
+            numberChoiceBox.getItems().add(2);
+            numberChoiceBox.getItems().add(3);
+            numberChoiceBox.getItems().add(4);
+            numberChoiceBox.getItems().add(5);
+            numberChoiceBox.getItems().add(6);
+            numberChoiceBox.getItems().add(7);
+            numberChoiceBox.getItems().add(8);
+            numberChoiceBox.getItems().add(9);
+            numberChoiceBox.getItems().add(10);
+            numberChoiceBox.setValue(1);
 
-        imageGroupColumn.setCellValueFactory(new PropertyValueFactory<>("imageGroup"));
-        imageGroupColumn.setMinWidth(70);
-        imageGroupColumn.setMaxWidth(70);
-        nameGroupColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+            imageGroupColumn.setCellValueFactory(new PropertyValueFactory<>("imageGroup"));
+            imageGroupColumn.setMinWidth(70);
+            imageGroupColumn.setMaxWidth(70);
+            nameGroupColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
-        imageReminderColumn.setCellValueFactory(new PropertyValueFactory<>("productImg"));
-        imageReminderColumn.setMinWidth(70);
-        imageReminderColumn.setMaxWidth(70);
-        nameReminderColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+            imageReminderColumn.setCellValueFactory(new PropertyValueFactory<>("productImg"));
+            imageReminderColumn.setMinWidth(70);
+            imageReminderColumn.setMaxWidth(70);
+            nameReminderColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
-        // listener
-        reminderTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, selectedProduct) -> addToButton.setOnAction(lambda -> handleAddTo(selectedProduct)));
+            // listener
+            reminderTable.getSelectionModel().selectedItemProperty().addListener(
+                    (observable, oldValue, selectedProduct) -> addToButton.setOnAction(lambda -> handleAddTo(selectedProduct)));
+        });
     }
 	
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+    }
+
+    public void setConnectedUser(User connectedUser) {
+        this.connectedUser = connectedUser;
     }
 	
 	public void setFavouriteBasketTotal() {
@@ -110,18 +118,22 @@ public class MainLayoutController {
 
 	public void setRecentGroup() {
 	    ObservableList<Group> recentGroup = FXCollections.observableArrayList();
-	    //get in db the three last group made
-        //TODO
-        //to delete
-        List<Group> groups = mainApp.getGroupData();
-        int cmp = 0;
-        for (Group group : groups) {
-            recentGroup.add(group);
-            cmp++;
-            if(cmp==3) break;
-        }
 
-        groupTable.setItems(recentGroup);
+        try {
+            NetworkResponse networkGetUserGroup = WebService.get("http://51.255.196.182:3000/group?user_uid=" + connectedUser.getId(), mainApp.getRequestHeader());
+
+            JSONArray jsonGroups = new JSONArray(networkGetUserGroup.getBody());
+            for(int i = jsonGroups.length()-1; i > jsonGroups.length()-4; i--) {
+                if (i < 0) {
+                    break;
+                }
+                recentGroup.add(new Group(jsonGroups.getJSONObject(i)));
+            }
+
+            Platform.runLater(() -> groupTable.setItems(recentGroup));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleAddTo(Product selectedProduct) {
@@ -141,4 +153,5 @@ public class MainLayoutController {
     private void handleChangeToGroupManagement() {
         mainApp.changeLayoutToGroupManagement();
     }
+
 }

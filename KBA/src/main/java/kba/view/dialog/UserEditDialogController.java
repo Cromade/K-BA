@@ -83,7 +83,7 @@ public class UserEditDialogController {
         	connectedUser.setFirstname(firstnameField.getText());
         	connectedUser.setUsername(usernameField.getText());
         	connectedUser.setEmail(emailField.getText());
-        	connectedUser.setPassword(connectedUser.getPassword());
+        	connectedUser.setPassword(passwordField.getText());
         	connectedUser.setBirthday(birthdayField.getText());
             connectedUser.setAddress(addressField.getText());
             connectedUser.setCity(cityField.getText());

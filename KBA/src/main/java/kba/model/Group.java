@@ -1,5 +1,6 @@
 package kba.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -8,6 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Group {
 	
@@ -50,7 +53,30 @@ public class Group {
 		this.creator = new User(creator);
 	}
 
-    public String getName() {
+	public Group(JSONObject jsonObject) {
+		this.name = new SimpleStringProperty(jsonObject.get("name").toString());
+        JSONArray jsonUsers = jsonObject.optJSONArray("users");
+        if(jsonUsers != null) {
+            ObservableList<User> users = FXCollections.observableArrayList();
+            for(int i = 0; i < jsonUsers.length(); i++) {
+                JSONObject user = new JSONObject(jsonUsers.getJSONObject(i).toString());
+
+                User tempUser = new User(user.get("uid").toString(), user.get("lastname").toString(), user.get("firstname").toString(), user.get("pseudo").toString(), user.get("email").toString(),
+                        user.get("birthdate").toString());
+
+                users.add(tempUser);
+            }
+            this.users = users;
+        }
+		JSONObject owner = new JSONObject(jsonObject.get("owner").toString());
+
+		User tempUser = new User(owner.get("uid").toString(), owner.get("lastname").toString(), owner.get("firstname").toString(), owner.get("pseudo").toString(), owner.get("email").toString(),
+				owner.get("birthdate").toString());
+
+		this.creator = tempUser;
+	}
+
+	public String getName() {
 		return name.get();
 	}
 

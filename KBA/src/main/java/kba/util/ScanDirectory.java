@@ -16,9 +16,6 @@ public class ScanDirectory {
                 for(Map.Entry<String, Long> fn : newfilenames.entrySet()) {
                     if (filenames.containsKey(fn.getKey())) {
                         deletedFiles.remove(fn.getKey());
-                        if (filenames.get(fn.getKey()).longValue() != fn.getValue().longValue()) {
-                            scanDirectoryCase.pluginFileUpdated(new File(dir, fn.getKey()));
-                        }
                     } else {
                         // added file
                         scanDirectoryCase.pluginFileAdded(new File(dir, fn.getKey()));

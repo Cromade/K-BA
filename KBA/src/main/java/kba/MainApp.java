@@ -14,6 +14,8 @@ import javax.imageio.ImageIO;
 
 import javafx.application.Platform;
 import kba.model.*;
+import kba.network.NetworkResponse;
+import kba.network.WebService;
 import kba.util.PluginParser;
 import kba.util.ScanDirectory;
 import kba.util.ScanDirectoryCase;
@@ -45,6 +47,7 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
     
     private User connectedUser;
+    private Map<String,String> requestHeader;
     private Group defaultGroup;
     private Map<String, PluginHolder> pluginList = new ConcurrentHashMap<>();
     private DataRepository dataRepository;
@@ -125,7 +128,7 @@ public class MainApp extends Application {
 	    	productData.add(product6);
 
 	    	connectedUser = new User();
-	    	connectedUser.setId(123456L);
+	    	connectedUser.setId("123456L");
             connectedUser.setLastname("Jean");
             connectedUser.setFirstname("Person");
             connectedUser.setUsername("Mr nobody");
@@ -139,26 +142,7 @@ public class MainApp extends Application {
             image = SwingFXUtils.toFXImage(img, null);
             connectedUser.setProfileImg(image);
 
-            img = ImageIO.read(new FileInputStream("resources/user.png"));
-            image = SwingFXUtils.toFXImage(img, null);
-            User user1 = new User("john", "john", "johnjohn", "jhn@jhn.fr", "thisisapass", "05/05/2015", "3rue truc", "ville truc", "75000");
-            user1.setProfileImg(image);
-            user1.setId(789456L);
-            User user2 = new User("johana", "johana", "johanajohana", "jhna@jhna.fr", "thisisapass", "05/05/2015", "3rue truc", "ville truc", "75000");
-            user2.setProfileImg(image);
-            user2.setId(321879L);
-            userData.add(user1);
-            userData.add(user2);
-
-            img = ImageIO.read(new FileInputStream("resources/user.png"));
-            image = SwingFXUtils.toFXImage(img, null);
-            defaultGroup = new Group(connectedUser.getUsername(), connectedUser, image, user1);
-
-            Group group2 = new Group("Famille", userData, image, user2);
-            group2.addUserToGroup(connectedUser);
-
             groupData.add(defaultGroup);
-            groupData.add(group2);
 	    	
 	    	Basket basket1 = new Basket("basket1");
 	    	basket1.addProduct(product1,1);
@@ -170,16 +154,12 @@ public class MainApp extends Application {
 	    	basket2.addProduct(product4,5);
 	    	basket2.addProduct(product2,2);
 	    	Basket basket3 = new Basket("basket3");
-            basket1.setGroup(defaultGroup);
-            basket2.setGroup(defaultGroup);
             basket2.setFavourite(true);
-            basket3.setGroup(group2);
 	    	basketData.add(basket1);
 	    	basketData.add(basket2);
 	    	basketData.add(basket3);
 
             cleverBasket = new Basket("cleverBasket");
-            cleverBasket.setGroup(defaultGroup);
             cleverBasket.addProduct(product1, 9);
 
 		} catch (Exception e) {
@@ -331,18 +311,6 @@ public class MainApp extends Application {
                                 controller.addButton(pluginList);
                             });
                         }
-
-                        @Override
-                        public void pluginFileUpdated(File updatedFile) {
-                            Platform.runLater(() -> {
-                                try {
-                                    PluginParser.analyzeJar(updatedFile, pluginList, dataRepository);
-                                    controller.addButton(pluginList);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            });
-                        }
             });
 
             primaryStage.show();
@@ -377,6 +345,7 @@ public class MainApp extends Application {
             // Give the controller access to controller
             MainLayoutController coreController = loader.getController();
             coreController.setMainApp(this);
+            coreController.setConnectedUser(connectedUser);
             coreController.setFavouriteBasketTotal();
             coreController.setRecentGroup();
             coreController.setReminderTable();
@@ -554,8 +523,8 @@ public class MainApp extends Application {
 	        // Give the controller access to the main app.
 	        GroupManagementLayoutController coreController = loader.getController();
 	        coreController.setMainApp(this);
+            coreController.setConnectedUser(connectedUser);
 	        coreController.setDataInTable();
-	        coreController.setConnectedUser(connectedUser);
 
 	        //set the menu
 	        LeftMenuLayoutController menuController = menuLoader.getController();
@@ -1059,4 +1028,11 @@ public class MainApp extends Application {
         return pluginList;
     }
 
+    public void setRequestHeader(Map<String,String> requestHeader) {
+        this.requestHeader = requestHeader;
+    }
+
+    public Map<String,String> getRequestHeader() {
+        return requestHeader;
+    }
 }

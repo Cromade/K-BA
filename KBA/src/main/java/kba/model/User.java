@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 
 public class User {
 
-	private Long id;
+	private String uid;
 	private String lastname;
 	private String firstname;
 	private StringProperty username;
@@ -19,11 +19,10 @@ public class User {
 	private String postalCode;
 	private Image profileImg;
 	private ImageView imageUser;
-	private Boolean isPremium;
 	
 	//Default constructor
 	public User() {
-		this.id = null;
+		this.uid = null;
 		this.lastname = null;
 		this.firstname = null;
 		this.username = new SimpleStringProperty();
@@ -33,10 +32,10 @@ public class User {
 		this.address = null;
 		this.city = null;
 		this.postalCode = null;
-		this.isPremium = null;
 	}
 
 	public User(User user) {
+	    this.uid = uid;
 		this.lastname = user.getLastname();
 		this.firstname = user.getFirstname();
 		this.username = new SimpleStringProperty(user.getUsername());
@@ -46,29 +45,41 @@ public class User {
 		this.address = user.getAddress();
 		this.city = user.getCity();
 		this.postalCode = user.getPostalCode();
-		this.isPremium = user.getIsPremium();
 	}
 
-	public User(String lastname, String firstname, String username, String email,
-			String password, String birthday, String address, String city, String postalCode) {
+	public User(String uid, String lastname, String firstname, String username, String email,
+			String birthday, String address, String city, String postalCode) {
+	    this.uid = uid;
 		this.lastname = lastname;
 		this.firstname = firstname;
 		this.username = new SimpleStringProperty(username);
 		this.email = new SimpleStringProperty(email);
-		this.password = password;
+		this.password = "";
 		this.birthday = birthday;
 		this.address = address;
 		this.city = city;
 		this.postalCode = postalCode;
-		this.isPremium = false;
-	}
-	
-	public Long getId() {
-		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+    public User(String uid, String lastname, String firstname, String pseudo, String email, String birthdate) {
+        this.uid = uid;
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.username = new SimpleStringProperty(pseudo);
+        this.email = new SimpleStringProperty(email);
+        this.password = "";
+        this.birthday = birthdate;
+        this.address = "";
+        this.city = "";
+        this.postalCode = "";
+    }
+
+    public String getId() {
+		return uid;
+	}
+
+	public void setId(String uid) {
+		this.uid = uid;
 	}
 
 	public String getLastname() {
@@ -166,14 +177,6 @@ public class User {
         this.imageUser = new ImageView(img);
         this.imageUser.setFitHeight(60);
         this.imageUser.setFitWidth(60);
-	}
-
-	public Boolean getIsPremium() {
-		return isPremium;
-	}
-
-	public void setIsPremium(Boolean isPremium) {
-		this.isPremium = isPremium;
 	}
 
 }

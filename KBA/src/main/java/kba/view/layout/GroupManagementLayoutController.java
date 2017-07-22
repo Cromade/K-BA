@@ -1,17 +1,22 @@
 package kba.view.layout;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import kba.MainApp;
 import kba.model.Group;
 import kba.model.User;
+import kba.network.NetworkResponse;
+import kba.network.WebService;
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GroupManagementLayoutController {
 
@@ -39,24 +44,35 @@ public class GroupManagementLayoutController {
 	@FXML
 	private void initialize() {
 
-		imageColumn.setCellValueFactory(new PropertyValueFactory<Group, ImageView>("imageGroup"));
-		imageColumn.setMinWidth(70);
-		imageColumn.setMaxWidth(70);
-		nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-		creatorColumn.setCellValueFactory(cellData -> cellData.getValue().getCreator().usernameProperty());
+        Platform.runLater(() -> {
+            imageColumn.setCellValueFactory(new PropertyValueFactory<Group, ImageView>("imageGroup"));
+            imageColumn.setMinWidth(70);
+            imageColumn.setMaxWidth(70);
+            nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+            creatorColumn.setCellValueFactory(cellData -> cellData.getValue().getCreator().usernameProperty());
 
-        // listener
-        groupTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, selectedProduct) -> setButton(selectedProduct));
+            // listener
+            groupTable.getSelectionModel().selectedItemProperty().addListener(
+                    (observable, oldValue, selectedProduct) -> setButton(selectedProduct));
+        });
+
 	}
 
 	public void setDataInTable() {
-		//get the preference of the user in db
-		//TODO
+        try {
+            NetworkResponse networkGetUserGroup = WebService.get("http://51.255.196.182:3000/group?user_uid=" + connectedUser.getId(), mainApp.getRequestHeader());
 
-		//to delete when db up
-		groupData = mainApp.getGroupData();
-		groupTable.setItems(groupData);
+            JSONArray jsonGroups = new JSONArray(networkGetUserGroup.getBody());
+            for(int i = 0; i < jsonGroups.length(); i++) {
+                groupData.add(new Group(jsonGroups.getJSONObject(i)));
+            }
+
+            Platform.runLater(() -> {
+                groupTable.setItems(groupData);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 
 	public void setMainApp(MainApp mainApp) {
@@ -71,11 +87,25 @@ public class GroupManagementLayoutController {
 	    Group tempGroup = new Group();
         boolean okClicked = mainApp.showGroupEditDialog(tempGroup, true);
         if (okClicked) {
-            // save changes
-            //TODO
-            tempGroup.setCreator(connectedUser);
-            groupData.add(tempGroup);
-            mainApp.setGroupData(groupData);
+            Map<String, String> params = new HashMap<>();
+            params.put("name", tempGroup.getName());
+
+            try {
+                NetworkResponse networkConnexionResponse = WebService.post("http://51.255.196.182:3000/group", params, mainApp.getRequestHeader());
+            }catch (Exception e) {
+
+                if (e.getLocalizedMessage().contains("401 for URL")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.initOwner(mainApp.getPrimaryStage());
+                    alert.setTitle("Erreur");
+                    alert.setHeaderText("Erreur lors de la sauvegarde");
+                    alert.setContentText("Veuillez réessayer...");
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add(mainApp.getCurrentCss().toURI().toString());
+                    dialogPane.getStyleClass().add("myDialog");
+                    alert.showAndWait();
+                }
+            }
 
             //refresh the group layout
             setDataInTable();
