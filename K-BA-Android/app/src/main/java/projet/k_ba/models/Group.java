@@ -3,6 +3,10 @@ package projet.k_ba.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -61,6 +65,29 @@ public class Group implements Parcelable {
         this.members = members;
     }
 
+    public Group(JSONObject obj) throws JSONException {
+        this.uid = obj.getString("uid");
+        this.name = obj.getString("name");
+        this.owner = new User(obj.getJSONObject("owner"));
+
+        JSONArray jsonLists = obj.optJSONArray("lists");
+        if(jsonLists != null) {
+            ArrayList<List> lists = new ArrayList<List>();
+            for(int i = 0; i < jsonLists.length(); i++) {
+               lists.add(new List(jsonLists.getJSONObject(i)));
+            }
+            this.lists = lists;
+        }
+
+        JSONArray jsonUsers = obj.optJSONArray("users");
+        if(jsonUsers != null) {
+            ArrayList<User> users = new ArrayList<User>();
+            for(int i = 0; i < jsonUsers.length(); i++) {
+                users.add(new User(jsonUsers.getJSONObject(i)));
+            }
+            this.members = users;
+        }
+    }
     public String getUid() {
         return uid;
     }

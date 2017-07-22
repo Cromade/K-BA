@@ -52,11 +52,11 @@ public class WebService {
         return networkResponse;
     }
 
-    public static NetworkResponse post(String url, Map<String, String> parameters) throws Exception {
+    public static NetworkResponse post(String url, Map<String, Object> parameters) throws Exception {
         return post(url, parameters, null);
     }
 
-    public static NetworkResponse post(String url, Map<String, String> parameters, Map<String, String> headers)
+    public static NetworkResponse post(String url, Map<String, Object> parameters, Map<String, String> headers)
             throws Exception {
         // Create connection
         URL obj = new URL(url);

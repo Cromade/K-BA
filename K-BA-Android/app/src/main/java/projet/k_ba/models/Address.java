@@ -11,30 +11,6 @@ import org.json.JSONObject;
  */
 public class Address implements Parcelable{
 
-    protected Address(Parcel in) {
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<Address> CREATOR = new Creator<Address>() {
-        @Override
-        public Address createFromParcel(Parcel in) {
-            return new Address(in);
-        }
-
-        @Override
-        public Address[] newArray(int size) {
-            return new Address[size];
-        }
-    };
-
     public Address(JSONObject obj) throws JSONException {
         if(obj != null) {
             this.uid = obj.getString("uid");
@@ -59,6 +35,38 @@ public class Address implements Parcelable{
         this.zipcode = zipcode;
         this.city = city;
     }
+
+    protected Address(Parcel in) {
+        uid = in.readString();
+        address = in.readString();
+        zipcode = in.readString();
+        city = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(uid);
+        dest.writeString(address);
+        dest.writeString(zipcode);
+        dest.writeString(city);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Address> CREATOR = new Creator<Address>() {
+        @Override
+        public Address createFromParcel(Parcel in) {
+            return new Address(in);
+        }
+
+        @Override
+        public Address[] newArray(int size) {
+            return new Address[size];
+        }
+    };
 
     public String getAddress() {
         return address;

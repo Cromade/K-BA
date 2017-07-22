@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="projet.k_ba.group.GroupActivity"
+    tools:context="projet.k_ba.group.AddGroupActivity"
     android:background="@color/blueGreen">
     <LinearLayout
         android:id="@+id/title_logo_linear_layout"
@@ -32,25 +32,16 @@
             android:layout_gravity="center"
             />
     </LinearLayout>
-    <RelativeLayout
-        android:id="@+id/relative_list_view"
+    <EditText
+        android:id="@+id/edit_text_new_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linear_button_group"
+        android:layout_height="50dp"
         android:layout_below="@id/title_logo_linear_layout"
-        >
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            />
-            <ListView
-                android:id="@+id/group_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+        android:layout_marginTop="100dp"
+        android:hint="Nom du groupe"/>
 
-    </RelativeLayout>
     <LinearLayout
-        android:id="@id/linear_button_group"
+        android:id="@+id/linear_button_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -58,7 +49,7 @@
         >
 
         <Button
-            android:id="@+id/add_group_button"
+            android:id="@+id/validate_new_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nouveau"
@@ -67,4 +58,5 @@
 
 
     </LinearLayout>
+
 </RelativeLayout>

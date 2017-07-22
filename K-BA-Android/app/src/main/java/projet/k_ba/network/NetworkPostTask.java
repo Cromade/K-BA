@@ -21,7 +21,7 @@ public class NetworkPostTask extends AsyncTask<Object, Void, NetworkResponse> {
     protected NetworkResponse doInBackground(Object... args) {
         try {
             String url = (String)args[0];
-            Map<String, String> params = (Map<String, String>)args[1];
+            Map<String, Object> params = (Map<String, Object>)args[1];
             return WebService.post(url, params, args.length > 2 ? (Map<String, String>) args[2] : null );
         } catch (Exception e) {
             Log.e("Network", "POST", e);

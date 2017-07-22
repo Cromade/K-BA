@@ -29,7 +29,6 @@ public class HomeActivity extends AppCompatActivity {
                Group.putExtra("token",HomeActivity.this.getIntent().getStringExtra("token"));
                Group.putExtra("user", HomeActivity.this.getIntent().getParcelableExtra("user"));
                startActivity(Group);
-               finish();
            }
        });
 

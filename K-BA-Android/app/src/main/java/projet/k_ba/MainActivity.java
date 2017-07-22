@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import projet.k_ba.models.User;
 import projet.k_ba.network.AsyncWebServices;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void connexion() {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, Object> params = new HashMap<String, Object>();
         params.put("email", login_text_edit.getText().toString());
         params.put("password", password_text_edit.getText().toString());
         AsyncWebServices.post("/auth/login", params, new INetworkListener() {

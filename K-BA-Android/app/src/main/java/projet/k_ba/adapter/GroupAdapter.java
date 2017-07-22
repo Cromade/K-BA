@@ -19,10 +19,10 @@ public class GroupAdapter extends BaseAdapter{
     private Context context;
     private ArrayList<Group> groups;
 
-    public GroupAdapter(Context context) {
+    public GroupAdapter(Context context, ArrayList<Group> groups) {
         super();
         this.context = context;
-        groups = new ArrayList<Group>();
+        this.groups = groups;
     }
 
     @Override

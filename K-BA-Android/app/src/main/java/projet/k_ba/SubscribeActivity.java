@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import projet.k_ba.network.AsyncWebServices;
 import projet.k_ba.network.INetworkListener;
@@ -105,7 +106,7 @@ public class SubscribeActivity extends AppCompatActivity {
             return;
         }
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, Object> params = new HashMap<String, Object>();
         params.put("firstname", firstname_text_edit.getText().toString());
         params.put("lastname", lastname_text_edit.getText().toString());
         params.put("pseudo", pseudo_text_edit.getText().toString());

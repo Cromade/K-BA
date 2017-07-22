@@ -19,7 +19,13 @@
         </activity>
         <activity android:name=".SubscribeActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".group.GroupActivity"></activity>
+        <activity android:name=".group.GroupActivity" />
+        <activity android:name=".group.AddGroupActivity" />
+        <activity android:name=".group.DetailsGroupActivity" />
+        <activity android:name=".user.UserActivity" />
+        <activity android:name=".user.AddUserActivity" />
+        <activity android:name=".user.DetailsUserActivity" />
+        <activity android:name=".group.AddMemberToGroupActivity"></activity>
     </application>
 
 </manifest>
