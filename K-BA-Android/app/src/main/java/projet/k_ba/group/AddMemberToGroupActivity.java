@@ -7,9 +7,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import projet.k_ba.R;
+import projet.k_ba.adapter.GroupAdapter;
+import projet.k_ba.adapter.UserAdapter;
 import projet.k_ba.models.Group;
+import projet.k_ba.models.User;
 import projet.k_ba.network.AsyncWebServices;
+import projet.k_ba.network.INetworkListener;
+import projet.k_ba.network.NetworkResponse;
 
 public class AddMemberToGroupActivity extends AppCompatActivity {
     private ListView userListView;
@@ -29,7 +41,28 @@ public class AddMemberToGroupActivity extends AppCompatActivity {
         searchUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AsyncWebServices.get("/user?search="+)
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer "+ token);
+                AsyncWebServices.get("/user?search=" + editTextSearchUser.getText().toString(), new INetworkListener() {
+                    @Override
+                    public void onComplete(NetworkResponse response) {
+                        if(response != null) {
+                            try {
+                                JSONArray jsonUsers = new JSONArray(response.getBody());
+                                ArrayList<User> users = new ArrayList<User>();
+                                for(int i = 0; i< jsonUsers.length(); i++) {
+                                    User user = new User(jsonUsers.getJSONObject(i));
+                                    users.add(user);
+                                }
+
+                                UserAdapter userAdapter = new UserAdapter(AddMemberToGroupActivity.this, users);
+                                AddMemberToGroupActivity.this.userListView.setAdapter(userAdapter);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, headers);
             }
         });
     }
