@@ -32,6 +32,22 @@ GroupController.getByUid = function(uid) {
     });
 };
 
+
+/**
+ *
+ * @param {String} uid
+ * @returns {Promise<Group|undefined>}
+ */
+GroupController.modify = function(uid, params) {
+    return GroupController.getByUid(uid).then((group) => {
+        if(group){
+            if(params.name) {
+                group.name = params.name
+            }
+        }
+    });
+};
+
 /**
  * @param {String} user_id
  * @returns {Promise<Group|undefined>}
