@@ -44,7 +44,7 @@ router.put('/:item_uid/category/:category_uid', (req, res, next) => {
 });
 
 router.get('/', (req, res, next)=> {
-   ItemController.listItems(req.query.search).then((items) => {
+   ItemController.listItems(req.query.search, req.query.category_uid).then((items) => {
        res.json(items);
    }).catch(next);
 });

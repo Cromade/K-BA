@@ -56,17 +56,28 @@ ItemController.modify = function(uid, params) {
  *
  * @returns {Promise<Item|undefined>}
  */
-ItemController.listItems = function(search) {
+ItemController.listItems = function(search, category_uid) {
+    var where= {}
+    var include = []
+
     if(search) {
-        return Item.findAndCountAll({
+        where.name = {
+            $like:  search + '%'
+        }
+    }
+    if(category_uid) {
+        include.append({
+            model: ModelIndex.getModel("category"),
+            as : "categories",
             where: {
-                name: {
-                 $like:  search + '%'
-                }
+                uid: category_uid
             }
         })
     }
-    return Item.findAndCountAll();
+    return Item.findAll({
+        where: where,
+        include: include
+    });
 };
 
 module.exports = ItemController;
