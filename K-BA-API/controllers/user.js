@@ -80,4 +80,32 @@ UserController.listUsers = function(search, scope) {
     return User.findAll();
 };
 
+/**
+ *
+ * @param {String} uid
+ * @returns {Promise<User|undefined>}
+ */
+UserController.modify = function(uid, params) {
+    return UserController.getByUid(uid).then((user) => {
+        if(user){
+            if(params.firstname) {
+                user.firstname = params.firstname
+           }
+            if(params.lastname) {
+                user.lastname = params.lastname
+           }
+            if(params.pseudo) {
+                user.pseudo = params.pseudo
+           }
+            if(params.email) {
+                user.email = params.emaik
+           }
+            if(params.birthdate) {
+                user.birthdate = params.birthdate
+           }
+           return user.save();
+        }
+    })
+};
+
 module.exports = UserController;
