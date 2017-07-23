@@ -6,6 +6,8 @@ const ControllerIndex = require('../controllers');
 const UserController = ControllerIndex.UserController;
 const ListController = ControllerIndex.ListController;
 const ItemController = ControllerIndex.ItemController;
+const GroupController = ControllerIndex.GroupController;
+
 const responsifier = UtilsIndex.ResponsifyUtils.sequelize;
 const MiddlewareIndex = require('../middlewares');
 const AuthMiddleware = MiddlewareIndex.AuthMiddleware;
