@@ -17,9 +17,20 @@ router.use(AuthMiddleware.getToken());
 router.use(SessionMiddleware.getUser());
 
 router.post('/', (req, res, next) => {
-    ListController.create(req.body.name, req.body.state, req.user).then((list) => {
-        res.json(responsifier.instance(list));
-    }).catch(next);
+    if(req.body.group_uid){
+        return GroupController.getByUid(req.body.group_uid).then((group) => {
+            if(group) {
+                return ListController.create(req.body.name, req.body.state, req.user, group.id).then((list) => {
+                    res.json(responsifier.instance(list));
+                }).catch(next); 
+            }
+        }).catch(next);
+    }else {
+        return ListController.create(req.body.name, req.body.state, req.user).then((list) => {
+            res.json(responsifier.instance(list));
+        }).catch(next); 
+    }
+    
 });
 
 router.put('/:list_uid/item/:item_uid', (req, res, next) => {
