@@ -86,7 +86,7 @@ UserController.listUsers = function(search, scope) {
  * @returns {Promise<User|undefined>}
  */
 UserController.modify = function(uid, params) {
-    return UserController.getByUid(uid).then((user) => {
+    return UserController.getByUid(uid, "minimum").then((user) => {
         if(user){
             if(params.firstname) {
                 user.firstname = params.firstname
