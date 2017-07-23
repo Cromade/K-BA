@@ -103,14 +103,16 @@ UserController.modify = function(uid, params) {
             if(params.birthdate) {
                 user.birthdate = params.birthdate
            }
-            if(params.address.address) {
-                user.address.address = params.address.address
-            }
-            if(params.address.zipcode) {
-                user.address.zipcode = params.address.zipcode
-            }
-            if(params.address.city) {
-                user.address.city = params.address.city
+            if(params.address) {
+                if(params.address.address) {
+                    user.address.address = params.address.address
+                }
+                if(params.address.zipcode) {
+                    user.address.zipcode = params.address.zipcode
+                }
+                if(params.address.city) {
+                    user.address.city = params.address.city
+                }
             }
            return user.save();
         }
