@@ -27,7 +27,7 @@ router.get('/:uid', (req, res, next) => {
 });
 
 router.put('/', (req, res, next) => {
-    UserController.modify(req.params.user_uid, req.body).then((response) => {
+    UserController.modify(req.user.uid, req.body).then((response) => {
         res.json(response);
     }).catch(next);
 })

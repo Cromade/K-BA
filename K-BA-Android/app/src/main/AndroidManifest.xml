@@ -27,7 +27,10 @@
         <activity android:name=".user.DetailsUserActivity" />
         <activity android:name=".group.AddMemberToGroupActivity" />
         <activity android:name=".item.ItemActivity" />
-        <activity android:name=".item.DetailsItemActivity"></activity>
+        <activity android:name=".item.DetailsItemActivity" />
+        <activity android:name=".list.ListActivity" />
+        <activity android:name=".list.AddListActivity" />
+        <activity android:name=".list.DetailsListActivity"></activity>
     </application>
 
 </manifest>

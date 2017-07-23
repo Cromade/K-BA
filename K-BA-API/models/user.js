@@ -67,6 +67,9 @@ module.exports = function (sequelize, DataTypes) {
                     as: 'lists',
                     through: 'UserList'
                 });
+                User.belongsTo(ModelIndex.getModel('List'), {
+                    as: 'fav',
+                });
             },
             associateScopes: function(ModelIndex) {
                 User.addScope("minimum", {

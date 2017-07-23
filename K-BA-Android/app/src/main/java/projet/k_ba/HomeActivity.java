@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import projet.k_ba.group.GroupActivity;
 import projet.k_ba.item.ItemActivity;
+import projet.k_ba.list.ListActivity;
 import projet.k_ba.models.User;
 
 public class HomeActivity extends AppCompatActivity {
@@ -16,8 +17,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private Button gestionGroupButton;
     private Button productListButton;
+    private Button gestionPreference;
+    private Button gestionAccount;
+    private Button gestionList;
 
-       @Override
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -34,21 +39,33 @@ public class HomeActivity extends AppCompatActivity {
            }
        });
 
-           productListButton.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   Intent Item = new Intent(HomeActivity.this, ItemActivity.class);
-                   Item.putExtra("token",HomeActivity.this.getIntent().getStringExtra("token"));
-                   Item.putExtra("user", HomeActivity.this.getIntent().getParcelableExtra("user"));
-                   startActivity(Item);
-               }
-           });
+       productListButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent Item = new Intent(HomeActivity.this, ItemActivity.class);
+               Item.putExtra("token",HomeActivity.this.getIntent().getStringExtra("token"));
+               Item.putExtra("user", HomeActivity.this.getIntent().getParcelableExtra("user"));
+               startActivity(Item);
+           }
+       });
+        gestionList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent List = new Intent(HomeActivity.this, ListActivity.class);
+                List.putExtra("token",HomeActivity.this.getIntent().getStringExtra("token"));
+                List.putExtra("user", HomeActivity.this.getIntent().getParcelableExtra("user"));
+                startActivity(List);
+            }
+        });
 
     }
 
     public void findViewsById() {
         gestionGroupButton = (Button) findViewById(R.id.gestion_group);
         productListButton = (Button)findViewById(R.id.list_produits);
+        gestionAccount = (Button)findViewById(R.id.gestion_compte);
+        gestionPreference = (Button)findViewById(R.id.gestion_preference);
+        gestionList = (Button)findViewById(R.id.gestion_list);
 
     }
 

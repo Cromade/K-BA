@@ -29,10 +29,6 @@ module.exports = function (sequelize, DataTypes) {
         state: {
             type: DataTypes.ENUM('ONGOING', 'COMPLETED'),
             allowNull: true
-        },
-        fav: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
         }
     }, {
         paranoid: true,
