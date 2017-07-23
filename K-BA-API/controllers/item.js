@@ -74,7 +74,7 @@ ItemController.listItems = function(search, category_uid) {
             }
         })
     }
-    return Item.findAll({
+    return Item.scope("minimum").findAll({
         where: where,
         include: include
     });
