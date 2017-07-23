@@ -48,10 +48,10 @@ public class ItemListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_list_cell
                     , parent, false);
             holder = new ItemListHolder();
-            holder.name = (TextView) convertView.findViewById(R.id.item_name);
-            holder.price = (TextView) convertView.findViewById(R.id.item_price);
+            holder.name = (TextView) convertView.findViewById(R.id.item_cell_name);
+            holder.price = (TextView) convertView.findViewById(R.id.item_cell_price);
             holder.quantity = (TextView) convertView.findViewById(R.id.item_cell_quantity);
-            holder.total = (TextView) convertView.findViewById(R.id.total_list_res);
+            holder.total = (TextView) convertView.findViewById(R.id.item_cell_total);
 
             convertView.setTag(holder);
         } else {

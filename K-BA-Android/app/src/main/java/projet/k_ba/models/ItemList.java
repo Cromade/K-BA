@@ -22,8 +22,9 @@ public class ItemList implements Parcelable{
     }
 
     public ItemList(JSONObject obj) throws JSONException {
-        this.item = new Item(obj.getJSONObject("item"));
-        this.quantity = obj.getInt("quantity");
+        this.item = new Item(obj);
+        JSONObject itemList = obj.getJSONObject("ItemList");
+        this.quantity = itemList.getInt("quantity");
     }
 
     protected ItemList(Parcel in) {

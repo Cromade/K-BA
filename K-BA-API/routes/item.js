@@ -50,7 +50,7 @@ router.get('/', (req, res, next)=> {
 });
 
 router.get('/:item_uid', (req, res, next)=> {
-   ItemController.getByUid(req.params.item_uid).then((item) => {
+   ItemController.getByUid(req.params.item_uid, "minimum").then((item) => {
        res.json(item);
    }).catch(next);
 });

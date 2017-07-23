@@ -106,6 +106,9 @@ public class DetailsItemActivity extends AppCompatActivity {
                     Map<String, Object> body = new HashMap<String, Object>();
                     body.put("quantity", quantity);
 
+                    Log.d("LIST", selectedList.getUid());
+                    Log.d("ITEM", item.getUid());
+
                     AsyncWebServices.put("/list/" + selectedList.getUid() + "/item/" + item.getUid(), body, new INetworkListener() {
                         @Override
                         public void onComplete(NetworkResponse response) {

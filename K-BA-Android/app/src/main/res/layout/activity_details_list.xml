@@ -69,9 +69,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total : "
-        android:layout_toLeftOf="@id/total_list_res"/>
+        android:layout_toLeftOf="@+id/total_list_res"/>
         <TextView
-            android:id="@+id/total_list_res"
+            android:id="@id/total_list_res"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
