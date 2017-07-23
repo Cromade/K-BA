@@ -65,15 +65,16 @@ ItemController.listItems = function(search, category_uid) {
             $like:  search + '%'
         }
     }
-    if(category_uid) {
-        include.push({
-            model: ModelIndex.getModel("Category"),
-            as : "categories",
-            where: {
-                uid: category_uid
-            }
-        })
+    var includeCategories = {
+        model: ModelIndex.getModel("Category"),
+        as : "categories",
     }
+    if(category_uid) {
+        includeCategories.where = {
+            uid: category_uid
+        }
+    }
+    include.push(includeCategories)
     return Item.scope("minimum").findAll({
         where: where,
         include: include

@@ -3,10 +3,12 @@ package projet.k_ba.item;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +52,15 @@ public class DetailsItemActivity extends AppCompatActivity {
         itemDescription.setText(this.item.getDescription());
         itemPrice.setText(this.item.getPrice()+ " €");
         itemManufacturer.setText(this.item.getManufacturer());
+        final java.util.List<String> quantity = new ArrayList<>();
+        quantity.add("Quantité");
+        for (int i = 1; i< 11; i++) {
+            quantity.add(""+i);
+        }
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(DetailsItemActivity.this, android.R.layout.simple_list_item_1, quantity);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemQuantity.setAdapter(adapter);
 
         final Map<String, String> headers = new HashMap<>();
         headers.put("Authorization","Bearer " + this.token);
@@ -86,6 +96,31 @@ public class DetailsItemActivity extends AppCompatActivity {
             }
         }, headers);
 
+
+        addToList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int quantity = itemQuantity.getSelectedItemPosition();
+                if(quantity > 0) {
+                    List selectedList = lists.get(listChoice.getSelectedItemPosition());
+                    Map<String, Object> body = new HashMap<String, Object>();
+                    body.put("quantity", quantity);
+
+                    AsyncWebServices.put("/list/" + selectedList.getUid() + "/item/" + item.getUid(), body, new INetworkListener() {
+                        @Override
+                        public void onComplete(NetworkResponse response) {
+                            if(response != null) {
+                                Toast.makeText(DetailsItemActivity.this, "Ajout effectué", Toast.LENGTH_LONG).show();
+                            }else {
+                                Toast.makeText(DetailsItemActivity.this, "Erreur lors de l'ajout", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }, headers);
+                }else {
+                    Toast.makeText(DetailsItemActivity.this, "Vous devez sélectionner une quantité", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
 
