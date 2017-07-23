@@ -67,8 +67,10 @@ module.exports = function (sequelize, DataTypes) {
                     as: 'lists',
                     through: 'UserList'
                 });
-                User.belongsTo(ModelIndex.getModel('List'), {
-                    as: 'fav',
+                User.belongsToMany(ModelIndex.getModel('List'), {
+                    as: 'favorites',
+                    through: 'FavoriteList'
+
                 });
             },
             associateScopes: function(ModelIndex) {
