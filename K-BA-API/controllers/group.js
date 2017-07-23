@@ -44,6 +44,7 @@ GroupController.modify = function(uid, params) {
             if(params.name) {
                 group.name = params.name
             }
+            return group.save()
         }
     });
 };

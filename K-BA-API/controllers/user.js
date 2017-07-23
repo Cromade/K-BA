@@ -99,7 +99,8 @@ UserController.modify = function(uid, params) {
                     if(params.address.city) {
                         address.city = params.address.city
                     }
-                    return address.save().then(() => {
+                    return address.save().then((res) => {
+                        user.address = res
                         return updateUser(user, params);
                     })
                 });
