@@ -46,6 +46,8 @@ public class ListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_cell, parent, false);
             holder = new ListHolder();
+            holder.listStatus = (TextView) convertView.findViewById(R.id.list_cell_status);
+            holder.listName = (TextView) convertView.findViewById(R.id.list_cell_name);
             convertView.setTag(holder);
         } else {
             holder = (ListHolder) convertView.getTag();

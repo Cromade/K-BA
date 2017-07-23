@@ -19,7 +19,6 @@ public class List implements Parcelable {
     private String state;
     private ArrayList<Item> items;
     private String group_uid;
-    private boolean fav;
 
     protected List(Parcel in) {
         uid = in.readString();
@@ -27,7 +26,6 @@ public class List implements Parcelable {
         state = in.readString();
         items = in.createTypedArrayList(Item.CREATOR);
         group_uid = in.readString();
-        fav = in.readByte() != 0;
     }
 
     @Override
@@ -37,7 +35,6 @@ public class List implements Parcelable {
         dest.writeString(state);
         dest.writeTypedList(items);
         dest.writeString(group_uid);
-        dest.writeByte((byte) (fav ? 1 : 0));
     }
 
     @Override
@@ -57,24 +54,14 @@ public class List implements Parcelable {
         }
     };
 
-    public boolean isFav() {
-        return fav;
-    }
-
-    public void setFav(boolean fav) {
-        this.fav = fav;
-    }
-
     public List() {
     }
 
-    public List(String uid, String name, String state, ArrayList<Item> items, boolean fav) {
+    public List(String uid, String name, String state, ArrayList<Item> items) {
         this.uid = uid;
         this.name = name;
         this.state = state;
         this.items = items;
-        this.fav = fav;
-
     }
 
     public List(JSONObject obj) throws JSONException {
@@ -90,7 +77,6 @@ public class List implements Parcelable {
             this.items = items;
 
         }
-        this.fav = obj.getBoolean("fav");
     }
     public String getUid() {
         return uid;

@@ -28,7 +28,8 @@ module.exports = function (sequelize, DataTypes) {
         },
         state: {
             type: DataTypes.ENUM('ONGOING', 'COMPLETED'),
-            allowNull: true
+            allowNull: true,
+            defaultValue: 'ONGOING'
         }
     }, {
         paranoid: true,
@@ -39,7 +40,6 @@ module.exports = function (sequelize, DataTypes) {
                 List.belongsTo(ModelIndex.getModel('Group'), {
                     as: 'group'
                 });
-
                 List.belongsTo(ModelIndex.getModel('User'), {
                     as: 'user'
                 });

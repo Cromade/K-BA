@@ -68,9 +68,21 @@ ListController.listLists = function(user_id) {
                 }]
             }]
         }).then((memberLists) => {
-            return userLists.concat(ownerLists, memberLists);
+            var allLists = userLists.concat(ownerLists, memberLists);
+            var unique = []
+            allLists.forEach(function(element) {
+                if(!unique.some((inner) => {
+                    if(inner.uid == element.uid) {
+                        return true
+                    }
+                    return false
+                })) {
+                    unique.push(element);
+                }
+            });
+            return unique;
         })
-    })
+        })
     })
 
 };
