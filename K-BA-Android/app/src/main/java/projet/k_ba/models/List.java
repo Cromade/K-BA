@@ -17,14 +17,14 @@ public class List implements Parcelable {
     private String uid;
     private String name;
     private String state;
-    private ArrayList<Item> items;
+    private ArrayList<ItemList> items;
     private String group_uid;
 
     protected List(Parcel in) {
         uid = in.readString();
         name = in.readString();
         state = in.readString();
-        items = in.createTypedArrayList(Item.CREATOR);
+        items = in.createTypedArrayList(ItemList.CREATOR);
         group_uid = in.readString();
     }
 
@@ -57,7 +57,7 @@ public class List implements Parcelable {
     public List() {
     }
 
-    public List(String uid, String name, String state, ArrayList<Item> items) {
+    public List(String uid, String name, String state, ArrayList<ItemList> items) {
         this.uid = uid;
         this.name = name;
         this.state = state;
@@ -70,9 +70,9 @@ public class List implements Parcelable {
         this.state = obj.getString("state");
         JSONArray jsonItems = obj.optJSONArray("items");
         if(jsonItems != null) {
-            ArrayList<Item> items = new ArrayList<Item>();
+            ArrayList<ItemList> items = new ArrayList<ItemList>();
             for(int i = 0; i < jsonItems.length(); i++) {
-                items.add(new Item(jsonItems.getJSONObject(i)));
+                items.add(new ItemList(jsonItems.getJSONObject(i)));
             }
             this.items = items;
 
@@ -102,11 +102,11 @@ public class List implements Parcelable {
         this.state = state;
     }
 
-    public ArrayList<Item> getItems() {
+    public ArrayList<ItemList> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<Item> items) {
+    public void setItems(ArrayList<ItemList> items) {
         this.items = items;
     }
 

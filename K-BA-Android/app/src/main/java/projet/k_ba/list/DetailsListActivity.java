@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import projet.k_ba.R;
 import projet.k_ba.adapter.ItemAdapter;
@@ -13,37 +14,33 @@ import projet.k_ba.adapter.UserAdapter;
 import projet.k_ba.group.AddMemberToGroupActivity;
 import projet.k_ba.models.Group;
 import projet.k_ba.models.List;
+import projet.k_ba.network.AsyncWebServices;
 
 public class DetailsListActivity extends AppCompatActivity {
     private ListView itemListView;
     private String token;
     private List list;
-    private Button addMemberButton;
+    private Button addToPref;
+    private TextView listName;
+    private TextView total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_list);
 
+        findViewsById();
 
-        /*this.userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                User selectedUser = (User) userListView.getAdapter().getItem(position);
-                Intent detailsGroupActivity = new Intent(DetailsGroupActivity.this, DetailsUserActivity.class);
-                detailsGroupActivity.putExtra("group", selectedUser);
-                detailsGroupActivity.putExtra("token", DetailsGroupActivity.this.token);
-                startActivity(detailsGroupActivity);
-            }
-        });*/
+        this.token = getIntent().getStringExtra("token");
+        this.list = getIntent().getParcelableExtra("list");
 
-            ItemAdapter itemAdapter = new ItemAdapter(this, this.list.getItems());
-            itemListView.setAdapter(itemAdapter);
-
-        }
-    public void findViewsById() {
-        userListView = (ListView) findViewById(R.id.user_list_view);
-        addMemberButton = (Button) findViewById(R.id.add_member_button);
     }
+
+    private void findViewsById() {
+        itemListView =(ListView) findViewById(R.id.item_list_view);
+        listName = (TextView) findViewById(R.id.list_name);
+        total = (TextView) findViewById(R.id.total_list_res);
+        addToPref = (Button) findViewById(R.id.add_pref_button);
+
     }
 }

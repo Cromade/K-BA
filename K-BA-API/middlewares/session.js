@@ -7,7 +7,6 @@ const User = ModelIndex.User;
 
 SessionMiddleware.getUser = function() {
     return (req, res, next) => {
-        console.log(req.token + " hello")
         if(req.token) {
             Session.find({
                 where: {
@@ -18,7 +17,7 @@ SessionMiddleware.getUser = function() {
                     as: 'user'
                 }]
             }).then((session) => {
-                if(session) {
+                if(session && session.user) {
                     req.user = session.user;
                     next();
                 } else {
