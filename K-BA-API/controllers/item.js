@@ -29,7 +29,7 @@ ItemController.create = function(name, description,price, manufacturer) {
  * @returns {Promise<Item|undefined>}
  */
 ItemController.getByUid = function(uid) {
-    return Item.find({
+    return Item.scope("minimum").find({
         where: {
             uid: uid
         }
