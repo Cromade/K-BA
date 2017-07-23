@@ -49,9 +49,6 @@ module.exports = function (sequelize, DataTypes) {
                 List.addScope("minimum", {
                     attributes: ["uid", "name", "state", "fav"],
                     include: [{
-                         model: ModelIndex.Group.scope("minimum"),
-                        as: "group"
-                   },{
                        model: ModelIndex.User.scope("minimum"),
                        as: "user"
                    }]
