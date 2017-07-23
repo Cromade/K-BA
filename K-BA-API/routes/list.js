@@ -16,7 +16,7 @@ const SessionMiddleware = MiddlewareIndex.SessionMiddleware;
 const router = express.Router();
 
 router.use(AuthMiddleware.getToken());
-router.use(SessionMiddleware.getUser());
+    router.use(SessionMiddleware.getUser());
 
 router.post('/', (req, res, next) => {
     if(req.body.group_uid){
@@ -56,10 +56,14 @@ router.put('/:list_uid/item/:item_uid', (req, res, next) => {
 });
 
 router.get('/', (req, res, next)=> {
-    console.log(req.user);
-    console.log("ok");
     ListController.listLists(req.user.id).then((lists) => {
         res.json(lists);
+    }).catch(next);
+});
+
+router.get('/:list_uid', (req, res, next)=> {
+    ListController.getByUid(req.params.list_uid).then((list) => {
+        res.json(list);
     }).catch(next);
 });
 

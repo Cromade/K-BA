@@ -31,7 +31,11 @@ ListController.getByUid = function(uid) {
     return List.find({
         where: {
             uid: uid
-        }
+        },
+        include: [{
+            model: ModelIndex.getModel('Item'),
+            as: 'items'
+        }]
     });
 };
 
