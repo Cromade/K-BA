@@ -86,37 +86,46 @@ UserController.listUsers = function(search, scope) {
  * @returns {Promise<User|undefined>}
  */
 UserController.modify = function(uid, params) {
-    return UserController.getByUid(uid, "minimum").then((user) => {
+    return UserController.getByUid(uid).then((user) => {
         if(user){
-            if(params.firstname) {
-                user.firstname = params.firstname
-           }
-            if(params.lastname) {
-                user.lastname = params.lastname
-           }
-            if(params.pseudo) {
-                user.pseudo = params.pseudo
-           }
-            if(params.email) {
-                user.email = params.emaik
-           }
-            if(params.birthdate) {
-                user.birthdate = params.birthdate
-           }
             if(params.address) {
-                if(params.address.address) {
-                    user.address.address = params.address.address
-                }
-                if(params.address.zipcode) {
-                    user.address.zipcode = params.address.zipcode
-                }
-                if(params.address.city) {
-                    user.address.city = params.address.city
-                }
+                return user.getAddress().then((address) => {
+                    if(params.address.address) {
+                        address.address = params.address.address
+                    }
+                    if(params.address.zipcode) {
+                        address.zipcode = params.address.zipcode
+                    }
+                    if(params.address.city) {
+                        address.city = params.address.city
+                    }
+                    return address.save().then(() => {
+                        return updateUser(user, params);
+                    })
+                });
             }
-           return user.save();
+            return updateUser(user, params);
         }
     })
 };
+
+function updateUser(user, params) {
+    if(params.firstname) {
+        user.firstname = params.firstname
+    }
+    if(params.lastname) {
+        user.lastname = params.lastname
+    }
+    if(params.pseudo) {
+        user.pseudo = params.pseudo
+    }
+    if(params.email) {
+        user.email = params.email
+    }
+    if(params.birthdate) {
+        user.birthdate = params.birthdate
+    }
+    return user.save();
+}
 
 module.exports = UserController;
