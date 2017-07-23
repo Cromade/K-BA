@@ -35,5 +35,44 @@ ListController.getByUid = function(uid) {
     });
 };
 
+/**
+ *
+ * @param {String} uid
+ * @returns {Promise<List|undefined>}
+ */
+ListController.listLists = function(user_id) {
+    return List.findAll({
+        where: {
+            user_id: user_id
+        }
+    }).then((userLists) => {
+        return List.findAll({
+            include: [{
+                model: ModelIndex.getModel("Group").scope("minimum"),
+                as: "group",
+                where: {
+                    owner_id: user_id
+                }
+            }]
+        }).then((ownerLists) => {
+            return List.findAll({
+            include: [{
+                model: ModelIndex.getModel("Group").scope("minimum"),
+                as: "group",
+                include: [{
+                    model: ModelIndex.getModel("User").scope("minimum"),
+                    as: "users",
+                    where: {
+                        id: user_id
+                    }
+                }]
+            }]
+        }).then((memberLists) => {
+            return userLists.concat(ownerLists, memberLists);
+        })
+    })
+    })
+
+};
 
 module.exports = ListController;

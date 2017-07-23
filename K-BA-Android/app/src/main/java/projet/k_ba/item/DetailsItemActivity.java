@@ -62,16 +62,22 @@ public class DetailsItemActivity extends AppCompatActivity {
                         JSONArray jsonLists = new JSONArray(response.getBody());
                         lists = new ArrayList<>();
                         java.util.List<String> spinnerData = new ArrayList<String>();
-                        for(int i = 0; i < jsonLists.length(); i++) {
-                            List l = new List(jsonLists.getJSONObject(i));
-                            lists.add(l);
-                            spinnerData.add(l.getName());
-                        }
+                        if(jsonLists.length() > 0) {
+                            for (int i = 0; i < jsonLists.length(); i++) {
+                                List l = new List(jsonLists.getJSONObject(i));
+                                lists.add(l);
+                                spinnerData.add(l.getName());
+                            }
 
+
+                        } else {
+                            spinnerData.add("Pas de liste");
+                            listChoice.setEnabled(false);
+
+                        }
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(DetailsItemActivity.this, android.R.layout.simple_list_item_1, spinnerData);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         listChoice.setAdapter(adapter);
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
