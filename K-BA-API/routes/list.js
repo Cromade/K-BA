@@ -43,7 +43,7 @@ router.put('/:list_uid/item/:item_uid', (req, res, next) => {
 });
 
 router.get('/', (req, res, next)=> {
-    ListController.listLists().then((lists) => {
+    ListController.listLists(req.user.id).then((lists) => {
         res.json(lists);
     }).catch(next);
 });
