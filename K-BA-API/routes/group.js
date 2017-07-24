@@ -24,7 +24,7 @@ router.post('/', (req, res, next) => {
 router.get('/', (req, res, next)=> {
     if(req.query.user_uid) {
         UserController.getByUid(req.query.user_uid).then((user) => {
-        return GroupController.listGroups(user.id).then((groups) => {
+        return GroupController.listGroups(user.id, req.query.search, "minimum").then((groups) => {
                 res.json(groups);
             }).catch(next);
         })
@@ -41,6 +41,7 @@ router.put('/:group_uid', (req, res, next) => {
         }).catch(next);
 });
 
+
 router.put('/:group_uid/user/:user_uid', (req, res, next) => {
     GroupController.getByUid(req.params.group_uid).then((group) => {
         if(!group) {
@@ -56,4 +57,7 @@ router.put('/:group_uid/user/:user_uid', (req, res, next) => {
         })
     }).catch(next);
 });
+
+
+
 module.exports = router;

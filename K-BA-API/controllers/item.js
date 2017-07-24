@@ -47,6 +47,9 @@ ItemController.modify = function(uid, params) {
             if(params.name) {
                 item.name = params.name
            }
+            if(params.description) {
+                item.description = params.description
+           }
            return item.save();
         }
     })

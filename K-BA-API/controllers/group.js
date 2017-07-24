@@ -49,6 +49,25 @@ GroupController.modify = function(uid, params) {
     });
 };
 
+
+/**
+ *
+ * @returns {Promise<Group|undefined>}
+ */
+GroupController.listGroups = function(user_id, search, scope) {
+    if(search) {
+        return Group.scope(scope || 'defaultScope').findAll({
+            where: {
+                user_id: user_id,
+                name: {
+                    $like:  search + '%'
+                }
+            }
+        })
+    }
+    return Group.findAll();
+};
+
 /**
  * @param {String} user_id
  * @returns {Promise<Group|undefined>}
