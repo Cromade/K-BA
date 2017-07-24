@@ -21,3 +21,12 @@ router.get('/:uid', (req, res, next)=> {
        res.json(address);
    }).catch(next);
 });
+
+router.delete('/:address_uid', (req, res, next)=> {
+   AddressController.getByUid(req.params.address_uid).then((address) => {
+       return address.destroy().then((result) => {
+            res.status(200).end();
+       })
+       
+   }).catch(next);
+});

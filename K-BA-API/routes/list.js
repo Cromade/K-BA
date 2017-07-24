@@ -56,6 +56,11 @@ router.put('/:list_uid/item/:item_uid', (req, res, next) => {
 });
 
 
+router.put('/', (req, res, next) => {
+    ListController.modify(req.user.uid, req.body).then((response) => {
+        res.json(response);
+    }).catch(next);
+})
 
 router.get('/', (req, res, next) => {
     ListController.listLists(req.user.id, req.query.search, 'minimum').then((lists) => {

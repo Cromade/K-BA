@@ -39,6 +39,24 @@ ListController.getByUid = function(uid) {
     });
 };
 
+/**
+ *
+ * @param {String} uid
+ * @returns {Promise<List|undefined>}
+ */
+ListController.modify = function(uid, params) {
+    return ListController.getByUid(uid).then((list) => {
+        if(list){
+            if(params.name) {
+                list.name = params.name
+           }
+            if(params.state) {
+                list.state = params.state
+           }
+           return list.save();
+        }
+    })
+};
 
 
 /**

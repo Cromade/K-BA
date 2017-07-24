@@ -68,6 +68,14 @@ public class WebService {
         return body("PUT", url, parameters, headers);
     }
 
+    public static NetworkResponse delete(String url, Map<String, Object> parameters) throws Exception {
+        return post(url, parameters, null);
+    }
+
+    public static NetworkResponse delete(String url, Map<String, Object> parameters, Map<String, String> headers) throws Exception {
+        return body("DELETE", url, parameters, headers);
+    }
+
     private static NetworkResponse body(String method, String url, Map<String, Object> parameters, Map<String, String> headers) throws Exception {
         // Create connection
         URL obj = new URL(url);

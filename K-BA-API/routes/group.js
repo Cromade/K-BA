@@ -58,6 +58,13 @@ router.put('/:group_uid/user/:user_uid', (req, res, next) => {
     }).catch(next);
 });
 
-
+router.delete('/:group_uid', (req, res, next)=> {
+   GroupController.getByUid(req.params.group_uid).then((group) => {
+       return group.destroy().then((result) => {
+            res.status(200).end();
+       })
+       
+   }).catch(next);
+});
 
 module.exports = router;

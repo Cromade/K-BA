@@ -25,4 +25,15 @@ router.get('/', (req, res, next)=> {
         res.json(categories);
     }).catch(next);
 });
+
+
+
+router.delete('/:category_uid', (req, res, next)=> {
+   CategoryController.getByUid(req.params.category_uid).then((category) => {
+       return category.destroy().then((result) => {
+            res.status(200).end();
+       })
+       
+   }).catch(next);
+});
 module.exports = router;
