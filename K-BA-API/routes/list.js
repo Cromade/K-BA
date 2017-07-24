@@ -75,4 +75,12 @@ router.get('/:list_uid', (req, res, next)=> {
     }).catch(next);
 });
 
+router.delete('/:list_uid', (req, res, next)=> {
+   ListController.getByUid(req.params.list_uid).then((list) => {
+       return list.destroy().then((result) => {
+            res.status(200).end();
+       })
+       
+   }).catch(next);
+});
 module.exports = router;
