@@ -21,12 +21,30 @@ router.use(SessionMiddleware.getUser());
 
 router.get("/", (req, res, next) => {
     return ListController.listLists(req.user.id).then((lists) => {
-        console.log(lists);
         return Promise.all(lists.map((list) => {
-            console.log(list);
             return list.getItems();
-        })).then((items) => {
-            res.json(items);
+        })).then((allListItems) => {
+            var itemCounter = {}
+            allListItems.forEach((items) => {
+                items.forEach((item) => {
+                    if(itemCounter[item.uid] == undefined) {
+                        itemCounter[item.uid] = {
+                            item: item,
+                            quantity: 0
+                        }
+                    }
+                    itemCounter[item.uid].quantity++
+                })
+            })
+            var resultItems = []
+            var keys = Object.keys(itemCounter);
+            keys.forEach((uid) => {
+                var item = itemCounter[uid]
+                if(item.quantity > 5) {
+                    resultItems.push(item);
+                }
+            })
+            res.json(resultItems)
         })
     }).catch(next);
 });
