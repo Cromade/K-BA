@@ -61,26 +61,6 @@ ListController.modify = function(uid, params) {
     })
 };
 
-
-/**
- *
- * @returns {Promise<User|undefined>}
- */
-ListController.listLists = function(user_id, search, scope) {
-    if(search) {
-        return List.scope(scope || 'defaultScope').findAll({
-            where: {
-                user_id: user_id,
-                name: {
-                    $like:  search + '%'
-                }
-            }
-        })
-    }
-    return List.findAll();
-};
-
-
 /**
  *
  * @param {String} uid

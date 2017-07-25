@@ -63,7 +63,7 @@ router.put('/:list_uid', (req, res, next) => {
 
 
 router.get('/', (req, res, next) => {
-    ListController.listLists(req.user.id, req.query.search, 'minimum').then((lists) => {
+    ListController.listLists(req.user.id).then((lists) => {
         res.json(lists);
     }).catch(next);
 });
