@@ -4,8 +4,13 @@
     android:layout_height="match_parent"
     android:padding="5dp"
     android:orientation="horizontal"
-    android:weightSum="4">
+    android:weightSum="5">
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        />
     <TextView
         android:id="@+id/item_cell_name"
         android:layout_width="match_parent"

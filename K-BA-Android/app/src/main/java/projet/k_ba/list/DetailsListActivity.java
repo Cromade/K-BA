@@ -32,7 +32,6 @@ public class DetailsListActivity extends AppCompatActivity {
     private ListView itemListView;
     private String token;
     private List list;
-    private Button addToPref;
     private TextView listName;
     private TextView total;
 
@@ -56,7 +55,7 @@ public class DetailsListActivity extends AppCompatActivity {
                         JSONObject jsonList = new JSONObject(response.getBody());
                         list = new List(jsonList);
                         itemListView.setAdapter(new ItemListAdapter(DetailsListActivity.this, list.getItems()));
-
+                        listName.setText(list.getName());
                         float totalPrice = 0;
                         for(ItemList il : list.getItems()) {
                             totalPrice += il.getQuantity() * il.getItem().getPrice();
@@ -86,7 +85,6 @@ public class DetailsListActivity extends AppCompatActivity {
         itemListView =(ListView) findViewById(R.id.item_list_view);
         listName = (TextView) findViewById(R.id.list_name);
         total = (TextView) findViewById(R.id.total_list_res);
-        addToPref = (Button) findViewById(R.id.add_pref_button);
 
     }
 }

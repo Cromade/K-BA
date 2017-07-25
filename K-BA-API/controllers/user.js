@@ -80,6 +80,7 @@ UserController.listUsers = function(search, scope) {
     return User.findAll();
 };
 
+
 /**
  *
  * @param {String} uid

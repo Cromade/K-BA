@@ -32,9 +32,27 @@ router.put('/', (req, res, next) => {
     }).catch(next);
 })
 
-router.delete('/:list_uid', (req, res, next)=> {
-   ListController.getByUid(req.params.list_uid).then((list) => {
-       return list.destroy().then((result) => {
+router.put('/addFavList/:list_uid', (req, res, next) => {
+    ListController.getByUid(req.params.list_uid).then((list) => {
+        req.user.addFavorite(list).then((response) => {
+            res.json(response);
+        });
+    }).catch(next);; 
+})
+
+router.get('/getFavList/', (req, res, next) => {
+    req.user.getFavorites().then((favorites) => {
+        if(favorites != undefined && favorites.length > 0) {
+            res.json(favorites[favorites.length - 1]);
+        } else {
+            res.status(404).end();
+        }
+    })
+});
+
+router.delete('/:user_uid', (req, res, next)=> {
+   UserController.getByUid(req.params.user_uid).then((user) => {
+       return user.destroy().then((result) => {
             res.status(200).end();
        })
        

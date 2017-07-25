@@ -31,8 +31,6 @@ import projet.k_ba.network.NetworkResponse;
 public class ListActivity extends AppCompatActivity {
     private TextView favTextView;
     private ListView listLists;
-    private EditText searchList;
-    private Button searchButton;
     private Button addList;
     private String token;
     private User user;
@@ -77,7 +75,7 @@ public class ListActivity extends AppCompatActivity {
             }
         },headers);
 
-
+        favTextView.
         addList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,8 +90,6 @@ public class ListActivity extends AppCompatActivity {
     public void findViewsById(){
         favTextView = (TextView) findViewById(R.id.fav_list_name);
         listLists = (ListView) findViewById(R.id.list_list_view);
-        searchList = (EditText) findViewById(R.id.edit_text_search_list);
-        searchButton = (Button) findViewById(R.id.search_list_button);
         addList = (Button) findViewById(R.id.add_list_button);
 
     }
