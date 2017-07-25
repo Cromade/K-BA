@@ -26,6 +26,11 @@ router.get('/', (req, res, next)=> {
     }).catch(next);
 });
 
+router.put('/', (req, res, next)=> {
+    CategoryController.modify().then((category) => {
+        res.json(categories);
+    }).catch(next);
+});
 
 
 router.delete('/:category_uid', (req, res, next)=> {

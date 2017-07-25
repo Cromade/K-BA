@@ -57,7 +57,7 @@ router.put('/:list_uid/item/:item_uid', (req, res, next) => {
 
 
 router.put('/:list_uid', (req, res, next) => {
-    ListController.modify(req.list.uid, req.body).then((response) => {
+    ListController.modify(req.params.list_uid, req.body).then((response) => {
         res.json(response);
     }).catch(next);
 });

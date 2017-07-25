@@ -31,6 +31,24 @@ CategoryController.getByUid = function(uid) {
     });
 };
 
+
+
+/**
+ *
+ * @param {String} uid
+ * @returns {Promise<Category|undefined>}
+ */
+CategoryController.modify = function(uid, params) {
+    return CategoryController.getByUid(uid).then((category) => {
+        if(category){
+            if(params.name) {
+                category.name = params.name
+            }
+            return category.save()
+        }
+    });
+};
+
 /**
  *
  * @returns {Promise<Category|undefined>}
