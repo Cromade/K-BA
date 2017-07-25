@@ -18,7 +18,8 @@ ListController.create = function(name, state, user, group) {
         name: name,
         state: state,
         user_id : user.id,
-        group_id: group
+        group_id: group,
+        fav: false
     });
 };
 
@@ -52,6 +53,16 @@ ListController.modify = function(uid, params) {
            }
             if(params.state) {
                 list.state = params.state
+           }
+            if(params.fav) {
+                if(params.fav == true) {
+                   // return ListController.findAll().then((lists) => {
+                   //     lists.fav = false;
+                   // });
+                    list.fav = params.fav
+                }else {
+                    list.fav = false;
+                }
            }
            return list.save();
         }
