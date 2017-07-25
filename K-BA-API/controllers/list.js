@@ -55,13 +55,13 @@ ListController.modify = function(uid, params) {
                 list.state = params.state
            }
             if(params.fav) {
-                if(params.fav == true) {
+                if(params.fav == "true") {
                     return ListController.findAll().then((lists) => {
-                       lists.fav = false;
+                       lists.fav = "false";
                     });
                     list.fav = params.fav
                 }else {
-                    list.fav = false;
+                    list.fav = "false";
                 }
            }
            return list.save();

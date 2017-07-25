@@ -32,7 +32,7 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: 'ONGOING'
         },
         fav: {
-            type: DataTypes.BOOLEAN
+            type: DataTypes.STRING(10)
         }
     }, {
         paranoid: true,
