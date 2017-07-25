@@ -19,9 +19,8 @@ ListController.create = function(name, state, user, group, fav) {
         state: state,
         user_id : user.id,
         group_id: group,
-        fav: fav.length() == 0 ? false : fav
-    });
-};
+        fav: fav
+});
 
 /**
  *
