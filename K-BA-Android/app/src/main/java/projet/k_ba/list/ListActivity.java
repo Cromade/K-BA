@@ -67,11 +67,6 @@ public class ListActivity extends AppCompatActivity {
                         for(int i = 0; i < jsonLists.length(); i++) {
                             lists.add(new List(jsonLists.getJSONObject(i)));
                         }
-                        for (List l : lists) {
-                            if(l.getFav().equals(true)) {
-                                favTextView.setText(l.getName());
-                            }
-                        }
                         ListAdapter listAdapter = new ListAdapter(ListActivity.this, lists);
                         ListActivity.this.listLists.setAdapter(listAdapter);
                     } catch (JSONException e) {

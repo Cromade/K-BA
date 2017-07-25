@@ -20,9 +20,13 @@ router.use(AuthMiddleware.getToken());
 router.use(SessionMiddleware.getUser());
 
 router.get("/", (req, res, next) => {
-    ListController.listLists(req.user.id).then((lists) => {
-
-    });
+    return ListController.listLists(req.user.id).then((lists) => {
+        return Promise.all(lists.map((list) => {
+            return list.getItems();
+        })).then((items) => {
+            res.json(items);
+        })
+    }).catch(next);
 });
 
 
