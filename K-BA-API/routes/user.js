@@ -43,13 +43,14 @@ router.put('/addFavList/:list_uid', (req, res, next) => {
 
 router.get('/getFavList/', (req, res, next) => {
     req.user.getFavorites().then((favorites) => {
+        console.log("lo");
         console.log(favorites);
         if(favorites != undefined && favorites.length > 0) {
             res.json(favorites[favorites.length - 1]);
         } else {
             res.status(404).end();
         }
-    })
+    }).catch(next);
 });
 
 router.delete('/:user_uid', (req, res, next)=> {
