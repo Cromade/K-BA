@@ -70,7 +70,6 @@ module.exports = function (sequelize, DataTypes) {
                 User.belongsToMany(ModelIndex.getModel('List'), {
                     as: 'favorites',
                     through: 'FavoriteList'
-
                 });
             },
             associateScopes: function(ModelIndex) {

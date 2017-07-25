@@ -13,14 +13,13 @@ const ListController = {};
  * @param {Enum} state
  * @returns {Promise<List|undefined>}
  */
-ListController.create = function(name, state, user, group, fav) {
+ListController.create = function(name, state, user, group) {
     return List.create({
         name: name,
         state: state,
         user_id : user.id,
-        group_id: group.id,
-        fav: fav
-})
+        group_id: group.id
+    })
 };
 
 /**
@@ -36,6 +35,9 @@ ListController.getByUid = function(uid) {
         include: [{
             model: ModelIndex.getModel('Item'),
             as: 'items'
+        }, {
+            model: ModelIndex.getModel('Group'),
+            as: 'group'
         }]
     });
 };
@@ -53,16 +55,6 @@ ListController.modify = function(uid, params) {
            }
             if(params.state) {
                 list.state = params.state
-           }
-            if(params.fav) {
-                if(params.fav == "true") {
-                    return ListController.findAll().then((lists) => {
-                       lists.fav = "false";
-                    });
-                    list.fav = params.fav
-                }else {
-                    list.fav = "false";
-                }
            }
            return list.save();
         }

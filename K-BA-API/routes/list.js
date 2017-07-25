@@ -22,13 +22,13 @@ router.post('/', (req, res, next) => {
     if(req.body.group_uid){
         return GroupController.getByUid(req.body.group_uid).then((group) => {
             if(group) {
-                return ListController.create(req.body.name, req.body.state, req.user, group.id, req.body.fav).then((list) => {
+                return ListController.create(req.body.name, req.body.state, req.user, group.id).then((list) => {
                     res.json(list);
                 }).catch(next); 
             }
         }).catch(next);
     }else {
-        return ListController.create(req.body.name, req.body.state, req.user, req.body.fav).then((list) => {
+        return ListController.create(req.body.name, req.body.state, req.user).then((list) => {
             res.json(list);
         }).catch(next); 
     }
@@ -65,12 +65,6 @@ router.put('/:list_uid', (req, res, next) => {
 
 router.get('/', (req, res, next) => {
     ListController.listLists(req.user.id, req.query.search, 'minimum').then((lists) => {
-        res.json(lists);
-    }).catch(next);
-});
-
-router.get('/', (req, res, next)=> {
-    ListController.listLists(req.user.id).then((lists) => {
         res.json(lists);
     }).catch(next);
 });

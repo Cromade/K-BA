@@ -30,9 +30,6 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.ENUM('ONGOING', 'COMPLETED'),
             allowNull: true,
             defaultValue: 'ONGOING'
-        },
-        fav: {
-            type: DataTypes.STRING(10)
         }
     }, {
         paranoid: true,
@@ -50,7 +47,7 @@ module.exports = function (sequelize, DataTypes) {
             associateScopes: function(ModelIndex) {
                 ModelIndex.associateScopes("User"); // force scope user
                 List.addScope("minimum", {
-                    attributes: ["uid", "name", "state", "fav"],
+                    attributes: ["uid", "name", "state"],
                     include: [{
                          model: ModelIndex.Group.scope("minimum"),
                         as: "group"
