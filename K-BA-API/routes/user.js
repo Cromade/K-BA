@@ -21,12 +21,6 @@ router.get('/', (req, res, next) => {
     }).catch(next);
 });
 
-router.get('/:uid', (req, res, next) => {
-   UserController.getByUid(req.params.uid, 'minimum').then((user) => {
-       res.json(user);
-   }).catch(next);
-});
-
 router.put('/', (req, res, next) => {
     UserController.modify(req.user.uid, req.body).then((response) => {
         res.json(response);
@@ -41,16 +35,20 @@ router.put('/addFavList/:list_uid', (req, res, next) => {
     }).catch(next);; 
 })
 
-router.get('/getFavList/', (req, res, next) => {
+router.get('/getFavList', (req, res, next) => {
     req.user.getFavorites().then((favorites) => {
-        console.log("lo");
-        console.log(favorites);
         if(favorites != undefined && favorites.length > 0) {
             res.json(favorites[favorites.length - 1]);
         } else {
             res.status(404).end();
         }
     }).catch(next);
+});
+
+router.get('/:uid', (req, res, next) => {
+   UserController.getByUid(req.params.uid, 'minimum').then((user) => {
+       res.json(user);
+   }).catch(next);
 });
 
 router.delete('/:user_uid', (req, res, next)=> {
