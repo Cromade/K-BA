@@ -1,0 +1,44 @@
+<div class="widgets">
+  <div class="row">
+    <div class="col-12 typography-widget">
+    <ba-card title="List of categories" baCardClass="with-scroll heading-widget">
+    <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="form-horizontal">
+      <label for="name" class="col-sm-2 form-control-label">Name</label>
+      <select name="name" id="name" [(ngModel)]="selectedCategory">
+        <option *ngFor="let option of allCategories" value="{{option.uid}}">{{option.name}}</option>
+      </select>
+      <button type="submit" class="btn btn-success" [disabled]="!editForm.form.valid">Insert</button>
+    </form>
+    <div class="row form-group">
+      <div class="col-12">
+        <button type="button" class="btn btn-success btn-with-icon pull-right" [routerLink]="['/pages/categories/create']"><i class="ion-compose"></i>Create category
+        </button>
+      </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-12">
+          <div class="vertical-scroll">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>name</th>
+                <th>action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of categories">
+                <td>{{ item.name }}</td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-with-icon" [routerLink]="['/pages/categories/edit', item.uid]"><i class="ion-compose"></i>Edit</button>
+                  <button type="button" class="btn btn-danger btn-with-icon" (click)="delete(item.uid)"><i class="ion-compose"></i>Delete</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </ba-card>
+    </div>
+  </div>
+</div>

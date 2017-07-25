@@ -1,0 +1,52 @@
+<form (ngSubmit)="onSubmit()" #editForm="ngForm" class="form-horizontal">
+  <div class="form-group row">
+    <label for="name" class="col-sm-2 form-control-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" [(ngModel)]="product.name" name="name" class="form-control" id="name" placeholder="Name">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="version" class="col-sm-2 form-control-label">Description</label>
+    <div class="col-sm-10">
+      <input type="text" [(ngModel)]="product.description" name="description" class="form-control" id="description" placeholder="Description">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="envoyName" class="col-sm-2 form-control-label">Price</label>
+    <div class="col-sm-10">
+      <input type="text" [(ngModel)]="product.price" name="price" class="form-control" id="price" placeholder="Price">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="envoyName" class="col-sm-2 form-control-label">Manufacturer</label>
+    <div class="col-sm-10">
+      <input type="text" [(ngModel)]="product.manufacturer" name="manufacturer" class="form-control" id="manufacturer" placeholder="Manufacturer">
+    </div>
+  </div>
+  <div class="form-group row">
+   <label for="envoyName" class="col-sm-2 form-control-label">Category</label>
+   <div class="col-sm-8 col-md-4">
+      <div class="vertical-scroll">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Selected</th>
+            <th>Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of category">
+            <td><input type="checkbox" name="inlineRadioOptions" id="{{item.uid}}" value="{{item.uid}}"></td>
+            <td>{{ item.name }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="offset-sm-2 col-sm-10">
+      <button type="submit" class="btn btn-success" [disabled]="!editForm.form.valid">Submit</button>
+    </div>
+  </div>
+</form>

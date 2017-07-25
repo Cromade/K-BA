@@ -1,0 +1,53 @@
+<div class="widgets">
+  <div class="row">
+    <div class="col-12 typography-widget">
+    <div class="row form-group">
+      <div class="col-12">
+        <button type="button" class="btn btn-success btn-with-icon pull-left" [routerLink]="['/pages/users/create']"><i class="ion-compose"></i>Create user
+        </button>
+      </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-12">
+          <div class="vertical-scroll">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Pseudo</th>
+                <th>Birthdate</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of users">
+                <td>{{ item.firstname }}</td>
+                <td>{{ item.lastname }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.pseudo }}</td>
+                <td>{{ item.birthdate }}</td>
+                <td>
+                  <div class="btn-group" ngbDropdown>
+                    <button type="button" class="btn btn-info" ngbDropdownToggle>
+                      Actions
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li class="dropdown-item"><a [routerLink]="['/pages/users/edit', item.uid]">Edit</a></li>
+                      <li class="dropdown-item"><a href="#">Reset password</a></li>
+                      <li class="dropdown-item"><a href="#">Groups</a></li>
+                      <li class="dropdown-item"><a href="#">Products</a></li>
+                      <li class="dropdown-item"><a href="#">Delete</a></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

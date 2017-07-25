@@ -1,0 +1,33 @@
+<div class="widgets">
+  <div class="row">
+    <div class="col-12 typography-widget">
+    <div class="row form-group">
+        <div class="col-12">
+          <div class="vertical-scroll">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>name</th>
+                <th>users</th>
+                <th>action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of groups">
+                <td>{{ item.name }}</td>
+                <td>
+                  <i *ngFor="let user of item.users" class="fa fa-user-circle"> {{ user.pseudo }}&nbsp;</i> 
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-with-icon" [routerLink]="['/pages/categories/edit', item.uid]"><i class="ion-compose"></i>Edit</button>
+                  <button type="button" class="btn btn-danger btn-with-icon" (click)="delete(item.uid)"><i class="ion-compose"></i>Delete</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

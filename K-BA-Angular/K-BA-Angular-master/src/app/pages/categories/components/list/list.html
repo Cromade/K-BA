@@ -1,0 +1,32 @@
+<div class="widgets">
+  <div class="row">
+    <div class="col-12 typography-widget">
+    <ba-card title="List of categories" baCardClass="with-scroll heading-widget">
+    <div class="row form-group">
+      <div class="col-12">
+        <button type="button" class="btn btn-success btn-with-icon pull-right" [routerLink]="['/pages/categories/create']"><i class="ion-compose"></i>Create
+        </button>
+      </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-12">
+          <div class="vertical-scroll">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>name</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of categories">
+                <td>{{ item.name }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </ba-card>
+    </div>
+  </div>
+</div>

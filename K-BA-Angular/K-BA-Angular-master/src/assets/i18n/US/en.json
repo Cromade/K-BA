@@ -1,0 +1,22 @@
+{
+  "login": {
+    "title": "Sign in to K-BA",
+    "signup_link": "New to ng2-admin? Sign up!",
+    "email": "Email",
+    "password": "Password",
+    "sign_in": "Sign in",
+    "forgot_password": "Forgot password?"
+  },
+  "general": {
+    "home": "Home",
+    "forms": {
+      "option1": "Option 1"
+    },
+    "menu": {
+      "products": "Products",
+      "categories": "Categories",
+      "groups": "Groups",
+      "users": "Users"
+    }
+  }
+}

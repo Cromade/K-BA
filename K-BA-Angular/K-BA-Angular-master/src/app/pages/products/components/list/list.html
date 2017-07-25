@@ -1,0 +1,66 @@
+<div class="widgets">
+  <div class="row">
+    <div class="col-12 typography-widget">
+    <ba-card title="List of products" baCardClass="with-scroll heading-widget">
+    <div class="row form-group">
+      <div class="col-12">
+        <button type="button" class="btn btn-success btn-with-icon pull-right" [routerLink]="['/pages/products/create']"><i class="ion-compose"></i>Create product
+        </button>
+      </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-12">
+          <div class="vertical-scroll">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>name</th>
+                <th>description</th>
+                <th>price</th>
+                <th>manufacturer</th>
+                <th>action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of products">
+                <td>{{ item.name }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.manufacturer }}</td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-with-icon" [routerLink]="['/pages/products/edit', item.uid]"><i class="ion-compose"></i>Edit</button>
+                  <button type="button" class="btn btn-success btn-with-icon" [routerLink]="['/pages/products/categories', item.uid]">Categories</button>
+                  <button type="button" class="btn btn-danger btn-with-icon" (click)="delete(item.uid)"><i class="ion-compose"></i>Delete</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </ba-card>
+    </div>
+    
+    <div class="col-12">
+      <div class="col-xlg-3 col-lg-3  col-md-4 col-sm-4 typography-widget pull-left" *ngFor="let server of servers">
+        <ba-card title="{{server.name}}" baCardClass="with-scroll heading-widget">
+          <div class="pull-left">
+            <i class="fa fa-refresh disabled" [ngClass]="{ 'fa-spin': server.loading }" [hidden]="!server.loading"></i>
+          </div>
+          <div class="pull-right">
+      		  <i class="fa fa-power-off" [ngClass]="{'1':'text-success','-1':'text-danger','undefined':'text-warning'}[server.isOnline]" (click)="refresh(server)"></i>
+          </div>
+          <div class="section-block">
+            <p (click)="version(server)">{{server.version}}</p>
+          </div>
+          <div class="section-block">
+            <p>Envoy Name : <b>{{server.envoyName}}</b></p>
+          </div>
+          <div class="text-center">
+            <button type="button" class="btn btn-primary btn-with-icon pagination-centered" [routerLink]="['/pages/servers/edit', server._id]"><i class="fa fa-pencil-square-o"></i>Edit</button>
+          </div>
+        </ba-card>
+      </div>
+    </div>
+  </div>
+</div>
