@@ -35,6 +35,8 @@ public class AddListActivity extends AppCompatActivity {
                     headers.put("Authorization", "Bearer "+ token);
                     Map<String, Object> params = new HashMap<String, Object>();
                     params.put("name", nameList.getText().toString());
+                    params.put("fav", "true");
+
                     AsyncWebServices.post("/list", params, new INetworkListener() {
                         @Override
                         public void onComplete(NetworkResponse response) {

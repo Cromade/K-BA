@@ -32,7 +32,10 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: 'ONGOING'
         },
         fav: {
-            type: DataTypes.STRING(10)
+            type: DataTypes.STRING(10),
+            allowNull: false,
+            defaultValue: "false"
+
         }
     }, {
         paranoid: true,

@@ -56,7 +56,7 @@
             android:id="@+id/edit_text_search_list"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:hint="Rechercher un user"
+            android:hint="Rechercher une liste"
             android:layout_weight="4"
             />
         <Button
