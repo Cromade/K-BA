@@ -18,7 +18,7 @@ ListController.create = function(name, state, user, group, fav) {
         name: name,
         state: state,
         user_id : user.id,
-        group_id: group,
+        group_id: group.id,
         fav: fav
 })
 };
