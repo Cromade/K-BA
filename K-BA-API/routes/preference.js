@@ -36,12 +36,11 @@ router.get("/", (req, res, next) => {
                     itemCounter[item.uid].quantity++
                 })
             })
-            console.log(itemCounter);
             var resultItems = []
             var keys = Object.keys(itemCounter);
             keys.forEach((uid) => {
                 var item = itemCounter[uid]
-                if(item.quantity > 5) {
+                if(item.quantity >= 5) {
                     resultItems.push(item.item);
                 }
             })
