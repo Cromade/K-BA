@@ -7,10 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import projet.k_ba.adapter.PreferenceAdapter;
 import projet.k_ba.group.GroupActivity;
 import projet.k_ba.item.ItemActivity;
 import projet.k_ba.list.ListActivity;
 import projet.k_ba.models.User;
+import projet.k_ba.preference.PreferenceActivity;
+import projet.k_ba.user.AccountActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -58,6 +61,24 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        gestionPreference.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Preference = new Intent(HomeActivity.this, PreferenceActivity.class);
+                Preference.putExtra("token",HomeActivity.this.getIntent().getStringExtra("token"));
+                Preference.putExtra("user", HomeActivity.this.getIntent().getParcelableExtra("user"));
+                startActivity(Preference);
+            }
+        });
+        gestionAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Account = new Intent(HomeActivity.this, AccountActivity.class);
+                Account.putExtra("token",HomeActivity.this.getIntent().getStringExtra("token"));
+                Account.putExtra("user", HomeActivity.this.getIntent().getParcelableExtra("user"));
+                startActivity(Account);
+            }
+        });
     }
 
     public void findViewsById() {

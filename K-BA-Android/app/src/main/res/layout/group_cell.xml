@@ -7,11 +7,13 @@
     <TextView
         android:id="@+id/group_cell_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_small"/>
 
     <TextView
         android:id="@+id/group_cell_owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:textSize="@dimen/text_small"/>
 </RelativeLayout>

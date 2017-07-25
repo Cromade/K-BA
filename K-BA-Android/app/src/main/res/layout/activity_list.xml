@@ -35,48 +35,41 @@
     <LinearLayout
         android:id="@+id/linear_fav_list"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/title_logo_linear_layout"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Panier Favori:"
+            android:textSize="@dimen/text_medium"
+            />
         <TextView
             android:id="@+id/fav_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+
            />
     </LinearLayout>
-    <LinearLayout
-        android:id="@id/linear_search"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/title_list_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Vos Listes:"
+        android:textSize="@dimen/text_medium"
         android:layout_below="@id/linear_fav_list"
-        android:orientation="horizontal"
-        android:weightSum="6"
-        android:layout_marginTop="10dp">
-        <EditText
-            android:id="@+id/edit_text_search_list"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="Rechercher une liste"
-            android:layout_weight="4"
-            />
-        <Button
-            android:id="@+id/search_list_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rechercher"
-            android:layout_weight="2"
-
-            style="@style/ButtonStyle"/>
-
-    </LinearLayout>
+        />
 
     <RelativeLayout
         android:id="@+id/relative_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linear_search"
+        android:layout_below="@id/title_list_view"
         android:layout_above="@+id/linear_button_list"
         >
+
         <View
             android:layout_width="match_parent"
             android:layout_height="100dp"

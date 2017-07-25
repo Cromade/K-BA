@@ -6,4 +6,5 @@
     <string name="connect">Vous êtes connecté</string>
     <string name="subscribe">Vous êtes bien inscrit</string>
     <string name="fail">Problème de connexion</string>
+    <string name="save">Modification effectuée</string>
 </resources>

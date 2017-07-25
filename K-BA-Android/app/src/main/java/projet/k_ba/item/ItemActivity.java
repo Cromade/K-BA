@@ -82,14 +82,13 @@ public class ItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int position = spinnerItemCategories.getSelectedItemPosition();
                 String url = "/item";
-                if(position > 0) {
-                    position--;
+                position--;
+                if(position >= 0) {
                     url += "?category_uid=" + categories.get(position).getUid();
                 }
                 String search = searchItemEditText.getText().toString();
                 if(search.length() > 0) {
-                    if(position >=
-                            0) {
+                    if(position >= 0) {
                         url += "&";
                     } else {
                         url += "?";

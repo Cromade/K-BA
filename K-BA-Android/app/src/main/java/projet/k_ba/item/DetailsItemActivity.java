@@ -135,7 +135,6 @@ public class DetailsItemActivity extends AppCompatActivity {
         itemQuantity = (Spinner) findViewById(R.id.quantity_spinner);
         listChoice = (Spinner) findViewById(R.id.list_spinner);
         addToList = (Button) findViewById(R.id.add_list_button);
-        addToPreference = (Button) findViewById(R.id.add_pref_button);
 
 
 

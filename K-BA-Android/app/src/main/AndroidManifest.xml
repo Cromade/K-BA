@@ -30,7 +30,9 @@
         <activity android:name=".item.DetailsItemActivity" />
         <activity android:name=".list.ListActivity" />
         <activity android:name=".list.AddListActivity" />
-        <activity android:name=".list.DetailsListActivity"></activity>
+        <activity android:name=".list.DetailsListActivity" />
+        <activity android:name=".preference.PreferenceActivity" />
+        <activity android:name=".user.AccountActivity"></activity>
     </application>
 
 </manifest>

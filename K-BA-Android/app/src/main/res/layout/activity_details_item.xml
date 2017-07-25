@@ -33,23 +33,34 @@
             android:layout_gravity="center"
             />
     </LinearLayout>
+    <TextView
+        android:id="@+id/title_list_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Détails de ce produit:"
+        android:textSize="@dimen/text_medium"
+        android:layout_below="@id/title_logo_linear_layout"
+        />
     <RelativeLayout
         android:id="@+id/relative_details_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/linear_button_details_item"
-        android:layout_below="@id/title_logo_linear_layout"
+        android:layout_below="@id/title_list_view"
         >
         <TextView
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_small"
             />
         <TextView
             android:id="@+id/item_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item_name"/>
+            android:layout_below="@id/item_name"
+            android:layout_marginBottom="@dimen/margin_small"
+            />
         <TextView
             android:id="@+id/item_price"
             android:layout_width="wrap_content"
@@ -59,7 +70,9 @@
             android:id="@+id/item_manufacturer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item_price"/>
+            android:layout_below="@id/item_price"
+            android:layout_marginBottom="@dimen/margin_small"
+            />
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/linear_button_details_item"
@@ -100,13 +113,6 @@
                 android:layout_weight="1"
                 />
         </LinearLayout>
-        <Button
-            android:id="@+id/add_pref_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ajouter aux préférences"
-            android:layout_margin="10dp"
-            style="@style/ButtonStyle"
-            android:layout_below="@id/linear_button_spinner" />
+
     </RelativeLayout>
 </RelativeLayout>

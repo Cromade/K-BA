@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,7 +76,22 @@ public class ListActivity extends AppCompatActivity {
             }
         },headers);
 
-        favTextView.
+        AsyncWebServices.get("/user/getFavList/", new INetworkListener() {
+            @Override
+            public void onComplete(NetworkResponse response) {
+                if (response != null) {
+                    try {
+                        JSONObject jsonList = new JSONObject(response.getBody());
+                        List list = new List(jsonList);
+                        favTextView.setText(list.getName());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        },headers);
+
         addList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
