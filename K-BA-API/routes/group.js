@@ -41,7 +41,11 @@ router.put('/:group_uid', (req, res, next) => {
         }).catch(next);
 });
 
-
+router.get('/:group_uid', (req, res, next)=> {
+    GroupController.getByUid(req.params.group_uid).then((group) => {
+        res.json(group);
+    }).catch(next);
+});
 router.put('/:group_uid/user/:user_uid', (req, res, next) => {
     GroupController.getByUid(req.params.group_uid).then((group) => {
         if(!group) {
