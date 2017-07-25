@@ -29,7 +29,7 @@ import projet.k_ba.network.INetworkListener;
 import projet.k_ba.network.NetworkResponse;
 
 public class ListActivity extends AppCompatActivity {
-    private TextView favListName;
+    private TextView favTextView;
     private ListView listLists;
     private EditText searchList;
     private Button searchButton;
@@ -67,6 +67,11 @@ public class ListActivity extends AppCompatActivity {
                         for(int i = 0; i < jsonLists.length(); i++) {
                             lists.add(new List(jsonLists.getJSONObject(i)));
                         }
+                        for (List l : lists) {
+                            if(l.getFav().equals(true)) {
+                                favTextView.setText(l.getName());
+                            }
+                        }
                         ListAdapter listAdapter = new ListAdapter(ListActivity.this, lists);
                         ListActivity.this.listLists.setAdapter(listAdapter);
                     } catch (JSONException e) {
@@ -90,7 +95,7 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public void findViewsById(){
-        favListName = (TextView) findViewById(R.id.fav_list_name);
+        favTextView = (TextView) findViewById(R.id.fav_list_name);
         listLists = (ListView) findViewById(R.id.list_list_view);
         searchList = (EditText) findViewById(R.id.edit_text_search_list);
         searchButton = (Button) findViewById(R.id.search_list_button);

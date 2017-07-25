@@ -42,7 +42,7 @@
             android:id="@+id/fav_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="kikou"/>
+           />
     </LinearLayout>
     <LinearLayout
         android:id="@id/linear_search"

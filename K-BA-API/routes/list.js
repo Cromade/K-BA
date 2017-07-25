@@ -23,13 +23,13 @@ router.post('/', (req, res, next) => {
         return GroupController.getByUid(req.body.group_uid).then((group) => {
             if(group) {
                 return ListController.create(req.body.name, req.body.state, req.user, group.id, req.body.fav).then((list) => {
-                    res.json(responsifier.instance(list));
+                    res.json(list);
                 }).catch(next); 
             }
         }).catch(next);
     }else {
         return ListController.create(req.body.name, req.body.state, req.user, req.body.fav).then((list) => {
-            res.json(responsifier.instance(list));
+            res.json(list);
         }).catch(next); 
     }
     

@@ -16,7 +16,7 @@ router.use(SessionMiddleware.getUser());
 
 router.post('/',(req, res, next) => {
     CategoryController.create(req.body.name).then((category) => {
-        res.json(responsifier.instance(category));
+        res.json(category);
     }).catch(next);
 });
 
