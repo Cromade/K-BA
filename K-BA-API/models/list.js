@@ -33,9 +33,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         fav: {
             type: DataTypes.STRING(10),
-            allowNull: false,
-            defaultValue: "false"
-
+            allowNull: false
         }
     }, {
         paranoid: true,
