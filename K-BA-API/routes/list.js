@@ -27,12 +27,11 @@ router.post('/', (req, res, next) => {
                 }).catch(next); 
             }
         }).catch(next);
-    }else {
+    } else {
         return ListController.create(req.body.name, req.body.state, req.user).then((list) => {
             res.json(list);
         }).catch(next); 
     }
-    
 });
 
 router.put('/:list_uid/item/:item_uid', (req, res, next) => {

@@ -13,12 +13,12 @@ const ListController = {};
  * @param {Enum} state
  * @returns {Promise<List|undefined>}
  */
-ListController.create = function(name, state, user, group) {
+ListController.create = function(name, state, user, grouId) {
     return List.create({
         name: name,
         state: state,
         user_id : user.id,
-        group_id: group.id
+        group_id: groupId
     })
 };
 
