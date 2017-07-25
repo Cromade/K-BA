@@ -43,6 +43,7 @@ router.put('/addFavList/:list_uid', (req, res, next) => {
 
 router.get('/getFavList/', (req, res, next) => {
     req.user.getFavorites().then((favorites) => {
+        console.log(favorites);
         if(favorites != undefined && favorites.length > 0) {
             res.json(favorites[favorites.length - 1]);
         } else {
