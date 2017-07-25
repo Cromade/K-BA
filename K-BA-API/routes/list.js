@@ -56,8 +56,8 @@ router.put('/:list_uid/item/:item_uid', (req, res, next) => {
 });
 
 
-router.put('/', (req, res, next) => {
-    ListController.modify(req.user.uid, req.body).then((response) => {
+router.put('/:list_uid', (req, res, next) => {
+    ListController.modify(req.params.list_uid, req.body).then((response) => {
         res.json(response);
     }).catch(next);
 });
@@ -80,7 +80,6 @@ router.get('/:list_uid', (req, res, next)=> {
         res.json(list);
     }).catch(next);
 });
-
 router.delete('/:list_uid', (req, res, next)=> {
    ListController.getByUid(req.params.list_uid).then((list) => {
        return list.destroy().then((result) => {
