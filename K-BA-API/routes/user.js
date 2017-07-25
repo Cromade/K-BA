@@ -4,6 +4,7 @@ const express = require('express');
 const UtilsIndex = require('../utils');
 const ControllerIndex = require('../controllers');
 const UserController = ControllerIndex.UserController;
+const ListController = ControllerIndex.ListController;
 const responsifier = UtilsIndex.ResponsifyUtils.sequelize;
 const MiddlewareIndex = require('../middlewares');
 const AuthMiddleware = MiddlewareIndex.AuthMiddleware;
