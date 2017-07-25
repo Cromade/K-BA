@@ -17,7 +17,7 @@ router.use(SessionMiddleware.getUser());
 
 router.post('/', (req, res, next) => {
     GroupController.create(req.body.name, req.user.id).then((group) => {
-        res.json(responsifier.instance(group));
+        res.json(group);
     }).catch(next);
 });
 
@@ -46,6 +46,7 @@ router.get('/:group_uid', (req, res, next)=> {
         res.json(group);
     }).catch(next);
 });
+
 router.put('/:group_uid/user/:user_uid', (req, res, next) => {
     GroupController.getByUid(req.params.group_uid).then((group) => {
         if(!group) {

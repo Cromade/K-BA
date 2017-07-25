@@ -13,13 +13,13 @@ const ListController = {};
  * @param {Enum} state
  * @returns {Promise<List|undefined>}
  */
-ListController.create = function(name, state, user, group) {
+ListController.create = function(name, state, user, group, fav) {
     return List.create({
         name: name,
         state: state,
         user_id : user.id,
         group_id: group,
-        fav: false
+        fav: fav.length() == 0 ? false : fav
     });
 };
 
@@ -56,10 +56,9 @@ ListController.modify = function(uid, params) {
            }
             if(params.fav) {
                 if(params.fav == true) {
-                    console.log("test");
-                    //return ListController.findAll().then((lists) => {
-                   //     lists.fav = false;
-                   // });
+                    return ListController.findAll().then((lists) => {
+                       lists.fav = false;
+                    });
                     list.fav = params.fav
                 }else {
                     list.fav = false;
