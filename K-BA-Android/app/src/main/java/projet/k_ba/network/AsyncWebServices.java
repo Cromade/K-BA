@@ -13,7 +13,14 @@ public class AsyncWebServices {
         new NetworkGetTask(listener).execute(BASE_URL + url);
     }
     public static void get(String url, INetworkListener listener, Map<String,String> headers) {
-        new NetworkGetTask(listener).execute(BASE_URL + url,headers);
+        new NetworkGetTask(listener).execute(BASE_URL + url, headers);
+    }
+
+    public static void delete(String url, INetworkListener listener) {
+        new NetworkDeleteTask(listener).execute(BASE_URL + url);
+    }
+    public static void delete(String url, INetworkListener listener, Map<String,String> headers) {
+        new NetworkDeleteTask(listener).execute(BASE_URL + url,headers);
     }
 
     public static void post(String url, Map<String, Object> parameters, INetworkListener listener) {

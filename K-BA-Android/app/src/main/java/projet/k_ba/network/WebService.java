@@ -20,36 +20,15 @@ public class WebService {
     }
 
     public static NetworkResponse get(String url, Map<String, String> headers) throws Exception {
+        return query("GET", url, headers);
+    }
 
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+    public static NetworkResponse delete(String url) throws Exception {
+        return delete(url, null);
+    }
 
-        // optional default is GET
-        con.setRequestMethod("GET");
-
-        // add request header
-        if (headers != null) {
-            Set<String> keys = headers.keySet();
-            for (String key : keys) {
-                con.setRequestProperty(key, headers.get(key));
-            }
-        }
-        System.out.println("Sending 'GET' request to URL : " + url);
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine = null;
-        StringBuffer response = new StringBuffer();
-
-        NetworkResponse networkResponse = new NetworkResponse();
-        networkResponse.setHeaders(con.getHeaderFields());
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-
-        networkResponse.setBody(response.toString());
-        return networkResponse;
+    public static NetworkResponse delete(String url, Map<String, String> headers) throws Exception {
+        return query("DELETE", url, headers);
     }
 
     public static NetworkResponse post(String url, Map<String, Object> parameters) throws Exception {
@@ -68,12 +47,35 @@ public class WebService {
         return body("PUT", url, parameters, headers);
     }
 
-    public static NetworkResponse delete(String url, Map<String, Object> parameters) throws Exception {
-        return post(url, parameters, null);
-    }
+    private static NetworkResponse query(String method, String url, Map<String, String> headers) throws Exception {
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-    public static NetworkResponse delete(String url, Map<String, Object> parameters, Map<String, String> headers) throws Exception {
-        return body("DELETE", url, parameters, headers);
+        con.setRequestMethod(method);
+
+        // add request header
+        if (headers != null) {
+            Set<String> keys = headers.keySet();
+            for (String key : keys) {
+                con.setRequestProperty(key, headers.get(key));
+            }
+        }
+        System.out.println("Sending request to URL : " + url);
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine = null;
+        StringBuffer response = new StringBuffer();
+
+        NetworkResponse networkResponse = new NetworkResponse();
+        networkResponse.setHeaders(con.getHeaderFields());
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        networkResponse.setBody(response.toString());
+        return networkResponse;
     }
 
     private static NetworkResponse body(String method, String url, Map<String, Object> parameters, Map<String, String> headers) throws Exception {
