@@ -21,7 +21,9 @@ router.use(SessionMiddleware.getUser());
 
 router.get("/", (req, res, next) => {
     return ListController.listLists(req.user.id).then((lists) => {
+        console.log(lists);
         return Promise.all(lists.map((list) => {
+            console.log(list);
             return list.getItems();
         })).then((items) => {
             res.json(items);
