@@ -56,7 +56,8 @@ ListController.modify = function(uid, params) {
            }
             if(params.fav) {
                 if(params.fav == true) {
-                   // return ListController.findAll().then((lists) => {
+                    console.log("test");
+                    //return ListController.findAll().then((lists) => {
                    //     lists.fav = false;
                    // });
                     list.fav = params.fav
